@@ -33,7 +33,6 @@ class AnasayfaVController: BaseVController {
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 5.0
     var selectedCities = SehirlerVController.getCities()
-    var didUpdateStates: [String: Bool] = [:]
 
     lazy var sehirlerVModel: CitiesMainVModel = {
         let vm = CitiesMainVModel(view: self.view)
@@ -45,19 +44,7 @@ class AnasayfaVController: BaseVController {
 
     override func viewDidLoad() {
         netWorkConnectivityCheck()
-
-        if selectedCities.isEmpty {
-            view.addSubview(emptyView)
-            emptyView.center = view.center
-            scrollViewAnasayfa.isHidden = true
-        } else {
-            for item in selectedCities {
-                didUpdateStates[item.name!] = false
-            }
-            createSegmentedControl()
-            fetchData()
-            config()
-        }
+        config()
 
 //        font ismini almak için
 //        for family in UIFont.familyNames.sorted() {
@@ -81,15 +68,22 @@ class AnasayfaVController: BaseVController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+       
+
         selectedCities = SehirlerVController.getCities()
         if !selectedCities.isEmpty {
             emptyView.removeFromSuperview()
             scrollViewAnasayfa.isHidden = false
-            if SehirlerVController.shouldUpdateSegments {
-                let items = SehirlerVController.getCities().map({ $0.name! })
-                segmentedControl?.replaceSegments(segments: items)
-                segmentedControl?.selectedSegmentIndex = 0
-                SehirlerVController.shouldUpdateSegments = false
+            fetchData()
+            if let _ = segmentedControl {
+                if SehirlerVController.shouldUpdateSegments {
+                    let items = SehirlerVController.getCities().map({ $0.name! })
+                    segmentedControl?.replaceSegments(segments: items)
+                    segmentedControl?.selectedSegmentIndex = 0
+                    SehirlerVController.shouldUpdateSegments = false
+                }
+            } else {
+                createSegmentedControl()
             }
         } else {
             view.addSubview(emptyView)
@@ -156,7 +150,6 @@ class AnasayfaVController: BaseVController {
 
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
-        didUpdateStates[city.name!] = true
     }
 
     func createSegmentedControl() {

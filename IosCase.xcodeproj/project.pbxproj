@@ -211,12 +211,12 @@
 				E101EF7B257B977A003ACC06 /* ViewControllers */,
 				E101EF7A257B9772003ACC06 /* Models */,
 				E101EF79257B9767003ACC06 /* ViewModels */,
-				E1F1D2832566C819001149FE /* APIManager.swift */,
 				E1B91B8D2566578A0031E020 /* AppDelegate.swift */,
 				E1B91B932566578A0031E020 /* Main.storyboard */,
 				E1F5B0FB25A4B285005CF4A4 /* TabbarController.swift */,
 				E1B91B962566578A0031E020 /* Assets.xcassets */,
 				E1B91B982566578A0031E020 /* LaunchScreen.storyboard */,
+				E1F1D2832566C819001149FE /* APIManager.swift */,
 				E1B91B9B2566578A0031E020 /* Info.plist */,
 			);
 			path = IosCase;
