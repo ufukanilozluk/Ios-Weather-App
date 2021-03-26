@@ -17,7 +17,7 @@ class SehirlerVController: BaseVController {
     }()
 
     var weather: [HavaDurum] = []
-    var selectedCities: [City] = []
+    var selectedCities: [Location] = []
     var newCityAdded = false
     static var shouldUpdateSegments = false
 
@@ -25,7 +25,7 @@ class SehirlerVController: BaseVController {
         weather = []
         selectedCities = SehirlerVController.getCities()
         for item in selectedCities {
-            let parameters: [String: Any] = ["q": item.name!, "cnt": 1]
+            let parameters: [String: Any] = ["q": item.cityName!, "cnt": 1]
             sehirlerVModel.getWeatherForecast(parameters: parameters)
         }
     }
@@ -80,9 +80,10 @@ class SehirlerVController: BaseVController {
     }
 
     // UserDefaultsa kaydedilen structları almak için
-    class func getCities() -> [City] {
+    class func getCities() -> [Location] {
         guard let cityData = UserDefaults.standard.object(forKey: "cities") as? [Data] else { return [] }
-        return cityData.compactMap { return City(data: $0) }
+//        Finally, there’s compactMap, which lets us discard any nil values that our transform might produce
+        return cityData.compactMap { return Location(data: $0) }
     }
 }
 
@@ -96,10 +97,10 @@ extension SehirlerVController: SehirlerMainVModelDelegate {
             // Şehirler sırasındakine göre tüm verileri çektikten sonra sırala
             weather.sort(by: { n1, n2 in
                 let index1 = selectedCities.firstIndex(where: {
-                    $0.name == n1.city.name
+                    $0.cityName == n1.city.cityName
                 })
                 let index2 = selectedCities.firstIndex(where: {
-                    $0.name == n2.city.name
+                    $0.cityName == n2.city.cityName
                 })
                 return index1! < index2!
             })
@@ -129,7 +130,7 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rowData = weather[indexPath.row].list[0]
         let cell = tableView.dequeueReusableCell(withIdentifier: "SehirlerCell", for: indexPath) as! SehirlerTVCell
-        cell.sehirIsim.text = weather[indexPath.row].city.name
+        cell.sehirIsim.text = weather[indexPath.row].city.cityName
         cell.derece.text = String(rowData.main.temp!) + "°C"
         cell.weatherPic.image = UIImage(named: rowData.weather[0].icon!)
 

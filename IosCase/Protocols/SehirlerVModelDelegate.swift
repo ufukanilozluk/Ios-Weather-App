@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SehirEkleVModelDelegate: MainVModelDelegate {
-    func getCityListCompleted(data:[City])
+    func getCityListCompleted(data:[Location])
 }

@@ -28,7 +28,7 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var welcomeAnimationView: UIView!
     let refreshControl = UIRefreshControl()
 
-    var city: City = City(json: [:])
+    var city: Location = Location(json: [:])
     var dataWeather: HavaDurum = HavaDurum(json: [:])
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 5.0
@@ -77,7 +77,7 @@ class AnasayfaVController: BaseVController {
             fetchData()
             if let _ = segmentedControl {
                 if SehirlerVController.shouldUpdateSegments {
-                    let items = SehirlerVController.getCities().map({ $0.name! })
+                    let items = SehirlerVController.getCities().map({ $0.cityName! })
                     segmentedControl?.replaceSegments(segments: items)
                     segmentedControl?.selectedSegmentIndex = 0
                     SehirlerVController.shouldUpdateSegments = false
@@ -145,15 +145,15 @@ class AnasayfaVController: BaseVController {
 
     fileprivate func fetchData(selectedCityIndex: Int = 0) {
         city = selectedCities[selectedCityIndex]
-        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
-        let parametersDaily: [String: Any] = ["q": city.name!, "cnt": 5]
+   //     let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
+        let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
 
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
-        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
+       // sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
     }
 
     func createSegmentedControl() {
-        let items = selectedCities.map({ $0.name! })
+        let items = selectedCities.map({ $0.cityName! })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray

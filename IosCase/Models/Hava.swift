@@ -12,7 +12,7 @@ struct HavaDurum: Codable {
     var cnt: Int?
     var message: Int?
     var cod: String?
-    var city: City
+    var city: Location
 
     init(json: [String: Any]) {
         if let weatherList = json["list"] as? [[String: Any]] {
@@ -24,17 +24,19 @@ struct HavaDurum: Codable {
         cnt = json["cnt"] as? Int ?? -1
         message = json["message"] as? Int ?? -1
         cod = json["cod"] as? String ?? "-"
-        city = City(json: json["city"] as? [String: Any] ?? [:])
+//        city = Location(json: json["city"] as? [String: Any] ?? [:])
+        let tmp = json["city"] as? [String: Any] ?? [:]
+        city = Location(json: ["LocalizedName": tmp["name"]] as? [String: Any] ?? [:])
     }
 }
 
 struct HavaDurumWeekly: Codable {
     var list: [Daily] = []
-    var uv : String?
-    
+    var uv: String?
+
     init(json: [String: Any]) {
         if let weatherList = json["daily"] as? [[String: Any]] {
-            uv = String(weatherList[0]["uvi"] as! Double) 
+            uv = String(weatherList[0]["uvi"] as! Double)
             for dic in weatherList {
                 list.append(Daily(json: dic))
             }

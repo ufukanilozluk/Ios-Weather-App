@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 import UIKit
 
-class SehirlerVModel : MainVModel {
+class SehirlerVModel: MainVModel {
     var delegate: SehirEkleVModelDelegate?
     let selfView: UIView
 
@@ -17,35 +17,30 @@ class SehirlerVModel : MainVModel {
         selfView = view
     }
 
-    func getCityList() {
-        var data: [City] = []
-        let url = "https://weathercase-99549.firebaseio.com/.json"
-        self.startLoader(uiView: self.selfView)
+    func findCity(query: String) {
+        var data: [Location] = []
+        let url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + query
+        startLoader(uiView: selfView)
         AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { [self] response in
-            
-        
+
             switch response.result {
-        case let .success(JSON):
+            case let .success(JSON):
 
-            if let response = JSON as? [[String: Any]] {
-                
-                for el in response{
-                    data.append(City(json: el))
+                if let response = JSON as? [[String: Any]] {
+                    for el in response {
+                        data.append(Location(json: el))
+                    }
+                    self.delegate?.getCityListCompleted(data: data)
+
+                } else {
+                    print("Cast olamadı")
                 }
-                self.delegate?.getCityListCompleted(data: data)
 
-            } else {
-              print("Cast olamadı")
+            case let .failure(error):
+                // TODO: moobil_log // type error olarak loglanıcak
+                print(error.localizedDescription)
             }
-
-        case let .failure(error):
-            //todo : moobil_log // type error olarak loglanıcak
-            print( error.localizedDescription)
-    
-        }
             stopLoader(uiView: self.selfView)
         }
-
     }
-        
-    }
+}
