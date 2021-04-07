@@ -14,6 +14,9 @@ struct Location: Codable, Equatable {
 
     var cityName: String?
     var countryName: String?
+    var lat: Double?
+    var lon: Double?
+    
     var locationName:String? {
 //        return city! + "," + country!
         return "\(cityName!), \(countryName!)"
@@ -25,6 +28,7 @@ struct Location: Codable, Equatable {
         if let data = json["Country"] as? [String: Any] {
             countryName = data["LocalizedName"] as? String ?? ""
         }
+        
     }
 }
 
@@ -35,6 +39,8 @@ extension Location {
 
         archiver.encode(cityName, forKey: "LocalizedName")
         archiver.encode(countryName, forKey: "Country")
+        archiver.encode(lon, forKey: "Longitude")
+        archiver.encode(lat, forKey: "Latitude")
 
         return archiver.encodedData
     }
@@ -48,11 +54,19 @@ extension Location {
             }
             guard let country = unarchiver.decodeObject(forKey: "Country") as? String? else { return nil }
             guard let city = unarchiver.decodeObject(forKey: "LocalizedName") as? String? else { return nil }
+            guard let lat = unarchiver.decodeObject(forKey: "Longitude") as? Double? else { return nil }
+            guard let lon = unarchiver.decodeObject(forKey: "Latitude") as? Double? else { return nil }
+         
             self.countryName = country
             self.cityName = city
+            self.lat = lat
+            self.lon = lon
         } catch {
+//            Buralara ne eklenir ?
             countryName = ""
             cityName = ""
+            lat = 0.0
+            lon = 0.0
         }
     }
 }

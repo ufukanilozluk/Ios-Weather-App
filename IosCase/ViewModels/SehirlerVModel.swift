@@ -12,6 +12,7 @@ import UIKit
 class SehirlerVModel: MainVModel {
     var delegate: SehirEkleVModelDelegate?
     let selfView: UIView
+    typealias FindCooordinateCompletion = ((_ data: [String:Any]?) -> Void)
 
     init(view: UIView) {
         selfView = view
@@ -42,5 +43,35 @@ class SehirlerVModel: MainVModel {
             }
             stopLoader(uiView: self.selfView)
         }
+    }
+
+    func findCoordinate(query: String,completion: @escaping FindCooordinateCompletion){
+      
+        
+        let url = "https://dataservice.accuweather.com/locations/v1/search?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + query
+        startLoader(uiView: selfView)
+        AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { [self] response in
+
+            switch response.result {
+            case let .success(JSON):
+
+                if let response = JSON as? [[String: Any]] {
+                    if response.count > 0 {
+                        let json = response[0]["GeoPosition"]
+    
+                        completion(json as? [String : Any])
+                    }
+
+                } else {
+                    print("Cast olamadı")
+                }
+
+            case let .failure(error):
+                // TODO: moobil_log // type error olarak loglanıcak
+                print(error.localizedDescription)
+            }
+            stopLoader(uiView: self.selfView)
+        }
+     
     }
 }

@@ -138,22 +138,37 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SehirlerDetayCell", for: indexPath) as! SehirlerDetayTVCell
 //        cell.sehirName.text = rowData.names[indexPath.row]
         cell.sehirName.text = cities[indexPath.row].cityName! + "," + cities[indexPath.row].countryName!
-        
+
         cell.ekleAction = {
             var citiesArray = SehirlerVController.getCities()
 //            let cityName = rowData.names[indexPath.row]
-            
+
 //            let cityName = rowData.names[indexPath.row]
             let cityName = self.cities[indexPath.row].cityName!
-            let city = self.cities.first(where: { $0.cityName == cityName })
+            var city = self.cities.first(where: { $0.cityName == cityName })
 
             guard !citiesArray.contains(city!) else {
                 throw WeatherAppErrors.SehirEkleError.sameSelection
             }
-            citiesArray.append(city!)
-            SehirlerDetayVController.saveCities(arrayCity: citiesArray)
-            alert(msg: "Başarıyla eklendi", type: .succ)
-            SehirlerVController.shouldUpdateSegments = true
+
+            let group = DispatchGroup()
+               group.enter()
+
+               DispatchQueue.main.async {
+            
+            self.sehirlerVModel.findCoordinate(query: cityName, completion: { data in
+                
+                city?.lat = data?["Latitude"] as? Double
+                city?.lon = data?["Longitude"] as? Double
+                
+                citiesArray.append(city!)
+                SehirlerDetayVController.saveCities(arrayCity: citiesArray)
+                alert(msg: "Başarıyla eklendi", type: .succ)
+                SehirlerVController.shouldUpdateSegments = true
+            }
+            )
+        }
+            
         }
         return cell
     }

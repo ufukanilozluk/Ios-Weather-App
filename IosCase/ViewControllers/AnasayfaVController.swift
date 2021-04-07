@@ -145,11 +145,11 @@ class AnasayfaVController: BaseVController {
 
     fileprivate func fetchData(selectedCityIndex: Int = 0) {
         city = selectedCities[selectedCityIndex]
-   //     let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
+        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
-
+//        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
-       // sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
+        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
     }
 
     func createSegmentedControl() {

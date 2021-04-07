@@ -18,7 +18,7 @@
 		E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */; };
 		E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA6256EAA620011E376 /* MainVModel.swift */; };
 		E168888225ACDAD60008E35F /* not-found.json in Resources */ = {isa = PBXBuildFile; fileRef = E168888125ACDAD60008E35F /* not-found.json */; };
-		E16EFC77260D2EC200FBA659 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EFC76260D2EC200FBA659 /* City.swift */; };
+		E16EFC77260D2EC200FBA659 /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16EFC76260D2EC200FBA659 /* GeoLocation.swift */; };
 		E172B3FF259B451100390001 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Constants.swift */; };
 		E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A6EB525798DA000FC2BD1 /* Hava.swift */; };
 		E18BF10125B0B227006AC78E /* welcome-page.json in Resources */ = {isa = PBXBuildFile; fileRef = E18BF10025B0B227006AC78E /* welcome-page.json */; };
@@ -35,7 +35,7 @@
 		E1EA113E259B5C3900C7D5F6 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113B259B5C3900C7D5F6 /* Roboto-Light.ttf */; };
 		E1EA113F259B5C3900C7D5F6 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113C259B5C3900C7D5F6 /* Roboto-Regular.ttf */; };
 		E1F1D2682566790A001149FE /* AnasayfaVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D2672566790A001149FE /* AnasayfaVController.swift */; };
-		E1F1D27325668764001149FE /* CitiesVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D27225668764001149FE /* CitiesVModel.swift */; };
+		E1F1D27325668764001149FE /* SehirlerVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D27225668764001149FE /* SehirlerVModel.swift */; };
 		E1F1D27B25669021001149FE /* SehirlerDetayVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D27A25669021001149FE /* SehirlerDetayVController.swift */; };
 		E1F1D27E2566A1A5001149FE /* SehirlerDetayTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D27D2566A1A5001149FE /* SehirlerDetayTVCell.swift */; };
 		E1F1D2812566C5B6001149FE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D2802566C5B6001149FE /* Location.swift */; };
@@ -59,7 +59,7 @@
 		E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA6256EAA620011E376 /* MainVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModel.swift; sourceTree = "<group>"; };
 		E168888125ACDAD60008E35F /* not-found.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-found.json"; sourceTree = "<group>"; };
-		E16EFC76260D2EC200FBA659 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		E16EFC76260D2EC200FBA659 /* GeoLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocation.swift; sourceTree = "<group>"; };
 		E172B3FE259B451100390001 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E18A6EB525798DA000FC2BD1 /* Hava.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hava.swift; sourceTree = "<group>"; };
 		E18BF10025B0B227006AC78E /* welcome-page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "welcome-page.json"; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 		E1EA113B259B5C3900C7D5F6 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		E1EA113C259B5C3900C7D5F6 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		E1F1D2672566790A001149FE /* AnasayfaVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnasayfaVController.swift; sourceTree = "<group>"; };
-		E1F1D27225668764001149FE /* CitiesVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesVModel.swift; sourceTree = "<group>"; };
+		E1F1D27225668764001149FE /* SehirlerVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerVModel.swift; sourceTree = "<group>"; };
 		E1F1D27A25669021001149FE /* SehirlerDetayVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerDetayVController.swift; sourceTree = "<group>"; };
 		E1F1D27D2566A1A5001149FE /* SehirlerDetayTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerDetayTVCell.swift; sourceTree = "<group>"; };
 		E1F1D2802566C5B6001149FE /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 			children = (
 				E14B8DA6256EAA620011E376 /* MainVModel.swift */,
 				E10236DA25757114007219EA /* CitiesMainVModel.swift */,
-				E1F1D27225668764001149FE /* CitiesVModel.swift */,
+				E1F1D27225668764001149FE /* SehirlerVModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -125,7 +125,7 @@
 			children = (
 				E18A6EB525798DA000FC2BD1 /* Hava.swift */,
 				E1F1D2802566C5B6001149FE /* Location.swift */,
-				E16EFC76260D2EC200FBA659 /* City.swift */,
+				E16EFC76260D2EC200FBA659 /* GeoLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -387,10 +387,10 @@
 				E1D66A20258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift in Sources */,
 				E101EF81257BA84A003ACC06 /* Extensions.swift in Sources */,
 				E1F1D2682566790A001149FE /* AnasayfaVController.swift in Sources */,
-				E1F1D27325668764001149FE /* CitiesVModel.swift in Sources */,
+				E1F1D27325668764001149FE /* SehirlerVModel.swift in Sources */,
 				E1F5B0FF25A4E909005CF4A4 /* BaseVController.swift in Sources */,
 				E1B91B8E2566578A0031E020 /* AppDelegate.swift in Sources */,
-				E16EFC77260D2EC200FBA659 /* City.swift in Sources */,
+				E16EFC77260D2EC200FBA659 /* GeoLocation.swift in Sources */,
 				E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
