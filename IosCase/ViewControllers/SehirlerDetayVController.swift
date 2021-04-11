@@ -41,11 +41,58 @@ class SehirlerDetayVController: BaseVController {
         searchTextField.layer.cornerRadius = 15
         searchTextField.textAlignment = .left
         let image: UIImage = UIImage(named: "ara")!
+        let konumImage: UIImage = UIImage(named: "konum")!
         let imageView: UIImageView = UIImageView(image: image)
-        searchTextField.leftView = nil
-        searchTextField.placeholder = "Şehir Ara"
+        let button = UIButton(type: .custom)
+//        button.setTitle("", for: .normal)
+        button.setImage(konumImage, for: .normal)
+//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+//        button.frame = CGRect(x: CGFloat(frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
+        searchTextField.leftView = button
+        searchTextField.placeholder = " Şehir Ara"
         searchTextField.rightView = imageView
         searchTextField.rightViewMode = UITextField.ViewMode.always
+    }
+
+    @objc func getLocation() {
+        let getLocation = GetLocation()
+
+        getLocation.run {
+            if let location = $0 {
+                getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
+                    print(placeMark)
+
+                    var citiesArray = SehirlerVController.getCities()
+                    //            let cityName = rowData.names[indexPath.row]
+
+                    //            let cityName = rowData.names[indexPath.row]
+                    var city = Location(json: [:])
+                    city.cityName = placeMark.locality
+                    city.countryName = placeMark.country
+                    city.lat = location.coordinate.longitude as Double
+                    city.lon = location.coordinate.latitude as Double
+               
+                    guard !citiesArray.contains(city) else {
+                        return
+                    }
+
+                    citiesArray.append(city)
+                    SehirlerDetayVController.saveCities(arrayCity: citiesArray)
+                    alert(msg: "Başarıyla eklendi", type: .succ)
+                    SehirlerVController.shouldUpdateSegments = true
+                }
+                )
+            }
+
+            //                        if let subcity = placeMark.locality {
+            //                            UserDefaults.standard.set(subcity, forKey: "user_subcity")
+            //                        }
+            //
+            //                        if let city = placeMark.administrativeArea {
+            //                            UserDefaults.standard.set(city, forKey: "user_city")
+            //                        }
+        }
     }
 
     override func viewDidLoad() {
@@ -151,24 +198,17 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
                 throw WeatherAppErrors.SehirEkleError.sameSelection
             }
 
-            let group = DispatchGroup()
-               group.enter()
-
-               DispatchQueue.main.async {
-            
             self.sehirlerVModel.findCoordinate(query: cityName, completion: { data in
-                
+
                 city?.lat = data?["Latitude"] as? Double
                 city?.lon = data?["Longitude"] as? Double
-                
+
                 citiesArray.append(city!)
                 SehirlerDetayVController.saveCities(arrayCity: citiesArray)
                 alert(msg: "Başarıyla eklendi", type: .succ)
                 SehirlerVController.shouldUpdateSegments = true
             }
             )
-        }
-            
         }
         return cell
     }
