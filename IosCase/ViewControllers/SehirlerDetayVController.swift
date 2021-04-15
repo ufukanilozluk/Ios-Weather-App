@@ -46,44 +46,50 @@ class SehirlerDetayVController: BaseVController {
         let button = UIButton(type: .custom)
 //        button.setTitle("", for: .normal)
         button.setImage(konumImage, for: .normal)
-//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-//        button.frame = CGRect(x: CGFloat(frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        button.frame = CGRect(x: CGFloat(-25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
         searchTextField.leftView = button
         searchTextField.placeholder = " Şehir Ara"
         searchTextField.rightView = imageView
         searchTextField.rightViewMode = UITextField.ViewMode.always
+        searchTextField.leftViewMode =  UITextField.ViewMode.always
     }
 
     @objc func getLocation() {
         let getLocation = GetLocation()
 
-        getLocation.run {
-            if let location = $0 {
-                getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
-                    print(placeMark)
+        getLocation.run   { location,error  in
+            if error == nil {
+                if let location = location {
+                    getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
+                        print(placeMark)
 
-                    var citiesArray = SehirlerVController.getCities()
-                    //            let cityName = rowData.names[indexPath.row]
+                        var citiesArray = SehirlerVController.getCities()
+                        //            let cityName = rowData.names[indexPath.row]
 
-                    //            let cityName = rowData.names[indexPath.row]
-                    var city = Location(json: [:])
-                    city.cityName = placeMark.locality
-                    city.countryName = placeMark.country
-                    city.lat = location.coordinate.longitude as Double
-                    city.lon = location.coordinate.latitude as Double
-               
-                    guard !citiesArray.contains(city) else {
-                        return
+                        //            let cityName = rowData.names[indexPath.row]
+                        var city = Location(json: [:])
+                        city.cityName = placeMark.administrativeArea
+                        city.countryName = placeMark.country
+                        city.lat = location.coordinate.longitude as Double
+                        city.lon = location.coordinate.latitude as Double
+                        let cities = citiesArray.map({$0.cityName})
+                        guard !cities.contains(city.cityName) else {
+                            return
+                        }
+
+                        citiesArray.append(city)
+                        SehirlerDetayVController.saveCities(arrayCity: citiesArray)
+                        alert(msg: "Başarıyla eklendi", type: .succ)
+                        SehirlerVController.shouldUpdateSegments = true
                     }
-
-                    citiesArray.append(city)
-                    SehirlerDetayVController.saveCities(arrayCity: citiesArray)
-                    alert(msg: "Başarıyla eklendi", type: .succ)
-                    SehirlerVController.shouldUpdateSegments = true
+                    )
                 }
-                )
+            }else{
+                alert(msg: error)
             }
+           
 
             //                        if let subcity = placeMark.locality {
             //                            UserDefaults.standard.set(subcity, forKey: "user_subcity")

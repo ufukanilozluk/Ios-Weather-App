@@ -10,32 +10,56 @@ import CoreLocation
 
 public class GetLocation: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
-    var locationCallback: ((CLLocation?) -> Void)!
+    var locationCallback: ((_ location:CLLocation?,_ error:String?) -> Void)!
     var locationServicesEnabled = false
     var didFailWithError: Error?
 
-    public func run(callback: @escaping (CLLocation?) -> Void) {
+    public func run(callback: @escaping (CLLocation?,String?) -> Void) {
         locationCallback = callback
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        manager.requestWhenInUseAuthorization()
+        
         locationServicesEnabled = CLLocationManager.locationServicesEnabled()
+
         if locationServicesEnabled {
-            manager.startUpdatingLocation()
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined:
+                manager.requestWhenInUseAuthorization()
+            
+            case .restricted, .denied:
+                locationCallback(nil,"Location authorization is denied")
+            case .authorizedAlways, .authorizedWhenInUse:
+                manager.startUpdatingLocation()
+           default:
+                break
+            }
+            
         } else {
-            locationCallback(nil)
+            locationCallback(nil,"Location service disabled")
+        }
+    }
+    
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+       
+        case .restricted, .denied:
+            locationCallback(nil,"Location authorization is denied")
+        case .authorizedAlways, .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+       default:
+            break
         }
     }
 
     public func locationManager(_ manager: CLLocationManager,
                                 didUpdateLocations locations: [CLLocation]) {
-        locationCallback(locations.last!)
+        locationCallback(locations.last!,nil)
         manager.stopUpdatingLocation()
     }
 
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         didFailWithError = error
-        locationCallback(nil)
+        locationCallback(nil,error.localizedDescription)
         manager.stopUpdatingLocation()
     }
 
