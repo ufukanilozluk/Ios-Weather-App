@@ -10,7 +10,7 @@ import UIKit
 // MARK: UITableView
 
 extension UITableView {
-    func setEmptyView(title: String, message: String, image: UIImage? = nil,animation:String? = nil) {
+    func setEmptyView(title: String, message: String, image: UIImage? = nil, animation: String? = nil) {
         let emptyView = UIView(frame: CGRect(x: center.x, y: center.y, width: bounds.size.width, height: bounds.size.height))
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,20 +26,19 @@ extension UITableView {
         messageLabel.textColor = UIColor.lightGray
         messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 17)
 
-        
         if let _ = image {
             let imageView = UIImageView()
             imageView.image = image
             stackView.addArrangedSubview(imageView)
 //            imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 //            imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        }else if let _ = animation{
+        } else if let _ = animation {
             let animationView = UIView()
             NSLayoutConstraint.activate([
                 animationView.widthAnchor.constraint(equalToConstant: 100),
-                animationView.heightAnchor.constraint(equalToConstant: 100)
+                animationView.heightAnchor.constraint(equalToConstant: 100),
             ])
-        
+
             startAnimation(jsonFile: animation!, view: animationView)
             stackView.addArrangedSubview(animationView)
         }
@@ -183,8 +182,12 @@ extension UIView {
 
         return nil
     }
-    
-    
+
+    func addSubviews(_ views: UIView...) {
+        for view in views {
+            addSubview(view)
+        }
+    }
 
     // OUTPUT 1
     func dropShadow(scale: Bool = true) {
@@ -359,6 +362,7 @@ extension UISegmentedControl {
             insertSegment(withTitle: segment, at: numberOfSegments, animated: false)
         }
     }
+
     func removeBorders() {
         setBackgroundImage(imageWithColor(color: .clear), for: .normal, barMetrics: .default)
         setBackgroundImage(imageWithColor(color: .gray), for: .selected, barMetrics: .default)
@@ -367,13 +371,27 @@ extension UISegmentedControl {
 
     // create a 1x1 image with this color
     private func imageWithColor(color: UIColor) -> UIImage {
-        let rect = CGRect(x: 0.0, y: 0.0, width:  1.0, height: 1.0)
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-        context!.setFillColor(color.cgColor);
-        context!.fill(rect);
-        let image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        context!.setFillColor(color.cgColor)
+        context!.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         return image!
+    }
+}
+
+// MARK: UIImageView
+
+extension UIImageView {
+    convenience init?(named name: String, contentMode: UIView.ContentMode = .scaleToFill) {
+        guard let image = UIImage(named: name) else {
+            return nil
+        }
+
+        self.init(image: image)
+        self.contentMode = contentMode
+        translatesAutoresizingMaskIntoConstraints = false
     }
 }

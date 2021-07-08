@@ -33,7 +33,7 @@ class SehirlerVController: BaseVController {
     override func viewDidLoad() {
         // Drag-drop da delegatelar ataman lazım
 
-        super.viewDidLoad()
+    //    super.viewDidLoad()
         setConfig()
     }
 
