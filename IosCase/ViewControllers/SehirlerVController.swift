@@ -9,7 +9,7 @@ import UIKit
 
 class SehirlerVController: BaseVController {
     @IBOutlet var sehirlerTableView: UITableView!
-
+    
     lazy var sehirlerVModel: CitiesMainVModel = {
         let vm = CitiesMainVModel(view: self.view)
         vm.delegate = self

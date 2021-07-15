@@ -183,6 +183,14 @@ extension UIView {
         return nil
     }
 
+    var width: CGFloat {
+        return frame.size.width
+    }
+
+    var height: CGFloat {
+        return frame.size.width
+    }
+
     func addSubviews(_ views: UIView...) {
         for view in views {
             addSubview(view)
