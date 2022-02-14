@@ -60,7 +60,9 @@ class SehirlerVController: BaseVController {
         navigationItem.leftBarButtonItem = editButtonItem
         sehirlerTableView.allowsSelection = false
     }
-
+    
+    // Edit state function
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         // Takes care of toggling the button's title.
         super.setEditing(editing, animated: true)
@@ -68,7 +70,7 @@ class SehirlerVController: BaseVController {
         sehirlerTableView.setEditing(editing, animated: true)
         sehirlerTableView.dragInteractionEnabled = editing
         // Edit button text ayarlama
-        if !isEditing {
+        if !isEditing {                     //Swiftten geliyor bu da
             editButtonItem.title = "Düzenle"
         } else {
             editButtonItem.title = "Bitti"
@@ -76,6 +78,7 @@ class SehirlerVController: BaseVController {
     }
 
     @IBAction func sehirEkle(_ sender: Any) {
+
         performSegue(withIdentifier: "goToSehirlerDetay", sender: nil)
     }
 

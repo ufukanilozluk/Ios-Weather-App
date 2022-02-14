@@ -46,7 +46,9 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
             locationCallback(nil,"Location authorization is denied")
         case .authorizedAlways, .authorizedWhenInUse:
             manager.startUpdatingLocation()
-       default:
+        case .notDetermined:
+            fallthrough
+        @unknown default:
             break
         }
     }

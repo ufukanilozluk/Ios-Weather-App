@@ -564,65 +564,6 @@
             </objects>
             <point key="canvasLocation" x="201" y="-267"/>
         </scene>
-        <!--Deneme-->
-        <scene sceneID="9SN-pR-XfA">
-            <objects>
-                <viewController id="dF9-fo-Mkx" customClass="DenemeVC" customModule="IosCase" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jQM-w8-P5N">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="kVW-GY-R8N">
-                                <rect key="frame" x="173.5" y="382.5" width="67" height="131"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlW-sp-cAy">
-                                        <rect key="frame" x="0.0" y="0.0" width="67" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                        <connections>
-                                            <action selector="bntAnimate:" destination="dF9-fo-Mkx" eventType="touchUpInside" id="O35-Mj-3DG"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zM4-XU-8wt">
-                                        <rect key="frame" x="0.0" y="50" width="67" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                        <connections>
-                                            <action selector="bntAnimate:" destination="dF9-fo-Mkx" eventType="touchUpInside" id="Y6R-bm-sbS"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bxq-oW-fe9">
-                                        <rect key="frame" x="0.0" y="100" width="67" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                        <connections>
-                                            <action selector="bntAnimate:" destination="dF9-fo-Mkx" eventType="touchUpInside" id="aKY-eD-nlj"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="h0Y-2j-wU4"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="kVW-GY-R8N" firstAttribute="centerY" secondItem="jQM-w8-P5N" secondAttribute="centerY" id="ZpV-77-yVP"/>
-                            <constraint firstItem="kVW-GY-R8N" firstAttribute="centerX" secondItem="jQM-w8-P5N" secondAttribute="centerX" id="nyX-wz-ju9"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Deneme" image="xmark.bin" catalog="system" id="3ne-x3-pj9"/>
-                    <connections>
-                        <outlet property="btn1" destination="dlW-sp-cAy" id="HZo-J7-jhq"/>
-                        <outlet property="btn2" destination="zM4-XU-8wt" id="Kc6-hL-nJU"/>
-                        <outlet property="btn3" destination="Bxq-oW-fe9" id="h6o-wU-ujI"/>
-                        <outletCollection property="allTheButtons" destination="dlW-sp-cAy" collectionClass="NSMutableArray" id="Mv7-zf-AAW"/>
-                        <outletCollection property="allTheButtons" destination="zM4-XU-8wt" collectionClass="NSMutableArray" id="Mm2-Cr-c94"/>
-                        <outletCollection property="allTheButtons" destination="Bxq-oW-fe9" collectionClass="NSMutableArray" id="dCa-bg-joT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eTA-jN-Mtk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="347.82608695652175" y="1153.7946428571429"/>
-        </scene>
         <!--Tabbar Controller-->
         <scene sceneID="siJ-ws-8kC">
             <objects>
@@ -635,7 +576,6 @@
                     <connections>
                         <segue destination="f2C-Bt-gmu" kind="relationship" relationship="viewControllers" id="y7b-Py-pmC"/>
                         <segue destination="tMa-rd-gag" kind="relationship" relationship="viewControllers" id="uD2-kD-1da"/>
-                        <segue destination="dF9-fo-Mkx" kind="relationship" relationship="viewControllers" id="RE6-z0-UKM"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qZe-l2-MP9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -749,7 +689,6 @@
         <image name="goz" width="17.5" height="11"/>
         <image name="konum" width="18.5" height="22.5"/>
         <image name="ruzgar" width="19" height="15.5"/>
-        <image name="xmark.bin" catalog="system" width="128" height="93"/>
         <image name="yukari" width="9" height="10"/>
         <namedColor name="anasayfaAyrac">
             <color red="0.91399997472763062" green="0.91399997472763062" blue="0.91399997472763062" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

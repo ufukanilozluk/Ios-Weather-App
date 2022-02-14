@@ -161,7 +161,7 @@ extension UIButton {
 extension Dictionary {
     mutating func merge(dict: [Key: Value]) {
         for (k, v) in dict {
-            updateValue(v, forKey: k)
+            updateValue(v, forKey: k)   // k varsa v yi güncelliyor yoksa k,v ekliyor bu func
         }
     }
 }

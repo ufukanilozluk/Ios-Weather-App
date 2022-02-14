@@ -9,8 +9,9 @@ import Alamofire
 import Foundation
 import UIKit
 
+
 class CitiesMainVModel: MainVModel {
-    var delegate: SehirlerMainVModelDelegate?
+    var delegate: SehirlerMainVModelDelegate?    // Delegator Class
     let selfView: UIView
 
     init(view: UIView) {
@@ -35,7 +36,6 @@ class CitiesMainVModel: MainVModel {
                 }
 
             case let .failure(error):
-                // TODO: moobil_log // type error olarak loglanıcak
                 print(error.localizedDescription)
             }
             self.stopLoader(uiView: self.selfView)
