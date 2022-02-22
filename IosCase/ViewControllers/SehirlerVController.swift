@@ -25,7 +25,7 @@ class SehirlerVController: BaseVController {
         weather = []
         selectedCities = SehirlerVController.getCities()
         for item in selectedCities {
-            let parameters: [String: Any] = ["q": item.cityName!, "cnt": 1]
+            let parameters: [String: Any] = ["q": item.cityName!, "cnt": 1]   // cnt -> kaç gün
             sehirlerVModel.getWeatherForecast(parameters: parameters)
         }
     }
@@ -57,7 +57,7 @@ class SehirlerVController: BaseVController {
             title: "", style: .plain, target: nil, action: nil)
         // Use the edit button provided by the view controller.
         editButtonItem.title = "Düzenle"
-        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem = editButtonItem //editbutton swiftten geliyor
         sehirlerTableView.allowsSelection = false
     }
     
@@ -70,18 +70,17 @@ class SehirlerVController: BaseVController {
         sehirlerTableView.setEditing(editing, animated: true)
         sehirlerTableView.dragInteractionEnabled = editing
         // Edit button text ayarlama
-        if !isEditing {                     //Swiftten geliyor bu da
-            editButtonItem.title = "Düzenle"
-        } else {
-            editButtonItem.title = "Bitti"
-        }
+        //Swiftten geliyor isEditing
+        editButtonItem.title  = isEditing ? "Bitti" : "Düzenle"
+        
     }
 
     @IBAction func sehirEkle(_ sender: Any) {
 
         performSegue(withIdentifier: "goToSehirlerDetay", sender: nil)
     }
-
+    
+   
     // UserDefaultsa kaydedilen structları almak için
     class func getCities() -> [Location] {
         guard let cityData = UserDefaults.standard.object(forKey: "cities") as? [Data] else { return [] }
@@ -91,6 +90,8 @@ class SehirlerVController: BaseVController {
 }
 
 extension SehirlerVController: SehirlerMainVModelDelegate {
+    
+    // Bu olay ???
     func getWeatherCastWeeklyCompleted(data: HavaDurumWeekly) {
     }
 
@@ -153,7 +154,8 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if isEditing { return true } else { return false }
+//        if isEditing { return true } else { return false }
+         return isEditing
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

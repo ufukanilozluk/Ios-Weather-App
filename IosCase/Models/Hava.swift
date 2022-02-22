@@ -9,10 +9,11 @@ import Foundation
 
 struct HavaDurum: Codable {
     var list: [Hava] = []
-    var cnt: Int?
-    var message: Int?
-    var cod: String?
     var city: Location
+//    var cnt: Int?
+//    var message: Int?
+//    var cod: String?
+
 
     init(json: [String: Any]) {
         if let weatherList = json["list"] as? [[String: Any]] {
@@ -21,12 +22,13 @@ struct HavaDurum: Codable {
             }
         }
 
-        cnt = json["cnt"] as? Int ?? -1
-        message = json["message"] as? Int ?? -1
-        cod = json["cod"] as? String ?? "-"
+//        cnt = json["cnt"] as? Int ?? -1
+//        message = json["message"] as? Int ?? -1
+//        cod = json["cod"] as? String ?? "-"
 //        city = Location(json: json["city"] as? [String: Any] ?? [:])
+        
         let tmp = json["city"] as? [String: Any] ?? [:]
-        city = Location(json: ["LocalizedName": tmp["name"]] as? [String: Any] ?? [:])
+        city = Location(json: ["LocalizedName": tmp["name"]] )
     }
 }
 

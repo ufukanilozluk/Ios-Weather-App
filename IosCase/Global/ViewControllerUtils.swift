@@ -181,15 +181,13 @@ public func questionConfirm(msg: String, btnTxt: String? = "Sil", success: @esca
     alertView.showNotice("Onaylıyor musunuz?", subTitle: msg, circleIconImage: alertViewIcon)
 }
 
-func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String? = nil, outputFormat: String = "dd.MM.yyyy HH:mm") throws -> Any {
+func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String = "yyyy-MM-dd HH:mm:ss", outputFormat: String = "dd.MM.yyyy HH:mm") throws -> Any {
+    
     let formatter = DateFormatter()
     formatter.locale = Locale(identifier: "tr")
     formatter.timeZone = TimeZone(abbreviation: "UTC")
+    formatter.dateFormat = inputFormat
     let rv: Any
-
-    if let _ = inputFormat {
-        formatter.dateFormat = inputFormat
-    } else { formatter.dateFormat = "yyyy-MM-dd HH:mm:ss" }
 
     switch date {
     case .toDate:
@@ -202,7 +200,10 @@ func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String? = 
     case .strToStr:
         let date = try dateFormatter(to: .toDate, value: value, inputFormat: inputFormat) as! Date
         formatter.dateFormat = outputFormat
-        rv = try dateFormatter(to: .toStr, value: date, inputFormat: inputFormat, outputFormat: outputFormat) as! String
+        rv = formatter.string(from: date)
+        
+//        Yada yukarısı olmadan aşağıdaki gibi recursive de yapabilirsin ilk stringi date çevirdikten sonra
+//        rv = try dateFormatter(to: .toStr, value: date, inputFormat: inputFormat, outputFormat: outputFormat) as! String
         break
     }
 

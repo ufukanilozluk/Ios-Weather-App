@@ -180,7 +180,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let rowData: Section
+//        let rowData: Section
 //        if isFiltering {
 //            rowData = filteredCities[indexPath.section]
 //        } else {
