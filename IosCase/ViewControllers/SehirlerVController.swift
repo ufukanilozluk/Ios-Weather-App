@@ -124,12 +124,6 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
         return weather.count
     }
 
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // Update the model
-        let mover = weather.remove(at: sourceIndexPath.row)
-        weather.insert(mover, at: destinationIndexPath.row)
-        SehirlerDetayVController.saveCities(arrayCity: weather.map({ $0.city }))
-    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rowData = weather[indexPath.row].list[0]
@@ -150,12 +144,19 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 //        if isEditing { return true } else { return false }
          return isEditing
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // Update the model
+        let mover = weather.remove(at: sourceIndexPath.row)   // sildiğini dönüyor. Yani mover bir Location
+        weather.insert(mover, at: destinationIndexPath.row)
+        SehirlerDetayVController.saveCities(arrayCity: weather.map({ $0.city }))
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -163,7 +164,7 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
             weather.remove(at: indexPath.row)
             sehirlerTableView.deleteRows(at: [indexPath], with: .automatic)
             SehirlerDetayVController.saveCities(arrayCity: weather.map({ $0.city }))
-            alert(msg: "Başarıyla silindi", type: .succ)
+//            alert(msg: "Başarıyla silindi", type: .succ)
             SehirlerVController.shouldUpdateSegments = true
         }
     }

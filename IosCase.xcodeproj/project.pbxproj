@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,6 +32,7 @@
 		E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1C258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift */; };
 		E1D66A20258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1F258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift */; };
 		E1D875F527B99B12001C01A6 /* DenemeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D875F427B99B12001C01A6 /* DenemeVC.swift */; };
+		E1E76FEE27D26B2900BD7B5D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E1E76FED27D26B2900BD7B5D /* Lottie */; };
 		E1EA113D259B5C3900C7D5F6 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113A259B5C3900C7D5F6 /* Roboto-Medium.ttf */; };
 		E1EA113E259B5C3900C7D5F6 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113B259B5C3900C7D5F6 /* Roboto-Light.ttf */; };
 		E1EA113F259B5C3900C7D5F6 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113C259B5C3900C7D5F6 /* Roboto-Regular.ttf */; };
@@ -98,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B495A1E5E8C48DD4AE3FF47 /* Pods_IosCase.framework in Frameworks */,
+				E1E76FEE27D26B2900BD7B5D /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +268,9 @@
 			dependencies = (
 			);
 			name = IosCase;
+			packageProductDependencies = (
+				E1E76FED27D26B2900BD7B5D /* Lottie */,
+			);
 			productName = IosCase;
 			productReference = E1B91B8A2566578A0031E020 /* IosCase.app */;
 			productType = "com.apple.product-type.application";
@@ -293,6 +298,9 @@
 				Base,
 			);
 			mainGroup = E1B91B812566578A0031E020;
+			packageReferences = (
+				E1E76FEC27D26B2900BD7B5D /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = E1B91B8B2566578A0031E020 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -472,7 +480,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -527,7 +535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -605,6 +613,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1E76FEC27D26B2900BD7B5D /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1E76FED27D26B2900BD7B5D /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1E76FEC27D26B2900BD7B5D /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E1B91B822566578A0031E020 /* Project object */;
 }

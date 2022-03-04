@@ -65,7 +65,7 @@ func netWorkConnectivityCheck() {
             }
         }
 
-        print(path.isExpensive)
+//        print(path.isExpensive)
     }
 
     monitor.start(queue: DispatchQueue(label: "Network"))

@@ -63,8 +63,6 @@ class SehirlerDetayVController: BaseVController {
             if error == nil {
                 if let location = location {
                     getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
-                        print(placeMark)
-
                         var citiesArray = SehirlerVController.getCities()
                         //            let cityName = rowData.names[indexPath.row]
 

@@ -8,7 +8,7 @@ target 'IosCase' do
   pod 'Alamofire'
   pod 'NVActivityIndicatorView'
   pod 'SCLAlertView'
-  pod 'lottie-ios'
+#  pod 'lottie-ios'
 
   # Pods for IosCase
 
