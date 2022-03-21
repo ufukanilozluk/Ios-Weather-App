@@ -59,6 +59,7 @@ class SehirlerVModel: MainVModel {
                     if response.count > 0 {
                         let json = response[0]["GeoPosition"]
     
+                        print(json)
                         completion(json as? [String : Any])
                     }
 

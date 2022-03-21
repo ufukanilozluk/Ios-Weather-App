@@ -64,10 +64,7 @@ class AnasayfaVController: BaseVController {
 //        lbl4.adjustsFontForContentSizeCategory = true
     }
 
-
     override func viewWillAppear(_ animated: Bool) {
-       
-
         selectedCities = SehirlerVController.getCities()
         if !selectedCities.isEmpty {
             emptyView.removeFromSuperview()
@@ -114,7 +111,7 @@ class AnasayfaVController: BaseVController {
         layout.minimumInteritemSpacing = spacing
         dailyWeatherCV?.collectionViewLayout = layout
 
-        refreshControl.attributedTitle = NSAttributedString(string: "Güncelleniyor")
+        refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
     }
@@ -128,13 +125,9 @@ class AnasayfaVController: BaseVController {
         lblTemperature.text = data.main.temp! + "°C"
         imgWeatherMain.image = UIImage(named: data.weather[0].icon!)
         lblDescription.text = data.weather[0].description?.capitalized
-        lblLowestTemperature.text = data.main.temp_min! + "°C"
-        lblHighestTemperature.text = data.main.temp_max! + "°C"
-
         lblVisibility.text = String(Int(data.visibility! / 1000)) + " km"
         lblWind.text = String(data.wind.deg!) + "m/s"
         lblHumidity.text = "%" + String(data.main.humidity!)
-        lblHighestTemperature.text = data.main.temp_max! + "°C"
 
         do {
             lblDate.text = try? dateFormatter(to: .strToStr, value: data.dt_text!, outputFormat: "dd/MM/yyyy") as? String
@@ -243,7 +236,7 @@ extension AnasayfaVController: UICollectionViewDelegate, UICollectionViewDataSou
         let rowData = dataWeather.list[indexPath.row]
 
         if indexPath.row == 0 {
-            cell.hour.text = "Şimdi"
+            cell.hour.text = "Now"
         } else {
             do {
                 cell.hour.text = try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String

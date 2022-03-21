@@ -51,8 +51,8 @@ extension Location {
             }
             guard let country = unarchiver.decodeObject(of: [NSString.self], forKey: "Country") as? String? else { return nil }
             guard let city = unarchiver.decodeObject(of: [NSString.self],forKey: "LocalizedName") as? String? else { return nil }
-            guard let lat = unarchiver.decodeObject(of: [NSNumber.self],forKey: "Longitude") as? Double? else { return nil }
-            guard let lon = unarchiver.decodeObject(of:[NSNumber.self],forKey: "Latitude") as? Double? else { return nil }
+            guard let lon = unarchiver.decodeObject(of: [NSNumber.self],forKey: "Longitude") as? Double? else { return nil }
+            guard let lat = unarchiver.decodeObject(of:[NSNumber.self],forKey: "Latitude") as? Double? else { return nil }
 
             countryName = country
             cityName = city

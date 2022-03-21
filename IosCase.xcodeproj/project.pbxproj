@@ -31,7 +31,6 @@
 		E1B91B9A2566578A0031E020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B91B982566578A0031E020 /* LaunchScreen.storyboard */; };
 		E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1C258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift */; };
 		E1D66A20258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1F258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift */; };
-		E1D875F527B99B12001C01A6 /* DenemeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D875F427B99B12001C01A6 /* DenemeVC.swift */; };
 		E1E76FEE27D26B2900BD7B5D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E1E76FED27D26B2900BD7B5D /* Lottie */; };
 		E1EA113D259B5C3900C7D5F6 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113A259B5C3900C7D5F6 /* Roboto-Medium.ttf */; };
 		E1EA113E259B5C3900C7D5F6 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113B259B5C3900C7D5F6 /* Roboto-Light.ttf */; };
@@ -76,7 +75,6 @@
 		E1B91B9B2566578A0031E020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1D66A1C258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnasayfaWeeklyWeatherTVCell.swift; sourceTree = "<group>"; };
 		E1D66A1F258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnasayfaDailyWeatherCVCell.swift; sourceTree = "<group>"; };
-		E1D875F427B99B12001C01A6 /* DenemeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DenemeVC.swift; sourceTree = "<group>"; };
 		E1EA113A259B5C3900C7D5F6 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		E1EA113B259B5C3900C7D5F6 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		E1EA113C259B5C3900C7D5F6 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 				E1B91B912566578A0031E020 /* SehirlerVController.swift */,
 				E1F5B0FE25A4E909005CF4A4 /* BaseVController.swift */,
 				E1F1D27A25669021001149FE /* SehirlerDetayVController.swift */,
-				E1D875F427B99B12001C01A6 /* DenemeVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -384,7 +381,6 @@
 				E1F1D27B25669021001149FE /* SehirlerDetayVController.swift in Sources */,
 				E1416FAB257E6A8200B548ED /* Enums.swift in Sources */,
 				E1F1D2842566C819001149FE /* APIManager.swift in Sources */,
-				E1D875F527B99B12001C01A6 /* DenemeVC.swift in Sources */,
 				E10236DE25757131007219EA /* SehirlerMainVModelDelegate.swift in Sources */,
 				E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */,
 				E10236DB25757114007219EA /* CitiesMainVModel.swift in Sources */,
@@ -564,7 +560,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -587,7 +583,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

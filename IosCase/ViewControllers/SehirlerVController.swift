@@ -39,8 +39,8 @@ class SehirlerVController: BaseVController {
 
     override func viewWillAppear(_ animated: Bool) {
         getWeatherInfo()
-        if weather.count == 0 {
-            sehirlerTableView.setEmptyView(title: "Henüz bir şehir seçmediniz", message: "Ekle butonuyla bir şehir ekleyebilirsiniz.", animation: "location")
+        if selectedCities.count == 0 {
+            sehirlerTableView.setEmptyView(title: "No location Found", message: "Start by adding a location", animation: "location")
         }
     }
 
@@ -56,7 +56,7 @@ class SehirlerVController: BaseVController {
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: "", style: .plain, target: nil, action: nil)
         // Use the edit button provided by the view controller.
-        editButtonItem.title = "Düzenle"
+        editButtonItem.title = "Edit"
         navigationItem.leftBarButtonItem = editButtonItem //editbutton swiftten geliyor
         sehirlerTableView.allowsSelection = false
     }
@@ -71,7 +71,7 @@ class SehirlerVController: BaseVController {
         sehirlerTableView.dragInteractionEnabled = editing
         // Edit button text ayarlama
         //Swiftten geliyor isEditing
-        editButtonItem.title  = isEditing ? "Bitti" : "Düzenle"
+        editButtonItem.title  = isEditing ? "Done" : "Edit"
         
     }
 
@@ -116,8 +116,8 @@ extension SehirlerVController: SehirlerMainVModelDelegate {
 
 extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if weather.count == 0 {
-            tableView.setEmptyView(title: "Henüz bir şehir seçmediniz", message: "Ekle butonuyla bir şehir ekleyebilirsiniz.", animation: "location")
+        if selectedCities.count == 0 {
+            tableView.setEmptyView(title: "No location found", message: "Start by adding a location", animation: "location")
         } else {
             tableView.restoreToFullTableView()
         }

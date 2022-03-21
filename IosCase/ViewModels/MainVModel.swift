@@ -11,8 +11,8 @@ import NVActivityIndicatorView
 
 class MainVModel {
     var baseUrl: String = "https://api.openweathermap.org/data/2.5/"
-    var defaultParams: [String: Any] = ["appid": "54bfbfe4aa755c3b005fded2b0741fa5", "units": "metric",
-        "lang": "tr"]
+    var defaultParams: [String: Any] = ["units": "metric","appid": "54bfbfe4aa755c3b005fded2b0741fa5",
+        ]
     let spinner = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballRotateChase, color: UIColor(red: 0.26, green: 0.41, blue: 0.62, alpha: 1.00))
     
     func startLoader(uiView: UIView) {

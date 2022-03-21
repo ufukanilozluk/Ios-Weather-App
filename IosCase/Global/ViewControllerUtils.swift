@@ -142,24 +142,24 @@ func alert(msg: String!, type: Alert = .err, completion: (() -> Void)? = nil, ti
     switch type {
     case .err:
         color = UIColor(red: 0.79, green: 0.11, blue: 0.18, alpha: 1.0)
-        alertView.showError(title.isEmpty ? "Hata !" : title, subTitle: msg!)
+        alertView.showError(title.isEmpty ? "Error!" : title, subTitle: msg!)
 
         break
     case .succ:
         color = UIColor(red: 0.00, green: 0.71, blue: 0.47, alpha: 1.0)
-        alertView.showSuccess(title.isEmpty ? "Başarılı" : title, subTitle: msg!)
+        alertView.showSuccess(title.isEmpty ? "Success" : title, subTitle: msg!)
         break
     case .warning:
         color = UIColor(red: 1.00, green: 0.81, blue: 0.25, alpha: 1.0)
-        alertView.showWarning(title.isEmpty ? "Uyarı !" : title, subTitle: msg!)
+        alertView.showWarning(title.isEmpty ? "Warning!" : title, subTitle: msg!)
         break
     case .info:
         color = UIColor(red: 0.00, green: 0.41, blue: 0.73, alpha: 1.0)
-        alertView.showInfo(title.isEmpty ? "Bilgi" : title, subTitle: msg!)
+        alertView.showInfo(title.isEmpty ? "Info" : title, subTitle: msg!)
         break
     }
 
-    let close = alertView.addButton("Kapat") {
+    let close = alertView.addButton("Close") {
         if completion != nil {
             completion!()
         }
@@ -184,7 +184,7 @@ public func questionConfirm(msg: String, btnTxt: String? = "Sil", success: @esca
 func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String = "yyyy-MM-dd HH:mm:ss", outputFormat: String = "dd.MM.yyyy HH:mm") throws -> Any {
     
     let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "tr")
+    formatter.locale = Locale(identifier: "en-US")
     formatter.timeZone = TimeZone(abbreviation: "UTC")
     formatter.dateFormat = inputFormat
     let rv: Any
@@ -221,7 +221,6 @@ func callNumber(phoneNumber: String) {
 }
 
 func dismissPopoverViewController(_ selfViewController: UIViewController, completion: (() -> Void)?) {
-    let tmpController: UIViewController! = selfViewController.presentingViewController
 
     selfViewController.dismiss(animated: true, completion: { () -> Void in
 

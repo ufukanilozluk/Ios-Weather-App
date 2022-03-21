@@ -41,16 +41,18 @@ class SehirlerDetayVController: BaseVController {
         searchTextField.layer.cornerRadius = 15
         searchTextField.textAlignment = .left
         let image: UIImage = UIImage(named: "ara")!
-        let konumImage: UIImage = UIImage(named: "konum")!
         let imageView: UIImageView = UIImageView(image: image)
-        let button = UIButton(type: .custom)
-//        button.setTitle("", for: .normal)
-        button.setImage(konumImage, for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-        button.frame = CGRect(x: CGFloat(-25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-        button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
-        searchTextField.leftView = button
-        searchTextField.placeholder = " Şehir Ara"
+        
+//        let button = UIButton(type: .custom)
+////        button.setTitle("", for: .normal)
+//        let konumImage: UIImage = UIImage(named: "konum")!
+//        button.setImage(konumImage, for: .normal)
+//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+//        button.frame = CGRect(x: CGFloat(-25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+//        button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
+//        searchTextField.leftView = button
+        searchTextField.leftView = nil
+        searchTextField.placeholder = " Search for a location"
         searchTextField.rightView = imageView
         searchTextField.rightViewMode = UITextField.ViewMode.always
         searchTextField.leftViewMode =  UITextField.ViewMode.always
@@ -79,7 +81,7 @@ class SehirlerDetayVController: BaseVController {
 
                         citiesArray.append(city)
                         SehirlerDetayVController.saveCities(arrayCity: citiesArray)
-                        alert(msg: "Başarıyla eklendi", type: .succ)
+                        alert(msg: "Added", type: .succ)
                         SehirlerVController.shouldUpdateSegments = true
                     }
                     )
@@ -119,7 +121,7 @@ class SehirlerDetayVController: BaseVController {
 
         // navigationItem.searchController = searchController
         definesPresentationContext = true
-        searchController.searchBar.setValue("Vazgeç", forKey: "cancelButtonText")
+        searchController.searchBar.setValue("Cancel", forKey: "cancelButtonText")
         // Yanda çıkan rehber gibi şeyin rengi
         sehirlerTableview.sectionIndexColor = Colors.iosCasePurple
     }
@@ -206,10 +208,12 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 
                 city?.lat = data?["Latitude"] as? Double
                 city?.lon = data?["Longitude"] as? Double
-
+                
+                
+                
                 citiesArray.append(city!)
                 SehirlerDetayVController.saveCities(arrayCity: citiesArray)
-                alert(msg: "Başarıyla eklendi", type: .succ)
+                alert(msg: "Added", type: .succ)
                 SehirlerVController.shouldUpdateSegments = true
             }
             )
@@ -251,6 +255,8 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 extension SehirlerDetayVController: SehirEkleVModelDelegate {
     func getCityListCompleted(data: [Location]) {
         cities = data
+        
+        print(cities)
         //       sections = createAlphabetSectionsFrom(data: data)
         sehirlerTableview.reloadData()
     }
