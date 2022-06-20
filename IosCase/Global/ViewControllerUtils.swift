@@ -12,7 +12,8 @@ let alertOptions = SCLAlertView.SCLAppearance(
     kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
     kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
     showCloseButton: false,
-    showCircularIcon: true
+    showCircularIcon: true,
+    shouldAutoDismiss: true
 )
 
 var animationView = AnimationView()
@@ -136,6 +137,7 @@ public func daysBetween(start: Date, end: Date) -> Int {
 }
 
 func alert(msg: String!, type: Alert = .err, completion: (() -> Void)? = nil, title: String = "") {
+    
     var color: UIColor?
     let alertView = SCLAlertView(appearance: alertOptions)
 

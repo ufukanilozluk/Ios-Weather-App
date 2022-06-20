@@ -18,7 +18,7 @@ class SehirlerDetayTVCell: UITableViewCell {
         do {
             try ekleAction?()
         } catch WeatherAppErrors.SehirEkleError.sameSelection {
-            alert(msg: "Bu şehir zaten ekli", type: .info)
+            alert(msg: "This city has been added already", type: .info)
         } catch {
             print("Unexpected error: \(error).")
         }

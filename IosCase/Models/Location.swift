@@ -22,6 +22,7 @@ struct Location: Codable, Equatable {
 
     init(json: [String: Any]) {
         cityName = json["LocalizedName"] as? String ?? ""
+        cityName = cityName?.replacingOccurrences(of: " Province", with: "")
         if let data = json["Country"] as? [String: Any] {
             countryName = data["LocalizedName"] as? String ?? ""
         }

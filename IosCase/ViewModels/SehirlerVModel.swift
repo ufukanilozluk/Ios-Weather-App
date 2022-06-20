@@ -47,8 +47,8 @@ class SehirlerVModel: MainVModel {
 
     func findCoordinate(query: String,completion: @escaping FindCooordinateCompletion){
       
-        
-        let url = "https://dataservice.accuweather.com/locations/v1/search?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + query
+        let searchText = query.replacingOccurrences(of: " ", with: "%20")
+        let url = "https://dataservice.accuweather.com/locations/v1/search?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + searchText
         startLoader(uiView: selfView)
         AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { [self] response in
 
@@ -58,8 +58,6 @@ class SehirlerVModel: MainVModel {
                 if let response = JSON as? [[String: Any]] {
                     if response.count > 0 {
                         let json = response[0]["GeoPosition"]
-    
-                        print(json)
                         completion(json as? [String : Any])
                     }
 

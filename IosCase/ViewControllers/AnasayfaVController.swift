@@ -26,8 +26,9 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var lblHumidity: UILabel!
     @IBOutlet var lblUV: UILabel!
     @IBOutlet var welcomeAnimationView: UIView!
-    let refreshControl = UIRefreshControl()
 
+    let refreshControl = UIRefreshControl()
+    var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
     var dataWeather: HavaDurum = HavaDurum(json: [:])
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
@@ -39,8 +40,6 @@ class AnasayfaVController: BaseVController {
         vm.delegate = self
         return vm
     }()
-
-    var segmentedControl: UISegmentedControl?
 
     override func viewDidLoad() {
         netWorkConnectivityCheck()
@@ -142,6 +141,8 @@ class AnasayfaVController: BaseVController {
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
     }
+    
+   
 
     func createSegmentedControl() {
         let items = selectedCities.map({ $0.cityName! })
@@ -154,6 +155,18 @@ class AnasayfaVController: BaseVController {
             // Fallback on earlier versions
         }
 
+        let scrollView = UIScrollView()
+//        scrollView.contentSize = CGSize(width: .zero, height: 50)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 10
+        
         let attributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         segmentedControl?.setTitleTextAttributes(attributes, for: .normal)
@@ -235,13 +248,8 @@ extension AnasayfaVController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DailyWeatherCVCell", for: indexPath) as! AnasayfaDailyWeatherCVCell
         let rowData = dataWeather.list[indexPath.row]
 
-        if indexPath.row == 0 {
-            cell.hour.text = "Now"
-        } else {
-            do {
-                cell.hour.text = try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String
-            }
-        }
+        cell.hour.text = indexPath.row == 0 ? "Now" :
+            try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String
 
         cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)?.withRenderingMode(.alwaysTemplate)
 

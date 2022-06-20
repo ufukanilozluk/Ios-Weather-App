@@ -22,12 +22,15 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
         locationServicesEnabled = CLLocationManager.locationServicesEnabled()
 
         if locationServicesEnabled {
+            print("dasdadas")
             switch CLLocationManager.authorizationStatus() {
+                
             case .notDetermined:
                 manager.requestWhenInUseAuthorization()
             
             case .restricted, .denied:
                 locationCallback(nil,"Location authorization is denied")
+                
             case .authorizedAlways, .authorizedWhenInUse:
                 manager.startUpdatingLocation()
            default:
@@ -36,22 +39,25 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
             
         } else {
             locationCallback(nil,"Location service disabled")
+            
         }
     }
     
-    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-       
-        case .restricted, .denied:
-            locationCallback(nil,"Location authorization is denied")
-        case .authorizedAlways, .authorizedWhenInUse:
-            manager.startUpdatingLocation()
-        case .notDetermined:
-            fallthrough
-        @unknown default:
-            break
-        }
-    }
+//    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        print("dasdadas")
+//        switch status {
+//       
+//        case .restricted, .denied:
+//            locationCallback(nil,"Location authorization is denied")
+//        case .authorizedAlways, .authorizedWhenInUse:
+//            manager.startUpdatingLocation()
+//        case .notDetermined:
+//            fallthrough
+//        @unknown default:
+//            break
+//        }
+//       
+//    }
 
     public func locationManager(_ manager: CLLocationManager,
                                 didUpdateLocations locations: [CLLocation]) {

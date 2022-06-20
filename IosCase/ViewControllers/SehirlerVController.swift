@@ -138,8 +138,6 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
             cell.tarih.text = try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "dd/MM/yyyy") as? String
         }
 
-        // TO-DO : Aynı şehir ekleme ve UserDefaultsa bittiğinde kaydetme?
-
         return cell
     }
 

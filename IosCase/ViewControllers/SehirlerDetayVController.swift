@@ -42,9 +42,9 @@ class SehirlerDetayVController: BaseVController {
         searchTextField.textAlignment = .left
         let image: UIImage = UIImage(named: "ara")!
         let imageView: UIImageView = UIImageView(image: image)
-        
+
 //        let button = UIButton(type: .custom)
-////        button.setTitle("", for: .normal)
+        ////        button.setTitle("", for: .normal)
 //        let konumImage: UIImage = UIImage(named: "konum")!
 //        button.setImage(konumImage, for: .normal)
 //        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
@@ -55,13 +55,18 @@ class SehirlerDetayVController: BaseVController {
         searchTextField.placeholder = " Search for a location"
         searchTextField.rightView = imageView
         searchTextField.rightViewMode = UITextField.ViewMode.always
-        searchTextField.leftViewMode =  UITextField.ViewMode.always
+        searchTextField.leftViewMode = UITextField.ViewMode.always
     }
 
-    @objc func getLocation() {
+    @IBAction func getLocationIBA(_ sender: Any) {
+        getLocation()
+    }
+
+    func getLocation() {
         let getLocation = GetLocation()
 
-        getLocation.run   { location,error  in
+        getLocation.run { location, error in
+            print("?")
             if error == nil {
                 if let location = location {
                     getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
@@ -72,9 +77,9 @@ class SehirlerDetayVController: BaseVController {
                         var city = Location(json: [:])
                         city.cityName = placeMark.administrativeArea
                         city.countryName = placeMark.country
-                        city.lat = location.coordinate.longitude as Double
-                        city.lon = location.coordinate.latitude as Double
-                        let cities = citiesArray.map({$0.cityName})
+                        city.lon = location.coordinate.longitude as Double
+                        city.lat = location.coordinate.latitude as Double
+                        let cities = citiesArray.map({ $0.cityName })
                         guard !cities.contains(city.cityName) else {
                             return
                         }
@@ -82,14 +87,17 @@ class SehirlerDetayVController: BaseVController {
                         citiesArray.append(city)
                         SehirlerDetayVController.saveCities(arrayCity: citiesArray)
                         alert(msg: "Added", type: .succ)
+                        self.searchController.searchBar.text = ""
+                        self.cities = []
+                        self.sehirlerTableview.reloadData()
+                        self.searchController.searchBar.endEditing(true)
                         SehirlerVController.shouldUpdateSegments = true
                     }
                     )
                 }
-            }else{
-                alert(msg: error)
+            } else {
+                alert(msg: error, type: .err)
             }
-           
 
             //                        if let subcity = placeMark.locality {
             //                            UserDefaults.standard.set(subcity, forKey: "user_subcity")
@@ -122,6 +130,7 @@ class SehirlerDetayVController: BaseVController {
         // navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.setValue("Cancel", forKey: "cancelButtonText")
+
         // Yanda çıkan rehber gibi şeyin rengi
         sehirlerTableview.sectionIndexColor = Colors.iosCasePurple
     }
@@ -141,7 +150,8 @@ class SehirlerDetayVController: BaseVController {
 //        filteredCities = createAlphabetSectionsFrom(data: filtered)
 //        sehirlerTableview.reloadData()
         if searchText.count > 2 {
-            sehirlerVModel.findCity(query: searchText)
+            let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
+            sehirlerVModel.findCity(query: searchTxt)
         }
     }
 
@@ -200,7 +210,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
             let cityName = self.cities[indexPath.row].cityName!
             var city = self.cities.first(where: { $0.cityName == cityName })
 
-            guard !citiesArray.contains(city!) else {
+            if let _ = citiesArray.first(where: { $0.cityName! == city?.cityName! }) {
                 throw WeatherAppErrors.SehirEkleError.sameSelection
             }
 
@@ -208,12 +218,15 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 
                 city?.lat = data?["Latitude"] as? Double
                 city?.lon = data?["Longitude"] as? Double
-                
-                
-                
+
                 citiesArray.append(city!)
                 SehirlerDetayVController.saveCities(arrayCity: citiesArray)
                 alert(msg: "Added", type: .succ)
+                SehirlerVController.shouldUpdateSegments = true
+                self.searchController.searchBar.text = ""
+                self.cities = []
+                self.sehirlerTableview.reloadData()
+                self.searchController.searchBar.endEditing(true)
                 SehirlerVController.shouldUpdateSegments = true
             }
             )
@@ -255,8 +268,6 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 extension SehirlerDetayVController: SehirEkleVModelDelegate {
     func getCityListCompleted(data: [Location]) {
         cities = data
-        
-        print(cities)
         //       sections = createAlphabetSectionsFrom(data: data)
         sehirlerTableview.reloadData()
     }
