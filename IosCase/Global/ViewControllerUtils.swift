@@ -27,10 +27,19 @@ func startLoader(uiView: UIView) {
     spinner.startAnimating()
 }
 
-func showToast(controller: UIViewController? = nil, message: String, seconds: Double) {
+func showToast(controller: UIViewController? = nil, message: String, seconds: Double, alertType: Alert = .info) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-    alert.view.backgroundColor = .black
-    alert.view.alpha = 0.5
+    switch alertType {
+    case .warning:
+        alert.view.backgroundColor = .yellow
+    case .err:
+        alert.view.backgroundColor = .red
+    case .succ:
+        alert.view.backgroundColor = .green
+    case .info:
+        alert.view.backgroundColor = .blue
+    }
+
     alert.view.layer.cornerRadius = 15
 
     var rootViewController = UIApplication.shared.keyWindow?.rootViewController
@@ -54,7 +63,8 @@ func netWorkConnectivityCheck() {
         if path.status == .satisfied {
             if !formerConnectivityStatus {
                 DispatchQueue.main.async {
-                    alert(msg: "sdadad")
+                    showToast(message: CustomAlerts.internetConnected.alertTitle, seconds: 5, alertType: CustomAlerts.internetConnected.alertType)
+                    
                 }
             }
             formerConnectivityStatus = true
@@ -62,7 +72,7 @@ func netWorkConnectivityCheck() {
         } else {
             formerConnectivityStatus = false
             DispatchQueue.main.async {
-                showToast(message: "ADASDA", seconds: 3)
+                showToast(message: CustomAlerts.internetNotConnected.alertTitle, seconds: 5, alertType: CustomAlerts.internetNotConnected.alertType)
             }
         }
 
@@ -137,7 +147,6 @@ public func daysBetween(start: Date, end: Date) -> Int {
 }
 
 func alert(msg: String!, type: Alert = .err, completion: (() -> Void)? = nil, title: String = "") {
-    
     var color: UIColor?
     let alertView = SCLAlertView(appearance: alertOptions)
 
@@ -184,7 +193,6 @@ public func questionConfirm(msg: String, btnTxt: String? = "Sil", success: @esca
 }
 
 func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String = "yyyy-MM-dd HH:mm:ss", outputFormat: String = "dd.MM.yyyy HH:mm") throws -> Any {
-    
     let formatter = DateFormatter()
     formatter.locale = Locale(identifier: "en-US")
     formatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -203,7 +211,7 @@ func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String = "
         let date = try dateFormatter(to: .toDate, value: value, inputFormat: inputFormat) as! Date
         formatter.dateFormat = outputFormat
         rv = formatter.string(from: date)
-        
+
 //        Yada yukarısı olmadan aşağıdaki gibi recursive de yapabilirsin ilk stringi date çevirdikten sonra
 //        rv = try dateFormatter(to: .toStr, value: date, inputFormat: inputFormat, outputFormat: outputFormat) as! String
         break
@@ -223,7 +231,6 @@ func callNumber(phoneNumber: String) {
 }
 
 func dismissPopoverViewController(_ selfViewController: UIViewController, completion: (() -> Void)?) {
-
     selfViewController.dismiss(animated: true, completion: { () -> Void in
 
         if completion != nil {

@@ -66,46 +66,40 @@ class SehirlerDetayVController: BaseVController {
         let getLocation = GetLocation()
 
         getLocation.run { location, error in
-            print("?")
+            var once : Bool = false
             if error == nil {
                 if let location = location {
                     getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
+
                         var citiesArray = SehirlerVController.getCities()
-                        //            let cityName = rowData.names[indexPath.row]
+                        let cityName = placeMark.administrativeArea
+                        if !once {
+                            if let _ = citiesArray.first(where: { $0.cityName! == cityName! }) {
+                                alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
 
-                        //            let cityName = rowData.names[indexPath.row]
-                        var city = Location(json: [:])
-                        city.cityName = placeMark.administrativeArea
-                        city.countryName = placeMark.country
-                        city.lon = location.coordinate.longitude as Double
-                        city.lat = location.coordinate.latitude as Double
-                        let cities = citiesArray.map({ $0.cityName })
-                        guard !cities.contains(city.cityName) else {
-                            return
+                            } else {
+                                var city = Location(json: [:])
+                                city.cityName = cityName
+                                city.countryName = placeMark.country
+                                city.lon = location.coordinate.longitude as Double
+                                city.lat = location.coordinate.latitude as Double
+                                citiesArray.append(city)
+                                SehirlerDetayVController.saveCities(arrayCity: citiesArray)
+                                alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
+                                self.searchController.searchBar.text = ""
+                                self.cities = []
+                                self.sehirlerTableview.reloadData()
+                                self.searchController.searchBar.endEditing(true)
+                                SehirlerVController.shouldUpdateSegments = true
+                            }
+                            once = true
                         }
-
-                        citiesArray.append(city)
-                        SehirlerDetayVController.saveCities(arrayCity: citiesArray)
-                        alert(msg: "Added", type: .succ)
-                        self.searchController.searchBar.text = ""
-                        self.cities = []
-                        self.sehirlerTableview.reloadData()
-                        self.searchController.searchBar.endEditing(true)
-                        SehirlerVController.shouldUpdateSegments = true
                     }
                     )
                 }
             } else {
                 alert(msg: error, type: .err)
             }
-
-            //                        if let subcity = placeMark.locality {
-            //                            UserDefaults.standard.set(subcity, forKey: "user_subcity")
-            //                        }
-            //
-            //                        if let city = placeMark.administrativeArea {
-            //                            UserDefaults.standard.set(city, forKey: "user_city")
-            //                        }
         }
     }
 
@@ -221,7 +215,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 
                 citiesArray.append(city!)
                 SehirlerDetayVController.saveCities(arrayCity: citiesArray)
-                alert(msg: "Added", type: .succ)
+                alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
                 SehirlerVController.shouldUpdateSegments = true
                 self.searchController.searchBar.text = ""
                 self.cities = []

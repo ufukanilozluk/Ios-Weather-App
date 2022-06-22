@@ -3,8 +3,7 @@
 //  endavet_portal
 //
 //  Created by Ufuk on 26.08.2020.
-//  Copyright © 2020 Hasan Karaman. All rights reserved.
-//
+
 
 import CoreLocation
 
@@ -15,6 +14,7 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
     var didFailWithError: Error?
 
     public func run(callback: @escaping (CLLocation?,String?) -> Void) {
+        
         locationCallback = callback
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
@@ -22,7 +22,7 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
         locationServicesEnabled = CLLocationManager.locationServicesEnabled()
 
         if locationServicesEnabled {
-            print("dasdadas")
+            
             switch CLLocationManager.authorizationStatus() {
                 
             case .notDetermined:
@@ -33,6 +33,7 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
                 
             case .authorizedAlways, .authorizedWhenInUse:
                 manager.startUpdatingLocation()
+              
            default:
                 break
             }
@@ -44,7 +45,7 @@ public class GetLocation: NSObject, CLLocationManagerDelegate {
     }
     
 //    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        print("dasdadas")
+//
 //        switch status {
 //       
 //        case .restricted, .denied:

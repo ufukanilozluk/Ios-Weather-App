@@ -2,8 +2,8 @@
 //  MyEnum.swift
 //  endavet_portal
 //
-//  Created by Hasan Karaman on 21.12.2019.
-//  Copyright © 2019 Hasan Karaman. All rights reserved.
+//  Created by Ufuk Anıl Özlük on 21.12.2019.
+//  Copyright © 2019 Ufuk Anıl Özlük. All rights reserved.
 //
 
 import Foundation

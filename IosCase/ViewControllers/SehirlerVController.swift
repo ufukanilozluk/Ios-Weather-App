@@ -146,7 +146,6 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        if isEditing { return true } else { return false }
          return isEditing
     }
     
@@ -154,15 +153,17 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
         // Update the model
         let mover = weather.remove(at: sourceIndexPath.row)   // sildiğini dönüyor. Yani mover bir Location
         weather.insert(mover, at: destinationIndexPath.row)
-        SehirlerDetayVController.saveCities(arrayCity: weather.map({ $0.city }))
+        selectedCities.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        print(selectedCities,sourceIndexPath.row,destinationIndexPath.row)
+        SehirlerDetayVController.saveCities(arrayCity: selectedCities)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             weather.remove(at: indexPath.row)
+            selectedCities.remove(at: indexPath.row)
             sehirlerTableView.deleteRows(at: [indexPath], with: .automatic)
-            SehirlerDetayVController.saveCities(arrayCity: weather.map({ $0.city }))
-//            alert(msg: "Başarıyla silindi", type: .succ)
+            SehirlerDetayVController.saveCities(arrayCity: selectedCities )
             SehirlerVController.shouldUpdateSegments = true
         }
     }

@@ -2,8 +2,8 @@
 //  DesingTableCell.swift
 //  isortagim
 //
-//  Created by Hasan Karaman on 18.11.2019.
-//  Copyright © 2019 Hasan Karaman. All rights reserved.
+//  Created by Ufuk Anıl Özlük on 18.11.2019.
+//  Copyright © 2019 Ufuk Anıl Özlük. All rights reserved.
 //
 
 import Foundation

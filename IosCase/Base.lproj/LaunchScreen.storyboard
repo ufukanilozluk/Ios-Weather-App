@@ -16,15 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="adM-TU-rmw">
-                                <rect key="frame" x="134" y="380" width="146.5" height="136.5"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="BFs-JW-nGd">
+                                <rect key="frame" x="132" y="373" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="DmC-Xb-U26"/>
+                                    <constraint firstAttribute="width" constant="150" id="y5V-fu-u9r"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="adM-TU-rmw" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="sEq-h9-Y4d"/>
-                            <constraint firstItem="adM-TU-rmw" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yVe-td-518"/>
+                            <constraint firstItem="BFs-JW-nGd" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Sok-6z-OYi"/>
+                            <constraint firstItem="BFs-JW-nGd" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="zYd-GJ-HbG"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -34,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchscreen" width="146.5" height="136.5"/>
+        <image name="launchscreen" width="341.5" height="341.5"/>
     </resources>
 </document>

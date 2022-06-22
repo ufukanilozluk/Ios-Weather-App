@@ -45,6 +45,7 @@
 		E1F5B0F925A4AA94005CF4A4 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1F5B0F825A4AA94005CF4A4 /* Roboto-Bold.ttf */; };
 		E1F5B0FC25A4B285005CF4A4 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5B0FB25A4B285005CF4A4 /* TabbarController.swift */; };
 		E1F5B0FF25A4E909005CF4A4 /* BaseVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5B0FE25A4E909005CF4A4 /* BaseVController.swift */; };
+		E1FAD1F62861C97E007A9EF4 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FAD1F52861C97E007A9EF4 /* Alerts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		E1F5B0F825A4AA94005CF4A4 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		E1F5B0FB25A4B285005CF4A4 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		E1F5B0FE25A4E909005CF4A4 /* BaseVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVController.swift; sourceTree = "<group>"; };
+		E1FAD1F52861C97E007A9EF4 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		EBBC120A842F1188662753C5 /* Pods_IosCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IosCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -176,12 +178,11 @@
 		E172B3FD259B44EB00390001 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				E1FAD1F42861C929007A9EF4 /* Constants */,
 				E11AF94D261F998B00EAD8E3 /* GetLocation.swift */,
-				E1416FAA257E6A8200B548ED /* Enums.swift */,
 				E1416F99257E551D00B548ED /* DesingTableCell.swift */,
 				E1416F98257E551D00B548ED /* ViewControllerUtils.swift */,
 				E101EF80257BA84A003ACC06 /* Extensions.swift */,
-				E172B3FE259B451100390001 /* Constants.swift */,
 				E1F354F625B8877700757B01 /* WeatherAppErrors.swift */,
 			);
 			path = Global;
@@ -236,6 +237,16 @@
 				E1EA113C259B5C3900C7D5F6 /* Roboto-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E1FAD1F42861C929007A9EF4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				E1FAD1F52861C97E007A9EF4 /* Alerts.swift */,
+				E172B3FE259B451100390001 /* Constants.swift */,
+				E1416FAA257E6A8200B548ED /* Enums.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		ECCBBF83937D2734938804CF /* Pods */ = {
@@ -390,6 +401,7 @@
 				E14B8DA1256EA32B0011E376 /* SehirlerVModelDelegate.swift in Sources */,
 				E1B91B922566578A0031E020 /* SehirlerVController.swift in Sources */,
 				E172B3FF259B451100390001 /* Constants.swift in Sources */,
+				E1FAD1F62861C97E007A9EF4 /* Alerts.swift in Sources */,
 				E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */,
 				E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */,
 				E1416F9B257E551D00B548ED /* DesingTableCell.swift in Sources */,
