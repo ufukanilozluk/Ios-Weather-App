@@ -12,7 +12,7 @@ class SehirlerDetayVController: BaseVController {
         let letter: String
         let names: [String]
     }
-
+    var once : Bool = false
     var sections = [Section]()
     var turkeyCities: [String] = []
     var cities: [Location] = []
@@ -66,14 +66,14 @@ class SehirlerDetayVController: BaseVController {
         let getLocation = GetLocation()
 
         getLocation.run { location, error in
-            var once : Bool = false
+           
             if error == nil {
                 if let location = location {
                     getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
 
                         var citiesArray = SehirlerVController.getCities()
                         let cityName = placeMark.administrativeArea
-                        if !once {
+                        if !self.once {
                             if let _ = citiesArray.first(where: { $0.cityName! == cityName! }) {
                                 alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
 
@@ -92,7 +92,7 @@ class SehirlerDetayVController: BaseVController {
                                 self.searchController.searchBar.endEditing(true)
                                 SehirlerVController.shouldUpdateSegments = true
                             }
-                            once = true
+                            self.once = true
                         }
                     }
                     )

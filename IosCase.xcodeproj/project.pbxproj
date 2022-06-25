@@ -31,6 +31,7 @@
 		E1B91B9A2566578A0031E020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B91B982566578A0031E020 /* LaunchScreen.storyboard */; };
 		E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1C258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift */; };
 		E1D66A20258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1F258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift */; };
+		E1E13CD328634EB6008767F9 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = E1E13CD228634EB6008767F9 /* SkeletonView */; };
 		E1E76FEE27D26B2900BD7B5D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E1E76FED27D26B2900BD7B5D /* Lottie */; };
 		E1EA113D259B5C3900C7D5F6 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113A259B5C3900C7D5F6 /* Roboto-Medium.ttf */; };
 		E1EA113E259B5C3900C7D5F6 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1EA113B259B5C3900C7D5F6 /* Roboto-Light.ttf */; };
@@ -99,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B495A1E5E8C48DD4AE3FF47 /* Pods_IosCase.framework in Frameworks */,
+				E1E13CD328634EB6008767F9 /* SkeletonView in Frameworks */,
 				E1E76FEE27D26B2900BD7B5D /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +280,7 @@
 			name = IosCase;
 			packageProductDependencies = (
 				E1E76FED27D26B2900BD7B5D /* Lottie */,
+				E1E13CD228634EB6008767F9 /* SkeletonView */,
 			);
 			productName = IosCase;
 			productReference = E1B91B8A2566578A0031E020 /* IosCase.app */;
@@ -308,6 +311,7 @@
 			mainGroup = E1B91B812566578A0031E020;
 			packageReferences = (
 				E1E76FEC27D26B2900BD7B5D /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				E1E13CD128634EB6008767F9 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = E1B91B8B2566578A0031E020 /* Products */;
 			projectDirPath = "";
@@ -568,6 +572,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ioscase.IosCase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -591,6 +596,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ioscase.IosCase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -623,6 +629,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E1E13CD128634EB6008767F9 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		E1E76FEC27D26B2900BD7B5D /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -634,6 +648,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E1E13CD228634EB6008767F9 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1E13CD128634EB6008767F9 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
 		E1E76FED27D26B2900BD7B5D /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E1E76FEC27D26B2900BD7B5D /* XCRemoteSwiftPackageReference "lottie-ios" */;

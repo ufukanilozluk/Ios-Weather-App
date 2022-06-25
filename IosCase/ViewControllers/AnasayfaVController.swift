@@ -6,6 +6,7 @@
 //
 
 import Network
+import SkeletonView
 import UIKit
 import XLPagerTabStrip
 
@@ -44,23 +45,7 @@ class AnasayfaVController: BaseVController {
     override func viewDidLoad() {
         netWorkConnectivityCheck()
         config()
-
-//        font ismini almak için
-//        for family in UIFont.familyNames.sorted() {
-//            let names = UIFont.fontNames(forFamilyName: family)
-//            print("Family: \(family) Font names: \(names)")
-//        }
-
-//        guard let customFont = UIFont(name: CustomFonts.pokemonHollow, size: UIFont.labelFontSize) else {
-//            fatalError("""
-//                Failed to load the "CustomFont-Light" font.
-//                Make sure the font file is included in the project and the font name is spelled correctly.
-//                """
-//            )
-//        }
-//        lbl4.font = UIFont(name: CustomFonts.pokemonHollow, size: 36.0)
-//
-//        lbl4.adjustsFontForContentSizeCategory = true
+        dailyWeatherCV.showAnimatedGradientSkeleton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -79,18 +64,22 @@ class AnasayfaVController: BaseVController {
             } else {
                 createSegmentedControl()
             }
+            segmentedControl?.isSkeletonable = true
+            segmentedControl?.showAnimatedGradientSkeleton()
+            for view in segmentedControl!.subviews {
+                for subview in view.subviews {
+                    if subview is UILabel {
+                        subview.isSkeletonable = true
+                        subview.isHiddenWhenSkeletonIsActive = true
+                        subview.showAnimatedGradientSkeleton()
+                    }
+                }
+            }
+
         } else {
             view.addSubview(emptyView)
 
             startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
-//            NSLayoutConstraint.activate([
-//                emptyView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-//                emptyView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-//                emptyView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-//                emptyView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-//                emptyView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
-//                emptyView.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1)
-//            ])
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
         }
@@ -103,7 +92,7 @@ class AnasayfaVController: BaseVController {
         dailyWeatherCV.delegate = self
         dailyWeatherCV.dataSource = self
 
-        // Collection view cell equaled size config
+//         Collection view cell equaled size config
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         layout.minimumLineSpacing = spacing
@@ -113,10 +102,10 @@ class AnasayfaVController: BaseVController {
         refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
-    }
 
-    @objc func didPullToRefresh() {
-        fetchData()
+        // for skeletonview
+        weeklyWeatherTV.estimatedRowHeight = 50
+        scrollViewAnasayfa.showAnimatedGradientSkeleton()
     }
 
     func setData() {
@@ -133,7 +122,7 @@ class AnasayfaVController: BaseVController {
         }
     }
 
-    fileprivate func fetchData(selectedCityIndex: Int = 0) {
+    func fetchData(selectedCityIndex: Int = 0) {
         city = selectedCities[selectedCityIndex]
         let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
@@ -141,8 +130,6 @@ class AnasayfaVController: BaseVController {
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
     }
-    
-   
 
     func createSegmentedControl() {
         let items = selectedCities.map({ $0.cityName! })
@@ -155,18 +142,6 @@ class AnasayfaVController: BaseVController {
             // Fallback on earlier versions
         }
 
-        let scrollView = UIScrollView()
-//        scrollView.contentSize = CGSize(width: .zero, height: 50)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .center
-        stackView.spacing = 10
-        
         let attributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         segmentedControl?.setTitleTextAttributes(attributes, for: .normal)
@@ -175,17 +150,14 @@ class AnasayfaVController: BaseVController {
         segmentedControl!.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
         segmentedControl!.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.insertArrangedSubview(segmentedControl!, at: 0)
-//        NSLayoutConstraint.activate([
-//            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-//            segmentedControl.topAnchor.constraint(equalTo: view.topAnchor, constant: -20)
-//
-//
-//        ])
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
         fetchData(selectedCityIndex: segmentedControl.selectedSegmentIndex)
+    }
+
+    @objc func didPullToRefresh() {
+        fetchData()
     }
 }
 
@@ -207,13 +179,17 @@ extension AnasayfaVController: SehirlerMainVModelDelegate {
     }
 }
 
-extension AnasayfaVController: UITableViewDelegate, UITableViewDataSource {
+extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weeklyWeather.list.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "WeeklyWeatherTVCell"
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -239,13 +215,22 @@ extension AnasayfaVController: UIScrollViewDelegate {
     }
 }
 
-extension AnasayfaVController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "DailyWeatherCVCell"
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataWeather.list.count
     }
 
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DailyWeatherCVCell", for: indexPath) as! AnasayfaDailyWeatherCVCell
+
         let rowData = dataWeather.list[indexPath.row]
 
         cell.hour.text = indexPath.row == 0 ? "Now" :
