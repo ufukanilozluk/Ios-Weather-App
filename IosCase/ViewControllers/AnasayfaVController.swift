@@ -45,7 +45,7 @@ class AnasayfaVController: BaseVController {
     override func viewDidLoad() {
         netWorkConnectivityCheck()
         config()
-        dailyWeatherCV.showAnimatedGradientSkeleton()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -64,18 +64,9 @@ class AnasayfaVController: BaseVController {
             } else {
                 createSegmentedControl()
             }
-            segmentedControl?.isSkeletonable = true
-            segmentedControl?.showAnimatedGradientSkeleton()
-            for view in segmentedControl!.subviews {
-                for subview in view.subviews {
-                    if subview is UILabel {
-                        subview.isSkeletonable = true
-                        subview.isHiddenWhenSkeletonIsActive = true
-                        subview.showAnimatedGradientSkeleton()
-                    }
-                }
-            }
-
+            
+            addSkeleton()
+            
         } else {
             view.addSubview(emptyView)
 
@@ -83,6 +74,33 @@ class AnasayfaVController: BaseVController {
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
         }
+    }
+
+    func switchSegmentControlSkeletonable() {
+        if let _ = segmentedControl {
+            let state = !segmentedControl!.isSkeletonable
+            segmentedControl!.isSkeletonable = state
+            state ? segmentedControl!.showAnimatedGradientSkeleton() : segmentedControl!.hideSkeleton()
+            
+            if #available(iOS 13.0, *) {
+                segmentedControl!.selectedSegmentTintColor = state ? Colors.alpha : Colors.iosCasePurple
+            }
+
+            let attributesSelected = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : .white]
+            let attributes = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : .black]
+            segmentedControl!.setTitleTextAttributes(attributes, for: .normal)
+            segmentedControl!.setTitleTextAttributes(attributesSelected, for: .selected)
+        }
+    }
+
+    func addSkeleton(){
+        scrollViewAnasayfa.showAnimatedGradientSkeleton()
+        switchSegmentControlSkeletonable()
+    }
+    
+    func removeSkeleton() {
+        scrollViewAnasayfa.hideSkeleton()
+        switchSegmentControlSkeletonable()
     }
 
     func config() {
@@ -105,7 +123,6 @@ class AnasayfaVController: BaseVController {
 
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
-        scrollViewAnasayfa.showAnimatedGradientSkeleton()
     }
 
     func setData() {
@@ -123,6 +140,7 @@ class AnasayfaVController: BaseVController {
     }
 
     func fetchData(selectedCityIndex: Int = 0) {
+        
         city = selectedCities[selectedCityIndex]
         let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
@@ -136,28 +154,18 @@ class AnasayfaVController: BaseVController {
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
-        if #available(iOS 13.0, *) {
-            segmentedControl!.selectedSegmentTintColor = Colors.iosCasePurple
-        } else {
-            // Fallback on earlier versions
-        }
-
-        let attributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        segmentedControl?.setTitleTextAttributes(attributes, for: .normal)
-        segmentedControl?.setTitleTextAttributes(attributesSelected, for: .selected)
-
         segmentedControl!.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
-        segmentedControl!.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.insertArrangedSubview(segmentedControl!, at: 0)
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
         fetchData(selectedCityIndex: segmentedControl.selectedSegmentIndex)
+        addSkeleton()
     }
 
     @objc func didPullToRefresh() {
         fetchData()
+        addSkeleton()
     }
 }
 
@@ -169,6 +177,7 @@ extension AnasayfaVController: SehirlerMainVModelDelegate {
         if weeklyWeather.list.count > 0 && dataWeather.list.count > 0 {
             // Refreshle eklenen viewi kaldırmak için
             refreshControl.endRefreshing()
+            removeSkeleton()
         }
     }
 
