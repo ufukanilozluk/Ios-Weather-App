@@ -18,6 +18,8 @@ class SehirlerTVCell: UITableViewCell {
     @IBOutlet weak var tarih: UILabel!
     @IBOutlet weak var sehirIsim: UILabel!
     @IBOutlet weak var weatherPic: UIImageView!
+    
+    static let reuseIdentifier : String = "SehirlerTVCell"
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

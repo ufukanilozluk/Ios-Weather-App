@@ -11,7 +11,8 @@ import UIKit
 
 class SehirlerDetayTVCell: UITableViewCell {
     var ekleAction: (() throws -> Void)?
-
+    static let reuseIdentifier : String = "SehirlerDetayTVCell"
+    
     @IBOutlet weak var sehirName: UILabel!
     
     @IBAction func sehirEkle(_ sender: Any) {

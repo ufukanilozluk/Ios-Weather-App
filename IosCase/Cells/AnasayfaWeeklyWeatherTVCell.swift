@@ -14,6 +14,8 @@ class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
     @IBOutlet weak var lblMaxWeatherTV: UILabel!
     @IBOutlet weak var lblMinWeatherTV: UILabel!
     
+    static let reuseIdentifier : String = "WeeklyWeatherTVCell"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

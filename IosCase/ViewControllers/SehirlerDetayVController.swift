@@ -192,7 +192,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 //        }
 
 //        rowData = sections[indexPath.section]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SehirlerDetayCell", for: indexPath) as! SehirlerDetayTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerDetayTVCell.reuseIdentifier, for: indexPath) as! SehirlerDetayTVCell
 //        cell.sehirName.text = rowData.names[indexPath.row]
         cell.sehirName.text = cities[indexPath.row].cityName! + "," + cities[indexPath.row].countryName!
 

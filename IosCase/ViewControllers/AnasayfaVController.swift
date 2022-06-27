@@ -198,11 +198,11 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
     }
 
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "WeeklyWeatherTVCell"
+        return AnasayfaWeeklyWeatherTVCell.reuseIdentifier
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeeklyWeatherTVCell", for: indexPath) as! AnasayfaWeeklyWeatherTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath) as! AnasayfaWeeklyWeatherTVCell
         let rowData = weeklyWeather.list[indexPath.row]
 
         cell.imgWeatherTV.image = UIImage(named: rowData.icon!)
@@ -226,7 +226,7 @@ extension AnasayfaVController: UIScrollViewDelegate {
 
 extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewDataSource {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "DailyWeatherCVCell"
+        return AnasayfaDailyWeatherCVCell.reuseIdentifier
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -238,7 +238,7 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DailyWeatherCVCell", for: indexPath) as! AnasayfaDailyWeatherCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath) as! AnasayfaDailyWeatherCVCell
 
         let rowData = dataWeather.list[indexPath.row]
 

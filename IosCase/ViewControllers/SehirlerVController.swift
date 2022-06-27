@@ -127,7 +127,7 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rowData = weather[indexPath.row].list[0]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SehirlerCell", for: indexPath) as! SehirlerTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerTVCell.reuseIdentifier, for: indexPath) as! SehirlerTVCell
         cell.sehirIsim.text = weather[indexPath.row].city.cityName
         cell.derece.text = String(rowData.main.temp!) + "°C"
         cell.weatherPic.image = UIImage(named: rowData.weather[0].icon!)
