@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class SehirlerVController: BaseVController {
     @IBOutlet var sehirlerTableView: UITableView!
@@ -39,9 +40,18 @@ class SehirlerVController: BaseVController {
 
     override func viewWillAppear(_ animated: Bool) {
         getWeatherInfo()
+        addSkeleton()
         if selectedCities.count == 0 {
             sehirlerTableView.setEmptyView(title: "No location Found", message: "Start by adding a location", animation: "location")
         }
+    }
+    
+    func addSkeleton(){
+        sehirlerTableView.showAnimatedGradientSkeleton()
+    }
+    
+    func removeSkeleton() {
+        sehirlerTableView.hideSkeleton()
     }
 
    override func setConfig() {
@@ -59,6 +69,7 @@ class SehirlerVController: BaseVController {
         editButtonItem.title = "Edit"
         navigationItem.leftBarButtonItem = editButtonItem //editbutton swiftten geliyor
         sehirlerTableView.allowsSelection = false
+        sehirlerTableView.estimatedRowHeight = 60
     }
     
     // Edit state function
@@ -108,13 +119,18 @@ extension SehirlerVController: SehirlerMainVModelDelegate {
                 })
                 return index1! < index2!
             })
-
+            removeSkeleton()
             sehirlerTableView.reloadData()
         }
     }
 }
 
-extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
+extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return SehirlerTVCell.reuseIdentifier
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if selectedCities.count == 0 {
             tableView.setEmptyView(title: "No location found", message: "Start by adding a location", animation: "location")

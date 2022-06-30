@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import SkeletonView
 
 class SehirlerDetayVController: BaseVController {
     struct Section {
         let letter: String
         let names: [String]
     }
+    
+    @IBOutlet var sehirlerTableview: UITableView!
+    
+    
     var once : Bool = false
     var sections = [Section]()
     var turkeyCities: [String] = []
@@ -127,9 +132,11 @@ class SehirlerDetayVController: BaseVController {
 
         // Yanda çıkan rehber gibi şeyin rengi
         sehirlerTableview.sectionIndexColor = Colors.iosCasePurple
+        
+        sehirlerTableview.estimatedRowHeight = 50
     }
 
-    @IBOutlet var sehirlerTableview: UITableView!
+    
 
     // UserDefaultsa struct array kaydetmek için
     class func saveCities(arrayCity: [Location]) {
@@ -144,9 +151,19 @@ class SehirlerDetayVController: BaseVController {
 //        filteredCities = createAlphabetSectionsFrom(data: filtered)
 //        sehirlerTableview.reloadData()
         if searchText.count > 2 {
+            addSkeleton()
             let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
             sehirlerVModel.findCity(query: searchTxt)
+            
         }
+    }
+    
+    func addSkeleton(){
+        view.showSkeleton()
+    }
+    
+    func removeSkeleton() {
+        view.hideSkeleton()
     }
 
 //    fileprivate func createAlphabetSectionsFrom(data cities: [City]) -> [Section] {
@@ -174,7 +191,13 @@ class SehirlerDetayVController: BaseVController {
 
 // MARK: TableView Functions
 
-extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
+extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSource {
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return SehirlerDetayTVCell.reuseIdentifier
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        if isFiltering {
 //            return filteredCities[section].names.count
@@ -261,14 +284,18 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
 
 extension SehirlerDetayVController: SehirEkleVModelDelegate {
     func getCityListCompleted(data: [Location]) {
+        
         cities = data
         //       sections = createAlphabetSectionsFrom(data: data)
+        removeSkeleton()
         sehirlerTableview.reloadData()
+       
     }
 }
 
 extension SehirlerDetayVController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+        
     }
 }
