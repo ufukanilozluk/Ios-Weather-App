@@ -69,7 +69,6 @@ class AnasayfaVController: BaseVController {
             
         } else {
             view.addSubview(emptyView)
-
             startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
@@ -83,13 +82,14 @@ class AnasayfaVController: BaseVController {
             state ? segmentedControl!.showAnimatedGradientSkeleton() : segmentedControl!.hideSkeleton()
             
             if #available(iOS 13.0, *) {
-                segmentedControl!.selectedSegmentTintColor = state ? Colors.alpha : Colors.iosCasePurple
+                segmentedControl!.selectedSegmentTintColor = state ? Colors.alpha : Colors.tint
             }
-
-            let attributesSelected = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : .white]
-            let attributes = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : .black]
+            
+            let attributes = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : Colors.segmentedControlNormalState]
+            let attributesSelected = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : Colors.segmentedControlSelectedState]
             segmentedControl!.setTitleTextAttributes(attributes, for: .normal)
             segmentedControl!.setTitleTextAttributes(attributesSelected, for: .selected)
+            segmentedControl!.backgroundColor = Colors.segmentedControlSelectedState
         }
     }
 
@@ -248,7 +248,7 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
         cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)?.withRenderingMode(.alwaysTemplate)
 
         cell.imgWeather.backgroundColor = UIColor.white
-        cell.imgWeather.tintColor = Colors.iosCasePurple
+        cell.imgWeather.tintColor = Colors.tint
         cell.imgWeather.layer.masksToBounds = true
         cell.imgWeather.layer.cornerRadius = 12
 

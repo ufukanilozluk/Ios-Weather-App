@@ -18,8 +18,9 @@
 		E14B8DA1256EA32B0011E376 /* SehirlerVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */; };
 		E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */; };
 		E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA6256EAA620011E376 /* MainVModel.swift */; };
+		E14F807028CF568100FEDDD9 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14F806F28CF568100FEDDD9 /* Fonts.swift */; };
 		E168888225ACDAD60008E35F /* not-found.json in Resources */ = {isa = PBXBuildFile; fileRef = E168888125ACDAD60008E35F /* not-found.json */; };
-		E172B3FF259B451100390001 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Constants.swift */; };
+		E172B3FF259B451100390001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Colors.swift */; };
 		E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A6EB525798DA000FC2BD1 /* Hava.swift */; };
 		E18BF10125B0B227006AC78E /* welcome-page.json in Resources */ = {isa = PBXBuildFile; fileRef = E18BF10025B0B227006AC78E /* welcome-page.json */; };
 		E18BF10425B0C7AB006AC78E /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = E18BF10325B0C7AB006AC78E /* location.json */; };
@@ -62,8 +63,9 @@
 		E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA6256EAA620011E376 /* MainVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModel.swift; sourceTree = "<group>"; };
+		E14F806F28CF568100FEDDD9 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		E168888125ACDAD60008E35F /* not-found.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-found.json"; sourceTree = "<group>"; };
-		E172B3FE259B451100390001 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E172B3FE259B451100390001 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E18A6EB525798DA000FC2BD1 /* Hava.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hava.swift; sourceTree = "<group>"; };
 		E18BF10025B0B227006AC78E /* welcome-page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "welcome-page.json"; sourceTree = "<group>"; };
 		E18BF10325B0C7AB006AC78E /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
@@ -245,8 +247,9 @@
 			children = (
 				E1F354F625B8877700757B01 /* WeatherAppErrors.swift */,
 				E1FAD1F52861C97E007A9EF4 /* Alerts.swift */,
-				E172B3FE259B451100390001 /* Constants.swift */,
+				E172B3FE259B451100390001 /* Colors.swift */,
 				E1416FAA257E6A8200B548ED /* Enums.swift */,
+				E14F806F28CF568100FEDDD9 /* Fonts.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E14F807028CF568100FEDDD9 /* Fonts.swift in Sources */,
 				E11AF94E261F998B00EAD8E3 /* GetLocation.swift in Sources */,
 				E1F1D2812566C5B6001149FE /* Location.swift in Sources */,
 				E1F354F725B8877700757B01 /* WeatherAppErrors.swift in Sources */,
@@ -404,7 +408,7 @@
 				E1A7B271257E489E00A0BAA7 /* SehirlerTVCell.swift in Sources */,
 				E14B8DA1256EA32B0011E376 /* SehirlerVModelDelegate.swift in Sources */,
 				E1B91B922566578A0031E020 /* SehirlerVController.swift in Sources */,
-				E172B3FF259B451100390001 /* Constants.swift in Sources */,
+				E172B3FF259B451100390001 /* Colors.swift in Sources */,
 				E1FAD1F62861C97E007A9EF4 /* Alerts.swift in Sources */,
 				E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */,
 				E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */,

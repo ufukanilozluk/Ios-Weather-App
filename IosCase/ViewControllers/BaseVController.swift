@@ -16,10 +16,10 @@ class BaseVController: UIViewController {
     }
     
     func setConfig(){
-        let textAttributes = [NSAttributedString.Key.foregroundColor:Colors.iosCasePurple]
+        let textAttributes = [NSAttributedString.Key.foregroundColor:Colors.tint]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
 //        navigationController?.navigationBar.barTintColor = Colors.iosCasePurple
-        navigationController?.navigationBar.tintColor = Colors.iosCasePurple
+        navigationController?.navigationBar.tintColor = Colors.tint
     }
     
 

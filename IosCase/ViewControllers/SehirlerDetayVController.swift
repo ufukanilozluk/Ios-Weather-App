@@ -131,7 +131,7 @@ class SehirlerDetayVController: BaseVController {
         searchController.searchBar.setValue("Cancel", forKey: "cancelButtonText")
 
         // Yanda çıkan rehber gibi şeyin rengi
-        sehirlerTableview.sectionIndexColor = Colors.iosCasePurple
+        sehirlerTableview.sectionIndexColor = Colors.tint
         
         sehirlerTableview.estimatedRowHeight = 50
     }
