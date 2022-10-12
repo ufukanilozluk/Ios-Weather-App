@@ -21,10 +21,10 @@ extension UITableView {
 
         let titleLabel = UILabel()
         let messageLabel = UILabel()
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = Colors.customGray
         titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-        messageLabel.textColor = UIColor.lightGray
-        messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 17)
+        messageLabel.textColor = Colors.customLightGray
+        messageLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
 
         if let _ = image {
             let imageView = UIImageView()

@@ -33,7 +33,7 @@ class AnasayfaVController: BaseVController {
     var city: Location = Location(json: [:])
     var dataWeather: HavaDurum = HavaDurum(json: [:])
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
-    private let spacing: CGFloat = 5.0
+    private let spacing: CGFloat = 4.0
     var selectedCities = SehirlerVController.getCities()
 
     lazy var sehirlerVModel: CitiesMainVModel = {
@@ -112,17 +112,19 @@ class AnasayfaVController: BaseVController {
 
 //         Collection view cell equaled size config
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         dailyWeatherCV?.collectionViewLayout = layout
-
+    
         refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
 
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
+        
+
     }
 
     func setData() {
@@ -221,6 +223,7 @@ extension AnasayfaVController: UIScrollViewDelegate {
         if scrollView.contentOffset.x != 0 && scrollView == scrollViewAnasayfa {
             scrollView.contentOffset.x = 0
         }
+      
     }
 }
 
@@ -245,10 +248,8 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
         cell.hour.text = indexPath.row == 0 ? "Now" :
             try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String
 
-        cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)?.withRenderingMode(.alwaysTemplate)
-
-        cell.imgWeather.backgroundColor = UIColor.white
-        cell.imgWeather.tintColor = Colors.tint
+//        cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)?.withRenderingMode(.alwaysTemplate)
+        cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)
         cell.imgWeather.layer.masksToBounds = true
         cell.imgWeather.layer.cornerRadius = 12
 
@@ -267,7 +268,7 @@ extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
 
         if let collection = dailyWeatherCV {
             let width = (collection.bounds.width - totalSpacing) / numberOfItemsPerRow
-            return CGSize(width: width, height: collectionView.bounds.height)
+            return CGSize(width: width, height: collectionView.bounds.height-10)
         } else {
             return CGSize(width: 0, height: 0)
         }

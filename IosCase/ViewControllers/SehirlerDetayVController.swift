@@ -5,19 +5,18 @@
 //  Created by Ufuk Anıl Özlük on 19.11.2020.
 //
 
-import UIKit
 import SkeletonView
+import UIKit
 
 class SehirlerDetayVController: BaseVController {
     struct Section {
         let letter: String
         let names: [String]
     }
-    
+
     @IBOutlet var sehirlerTableview: UITableView!
-    
-    
-    var once : Bool = false
+
+    var once: Bool = false
     var sections = [Section]()
     var turkeyCities: [String] = []
     var cities: [Location] = []
@@ -71,7 +70,7 @@ class SehirlerDetayVController: BaseVController {
         let getLocation = GetLocation()
 
         getLocation.run { location, error in
-           
+
             if error == nil {
                 if let location = location {
                     getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
@@ -131,12 +130,10 @@ class SehirlerDetayVController: BaseVController {
         searchController.searchBar.setValue("Cancel", forKey: "cancelButtonText")
 
         // Yanda çıkan rehber gibi şeyin rengi
-        sehirlerTableview.sectionIndexColor = Colors.tint
-        
+//        sehirlerTableview.sectionIndexColor = Colors.tint
+
         sehirlerTableview.estimatedRowHeight = 50
     }
-
-    
 
     // UserDefaultsa struct array kaydetmek için
     class func saveCities(arrayCity: [Location]) {
@@ -150,18 +147,15 @@ class SehirlerDetayVController: BaseVController {
 //        }
 //        filteredCities = createAlphabetSectionsFrom(data: filtered)
 //        sehirlerTableview.reloadData()
-        if searchText.count > 2 {
-            addSkeleton()
-            let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
-            sehirlerVModel.findCity(query: searchTxt)
-            
-        }
+        addSkeleton()
+        let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
+        sehirlerVModel.findCity(query: searchTxt)
     }
-    
-    func addSkeleton(){
+
+    func addSkeleton() {
         view.showSkeleton()
     }
-    
+
     func removeSkeleton() {
         view.hideSkeleton()
     }
@@ -192,12 +186,10 @@ class SehirlerDetayVController: BaseVController {
 // MARK: TableView Functions
 
 extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSource {
-    
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return SehirlerDetayTVCell.reuseIdentifier
     }
-    
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        if isFiltering {
 //            return filteredCities[section].names.count
@@ -284,18 +276,21 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
 
 extension SehirlerDetayVController: SehirEkleVModelDelegate {
     func getCityListCompleted(data: [Location]) {
-        
         cities = data
         //       sections = createAlphabetSectionsFrom(data: data)
         removeSkeleton()
         sehirlerTableview.reloadData()
-       
     }
 }
 
 extension SehirlerDetayVController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-        
+        let searchText: String = searchController.searchBar.text!
+        if searchText.count > 2 {
+            filterContentForSearchText(searchText)
+        } else {
+            cities = []
+            sehirlerTableview.reloadData()
+        }
     }
 }

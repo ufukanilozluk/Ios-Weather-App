@@ -1,19 +1,37 @@
 {
   "images" : [
     {
-      "filename" : "Path 5542.png",
+      "filename" : "konum.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Path 5542@2x.png",
+      "filename" : "konum@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Path 5542@3x.png",
+      "filename" : "konum@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
+    },
+    {
+      "filename" : "konum 1.png",
+      "idiom" : "universal",
+      "scale" : "1x",
+      "width-class" : "compact"
+    },
+    {
+      "filename" : "konum@2x 1.png",
+      "idiom" : "universal",
+      "scale" : "2x",
+      "width-class" : "compact"
+    },
+    {
+      "filename" : "konum@3x 1.png",
+      "idiom" : "universal",
+      "scale" : "3x",
+      "width-class" : "compact"
     }
   ],
   "info" : {

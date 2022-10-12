@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Path 5541.png",
+      "filename" : "ruzgar.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Path 5541@2x.png",
+      "filename" : "ruzgar@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Path 5541@3x.png",
+      "filename" : "ruzgar@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
