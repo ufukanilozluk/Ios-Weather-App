@@ -18,7 +18,6 @@
 		E14B8DA1256EA32B0011E376 /* SehirlerVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */; };
 		E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */; };
 		E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA6256EAA620011E376 /* MainVModel.swift */; };
-		E14F807028CF568100FEDDD9 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14F806F28CF568100FEDDD9 /* Fonts.swift */; };
 		E168888225ACDAD60008E35F /* not-found.json in Resources */ = {isa = PBXBuildFile; fileRef = E168888125ACDAD60008E35F /* not-found.json */; };
 		E172B3FF259B451100390001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Colors.swift */; };
 		E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A6EB525798DA000FC2BD1 /* Hava.swift */; };
@@ -63,7 +62,6 @@
 		E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA6256EAA620011E376 /* MainVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModel.swift; sourceTree = "<group>"; };
-		E14F806F28CF568100FEDDD9 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		E168888125ACDAD60008E35F /* not-found.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-found.json"; sourceTree = "<group>"; };
 		E172B3FE259B451100390001 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E18A6EB525798DA000FC2BD1 /* Hava.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hava.swift; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 				E1FAD1F52861C97E007A9EF4 /* Alerts.swift */,
 				E172B3FE259B451100390001 /* Colors.swift */,
 				E1416FAA257E6A8200B548ED /* Enums.swift */,
-				E14F806F28CF568100FEDDD9 /* Fonts.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -392,7 +389,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E14F807028CF568100FEDDD9 /* Fonts.swift in Sources */,
 				E11AF94E261F998B00EAD8E3 /* GetLocation.swift in Sources */,
 				E1F1D2812566C5B6001149FE /* Location.swift in Sources */,
 				E1F354F725B8877700757B01 /* WeatherAppErrors.swift in Sources */,
@@ -571,12 +567,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BDM6BJ67HH;
 				INFOPLIST_FILE = IosCase/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Weather by Özlük";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ioscase.IosCase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -595,12 +593,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BDM6BJ67HH;
 				INFOPLIST_FILE = IosCase/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Weather by Özlük";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ioscase.IosCase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

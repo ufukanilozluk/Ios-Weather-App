@@ -223,7 +223,7 @@ extension AnasayfaVController: UIScrollViewDelegate {
         if scrollView.contentOffset.x != 0 && scrollView == scrollViewAnasayfa {
             scrollView.contentOffset.x = 0
         }
-      
+
     }
 }
 

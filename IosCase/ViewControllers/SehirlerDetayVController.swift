@@ -30,31 +30,24 @@ class SehirlerDetayVController: BaseVController {
     lazy var searchBar = UISearchBar()
     var segueIdentifier = "goToSehir"
     var filteredCities: [Section] = []
+    
     var isSearchBarEmpty: Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
+        searchController.searchBar.text?.isEmpty ?? true
     }
-
+    
     var isFiltering: Bool {
-        return searchController.isActive && !isSearchBarEmpty
+        searchController.isActive && !isSearchBarEmpty
     }
 
     // Searchbar Search icon sağa almak için
 
     override func viewDidLayoutSubviews() {
-        let searchTextField: UITextField = searchController.searchBar.value(forKey: "searchField") as? UITextField ?? UITextField()
-        searchTextField.layer.cornerRadius = 15
-        searchTextField.textAlignment = .left
         let image: UIImage = UIImage(named: "ara")!
         let imageView: UIImageView = UIImageView(image: image)
 
-//        let button = UIButton(type: .custom)
-        ////        button.setTitle("", for: .normal)
-//        let konumImage: UIImage = UIImage(named: "konum")!
-//        button.setImage(konumImage, for: .normal)
-//        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-//        button.frame = CGRect(x: CGFloat(-25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
-//        button.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
-//        searchTextField.leftView = button
+        let searchTextField: UITextField = searchController.searchBar.value(forKey: "searchField") as? UITextField ?? UITextField()
+        searchTextField.layer.cornerRadius = 15
+        searchTextField.textAlignment = .left
         searchTextField.leftView = nil
         searchTextField.placeholder = " Search for a location"
         searchTextField.rightView = imageView
@@ -223,8 +216,7 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
                 throw WeatherAppErrors.SehirEkleError.sameSelection
             }
 
-            self.sehirlerVModel.findCoordinate(query: cityName, completion: { data in
-
+            self.sehirlerVModel.findCoordinate(query: cityName) { data in
                 city?.lat = data?["Latitude"] as? Double
                 city?.lon = data?["Longitude"] as? Double
 
@@ -238,7 +230,6 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
                 self.searchController.searchBar.endEditing(true)
                 SehirlerVController.shouldUpdateSegments = true
             }
-            )
         }
         return cell
     }

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct Colors {
+enum Colors {
     // Sayıları 255 e böl rgb verirken
 
     static let weatherPurpleLight = UIColor(red: 120 / 255, green: 6 / 255, blue: 245 / 255, alpha: 1)
@@ -19,6 +19,8 @@ struct Colors {
     static let lightGrayDarkMode = UIColor(red: 227 / 255, green: 225 / 255, blue: 220 / 255, alpha: 1)
     static let lightGrayLightMode = UIColor(red: 50 / 255, green: 53 / 255, blue: 64 / 255, alpha: 1)
     static let alpha = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+    
+    
     
     static var tint: UIColor = {
         if #available(iOS 13, *) {
