@@ -7,8 +7,17 @@
 
 import Foundation
 
+
+enum AlertType {
+    case warning
+    case err
+    case succ
+    case info
+}
+
+
 struct Alerts {
-    var alertType: Alert
+    var alertType: AlertType
     var alertTitle: String
 }
 

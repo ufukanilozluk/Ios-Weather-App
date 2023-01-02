@@ -43,7 +43,7 @@ class AnasayfaVController: BaseVController {
     }()
 
     override func viewDidLoad() {
-        netWorkConnectivityCheck()
+        Utility.netWorkConnectivityCheck()
         config()
         
     }
@@ -69,7 +69,7 @@ class AnasayfaVController: BaseVController {
             
         } else {
             view.addSubview(emptyView)
-            startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
+            Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
         }
@@ -137,7 +137,7 @@ class AnasayfaVController: BaseVController {
         lblHumidity.text = "%" + String(data.main.humidity!)
 
         do {
-            lblDate.text = try? dateFormatter(to: .strToStr, value: data.dt_text!, outputFormat: "dd/MM/yyyy") as? String
+            lblDate.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_text!, outputFormat: "dd/MM/yyyy") as? String
         }
     }
 
@@ -212,7 +212,7 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
         cell.lblMinWeatherTV.text = rowData.min
         do {
             // EEEE direk gün ismi
-            cell.lblDay.text = try? dateFormatter(to: .toStr, value: rowData.dt, outputFormat: "EEEE") as? String
+            cell.lblDay.text = try? Utility.dateFormatter(to: .toStr, value: rowData.dt, outputFormat: "EEEE") as? String
         }
         return cell
     }
@@ -246,7 +246,7 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
         let rowData = dataWeather.list[indexPath.row]
 
         cell.hour.text = indexPath.row == 0 ? "Now" :
-            try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String
+        try? Utility.dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String
 
 //        cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)?.withRenderingMode(.alwaysTemplate)
         cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)

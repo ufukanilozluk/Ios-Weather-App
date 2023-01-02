@@ -8,7 +8,7 @@
 import UIKit
 
 class AnasayfaDailyWeatherCVCell: UICollectionViewCell {
-    @IBOutlet weak var frameCV: DesingTableCell!
+    @IBOutlet weak var frameCV: CardView!
     @IBOutlet weak var imgWeather: UIImageView!
     @IBOutlet weak var hour: UILabel!
     

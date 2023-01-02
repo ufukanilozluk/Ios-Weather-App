@@ -146,7 +146,7 @@ extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource 
 //        cell.weatherPic.image =
 
         do {
-            cell.tarih.text = try? dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "dd/MM/yyyy") as? String
+            cell.tarih.text = try? Utility.dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "dd/MM/yyyy") as? String
         }
 
         return cell

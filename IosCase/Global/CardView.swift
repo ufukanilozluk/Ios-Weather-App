@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable class DesingTableCell : UIView{
+@IBDesignable class CardView : UIView{
     @IBInspectable var cornerRadius: CGFloat = 5
     @IBInspectable var shadowColor: UIColor? =  UIColor.black
     @IBInspectable var borderColor: UIColor? =  UIColor.black

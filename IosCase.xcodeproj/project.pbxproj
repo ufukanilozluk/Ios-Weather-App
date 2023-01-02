@@ -13,8 +13,7 @@
 		E10236DE25757131007219EA /* SehirlerMainVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10236DD25757131007219EA /* SehirlerMainVModelDelegate.swift */; };
 		E11AF94E261F998B00EAD8E3 /* GetLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AF94D261F998B00EAD8E3 /* GetLocation.swift */; };
 		E1416F9A257E551D00B548ED /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F98257E551D00B548ED /* Utilities.swift */; };
-		E1416F9B257E551D00B548ED /* DesingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F99257E551D00B548ED /* DesingTableCell.swift */; };
-		E1416FAB257E6A8200B548ED /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416FAA257E6A8200B548ED /* Enums.swift */; };
+		E1416F9B257E551D00B548ED /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F99257E551D00B548ED /* CardView.swift */; };
 		E14B8DA1256EA32B0011E376 /* SehirlerVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */; };
 		E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */; };
 		E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA6256EAA620011E376 /* MainVModel.swift */; };
@@ -42,7 +41,7 @@
 		E1F1D27E2566A1A5001149FE /* SehirlerDetayTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D27D2566A1A5001149FE /* SehirlerDetayTVCell.swift */; };
 		E1F1D2812566C5B6001149FE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D2802566C5B6001149FE /* Location.swift */; };
 		E1F1D2842566C819001149FE /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D2832566C819001149FE /* APIManager.swift */; };
-		E1F354F725B8877700757B01 /* WeatherAppErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F354F625B8877700757B01 /* WeatherAppErrors.swift */; };
+		E1F354F725B8877700757B01 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F354F625B8877700757B01 /* Errors.swift */; };
 		E1F5B0F925A4AA94005CF4A4 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1F5B0F825A4AA94005CF4A4 /* Roboto-Bold.ttf */; };
 		E1F5B0FC25A4B285005CF4A4 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5B0FB25A4B285005CF4A4 /* TabbarController.swift */; };
 		E1F5B0FF25A4E909005CF4A4 /* BaseVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5B0FE25A4E909005CF4A4 /* BaseVController.swift */; };
@@ -57,8 +56,7 @@
 		E10236DD25757131007219EA /* SehirlerMainVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerMainVModelDelegate.swift; sourceTree = "<group>"; };
 		E11AF94D261F998B00EAD8E3 /* GetLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLocation.swift; sourceTree = "<group>"; };
 		E1416F98257E551D00B548ED /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		E1416F99257E551D00B548ED /* DesingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesingTableCell.swift; sourceTree = "<group>"; };
-		E1416FAA257E6A8200B548ED /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		E1416F99257E551D00B548ED /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA6256EAA620011E376 /* MainVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModel.swift; sourceTree = "<group>"; };
@@ -86,7 +84,7 @@
 		E1F1D27D2566A1A5001149FE /* SehirlerDetayTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerDetayTVCell.swift; sourceTree = "<group>"; };
 		E1F1D2802566C5B6001149FE /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		E1F1D2832566C819001149FE /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		E1F354F625B8877700757B01 /* WeatherAppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppErrors.swift; sourceTree = "<group>"; };
+		E1F354F625B8877700757B01 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		E1F5B0F825A4AA94005CF4A4 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		E1F5B0FB25A4B285005CF4A4 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		E1F5B0FE25A4E909005CF4A4 /* BaseVController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVController.swift; sourceTree = "<group>"; };
@@ -182,7 +180,7 @@
 			children = (
 				E1FAD1F42861C929007A9EF4 /* Constants */,
 				E11AF94D261F998B00EAD8E3 /* GetLocation.swift */,
-				E1416F99257E551D00B548ED /* DesingTableCell.swift */,
+				E1416F99257E551D00B548ED /* CardView.swift */,
 				E1416F98257E551D00B548ED /* Utilities.swift */,
 				E101EF80257BA84A003ACC06 /* Extensions.swift */,
 			);
@@ -243,10 +241,9 @@
 		E1FAD1F42861C929007A9EF4 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				E1F354F625B8877700757B01 /* WeatherAppErrors.swift */,
+				E1F354F625B8877700757B01 /* Errors.swift */,
 				E1FAD1F52861C97E007A9EF4 /* Alerts.swift */,
 				E172B3FE259B451100390001 /* Colors.swift */,
-				E1416FAA257E6A8200B548ED /* Enums.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -391,10 +388,9 @@
 			files = (
 				E11AF94E261F998B00EAD8E3 /* GetLocation.swift in Sources */,
 				E1F1D2812566C5B6001149FE /* Location.swift in Sources */,
-				E1F354F725B8877700757B01 /* WeatherAppErrors.swift in Sources */,
+				E1F354F725B8877700757B01 /* Errors.swift in Sources */,
 				E1F5B0FC25A4B285005CF4A4 /* TabbarController.swift in Sources */,
 				E1F1D27B25669021001149FE /* SehirlerDetayVController.swift in Sources */,
-				E1416FAB257E6A8200B548ED /* Enums.swift in Sources */,
 				E1F1D2842566C819001149FE /* APIManager.swift in Sources */,
 				E10236DE25757131007219EA /* SehirlerMainVModelDelegate.swift in Sources */,
 				E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */,
@@ -408,7 +404,7 @@
 				E1FAD1F62861C97E007A9EF4 /* Alerts.swift in Sources */,
 				E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */,
 				E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */,
-				E1416F9B257E551D00B548ED /* DesingTableCell.swift in Sources */,
+				E1416F9B257E551D00B548ED /* CardView.swift in Sources */,
 				E1D66A20258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift in Sources */,
 				E101EF81257BA84A003ACC06 /* Extensions.swift in Sources */,
 				E1F1D2682566790A001149FE /* AnasayfaVController.swift in Sources */,

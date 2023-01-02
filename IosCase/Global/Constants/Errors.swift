@@ -8,9 +8,6 @@
 import Foundation
 
 
-enum WeatherAppErrors : Error{
-    
-    enum SehirEkleError: Error {
-        case sameSelection
-    }
+enum SehirEkleError: Error {
+    case sameSelection
 }

@@ -39,7 +39,7 @@ extension UITableView {
                 animationView.heightAnchor.constraint(equalToConstant: 100),
             ])
 
-            startAnimation(jsonFile: animation!, view: animationView)
+            Utility.startAnimation(jsonFile: animation!, view: animationView)
             stackView.addArrangedSubview(animationView)
         }
 
@@ -168,4 +168,18 @@ extension UISegmentedControl {
         }
     }
 
+}
+
+// MARK: UIImageView
+
+extension UIImageView {
+    convenience init?(named name: String, contentMode: UIView.ContentMode = .scaleToFill) {
+        guard let image = UIImage(named: name) else {
+            return nil
+        }
+
+        self.init(image: image)
+        self.contentMode = contentMode
+        translatesAutoresizingMaskIntoConstraints = false
+    }
 }

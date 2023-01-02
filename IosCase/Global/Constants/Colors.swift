@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 enum Colors {
-    // Sayıları 255 e böl rgb verirken
-
+//    Colors
     static let weatherPurpleLight = UIColor(red: 120 / 255, green: 6 / 255, blue: 245 / 255, alpha: 1)
     static let weatherPurpleDark = UIColor(red: 174 / 255, green: 13 / 255, blue: 255 / 255, alpha: 1)
     static let iosCaseLightGray = UIColor(red: 247 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
@@ -19,9 +18,9 @@ enum Colors {
     static let lightGrayDarkMode = UIColor(red: 227 / 255, green: 225 / 255, blue: 220 / 255, alpha: 1)
     static let lightGrayLightMode = UIColor(red: 50 / 255, green: 53 / 255, blue: 64 / 255, alpha: 1)
     static let alpha = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
-    
-    
-    
+
+//     Dynamic Colors for Dark/Light Mode
+
     static var tint: UIColor = {
         if #available(iOS 13, *) {
             return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
@@ -41,7 +40,7 @@ enum Colors {
             return UIColor.black
         }
     }()
-    
+
     static var segmentedControlNormalState: UIColor = {
         if #available(iOS 13, *) {
             return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
@@ -51,7 +50,7 @@ enum Colors {
             return UIColor.white
         }
     }()
-    
+
     static var customLightGray: UIColor = {
         if #available(iOS 13, *) {
             return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
@@ -61,7 +60,7 @@ enum Colors {
             return UIColor.lightGray
         }
     }()
-    
+
     static var customGray: UIColor = {
         if #available(iOS 13, *) {
             return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
