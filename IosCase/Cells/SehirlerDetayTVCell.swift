@@ -26,8 +26,4 @@ class SehirlerDetayTVCell: UITableViewCell {
     func set(city : String ){
         sehirName.text = city
     }
-    
-    
-    
-    
 }
