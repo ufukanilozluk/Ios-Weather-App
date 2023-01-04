@@ -2,7 +2,7 @@
 //  SehirlerDetayTVCell.swift
 //  IosCase
 //
-//  Created by Ufuk Anıl Özlük on 19.11.2020.
+//  Created by Ufuk Anıl Özlük
 //
 
 import UIKit
@@ -22,5 +22,12 @@ class SehirlerDetayTVCell: UITableViewCell {
             print("Unexpected error: \(error).")
         }
     }
+    
+    func set(city : String ){
+        sehirName.text = city
+    }
+    
+    
+    
     
 }

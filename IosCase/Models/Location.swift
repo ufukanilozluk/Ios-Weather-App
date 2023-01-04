@@ -16,8 +16,7 @@ struct Location: Codable, Equatable {
     var lon: Double?
 
     var locationName: String? {
-//        return city! + "," + country!
-        return "\(cityName!), \(countryName!)"
+        "\(cityName!),\(countryName!)"
     }
 
     init(json: [String: Any]) {

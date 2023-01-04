@@ -2,8 +2,7 @@
 //  SehirlerDetayVController.swift
 //  IosCase
 //
-//  Created by Ufuk Anıl Özlük on 19.11.2020.
-//
+//  Created by Ufuk Anıl Özlük
 
 import SkeletonView
 import UIKit
@@ -18,7 +17,6 @@ class SehirlerDetayVController: BaseVController {
 
     var once: Bool = false
     var sections = [Section]()
-    var turkeyCities: [String] = []
     var cities: [Location] = []
     let searchController = UISearchController(searchResultsController: nil)
     lazy var sehirlerVModel: SehirlerVModel = {
@@ -30,11 +28,11 @@ class SehirlerDetayVController: BaseVController {
     lazy var searchBar = UISearchBar()
     var segueIdentifier = "goToSehir"
     var filteredCities: [Section] = []
-    
+
     var isSearchBarEmpty: Bool {
         searchController.searchBar.text?.isEmpty ?? true
     }
-    
+
     var isFiltering: Bool {
         searchController.isActive && !isSearchBarEmpty
     }
@@ -114,17 +112,8 @@ class SehirlerDetayVController: BaseVController {
         navigationController?.navigationBar.backItem?.title = ""
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-
-//        searchController.searchBar.setImage(image, for: .search, state: .normal)
-//        searchController.searchBar.setPositionAdjustment(UIOffset(horizontal: searchController.searchBar.frame.width ,vertical: 0), for:.search )
-
-        // navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.setValue("Cancel", forKey: "cancelButtonText")
-
-        // Yanda çıkan rehber gibi şeyin rengi
-//        sehirlerTableview.sectionIndexColor = Colors.tint
-
         sehirlerTableview.estimatedRowHeight = 50
     }
 
@@ -135,11 +124,6 @@ class SehirlerDetayVController: BaseVController {
     }
 
     func filterContentForSearchText(_ searchText: String) {
-//        let filtered = cities.filter {
-//            $0.name!.lowercased().contains(searchText.lowercased())
-//        }
-//        filteredCities = createAlphabetSectionsFrom(data: filtered)
-//        sehirlerTableview.reloadData()
         addSkeleton()
         let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
         sehirlerVModel.findCity(query: searchTxt)
@@ -152,28 +136,6 @@ class SehirlerDetayVController: BaseVController {
     func removeSkeleton() {
         view.hideSkeleton()
     }
-
-//    fileprivate func createAlphabetSectionsFrom(data cities: [City]) -> [Section] {
-//        turkeyCities = cities.map { $0.name! }
-//        // Array Gruplama ilk harfe göre
-//        let groupedDictionary = Dictionary(grouping: turkeyCities, by: { String($0.prefix(1)) })
-//        // get the keys and sort them
-//
-//        let keys = groupedDictionary.keys.sorted(by: {
-//            let locale = NSLocale(localeIdentifier: "tr")
-//            let firstLetter = String($0) as NSString
-//            let secondLetter = String($1) as NSString
-//            return firstLetter.compare(secondLetter as String, options: .caseInsensitive, range: NSMakeRange(0, 1), locale: locale) == ComparisonResult.orderedAscending
-//        })
-//        // map the sorted keys to a struct
-//        let sections = keys.map { Section(letter: $0, names: groupedDictionary[$0]!.sorted(by: {
-//            let locale = NSLocale(localeIdentifier: "tr")
-//            let firstCity = String($0) as NSString
-//            let secondCity = String($1) as NSString
-//            return firstCity.compare(secondCity as String, options: .caseInsensitive, range: NSMakeRange(0, firstCity.length), locale: locale) == ComparisonResult.orderedAscending
-//        })) }
-//        return sections
-//    }
 }
 
 // MARK: TableView Functions
@@ -184,34 +146,20 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if isFiltering {
-//            return filteredCities[section].names.count
-//        }
-
         return cities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let rowData: Section
-//        if isFiltering {
-//            rowData = filteredCities[indexPath.section]
-//        } else {
-//            rowData = sections[indexPath.section]
-//        }
-
-//        rowData = sections[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerDetayTVCell.reuseIdentifier, for: indexPath) as! SehirlerDetayTVCell
-//        cell.sehirName.text = rowData.names[indexPath.row]
-        cell.sehirName.text = cities[indexPath.row].cityName! + "," + cities[indexPath.row].countryName!
+        let city = cities[indexPath.row].locationName
 
+        cell.set(city: city!)
+
+//Refactor ?
         cell.ekleAction = {
             var citiesArray = SehirlerVController.getCities()
-//            let cityName = rowData.names[indexPath.row]
-
-//            let cityName = rowData.names[indexPath.row]
             let cityName = self.cities[indexPath.row].cityName!
             var city = self.cities.first(where: { $0.cityName == cityName })
-
             if let _ = citiesArray.first(where: { $0.cityName! == city?.cityName! }) {
                 throw SehirEkleError.sameSelection
             }
@@ -233,34 +181,6 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
         }
         return cell
     }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-//        if isFiltering {
-//            if filteredCities.count == 0 {
-//                tableView.setEmptyView(title: "Sonuç bulunamadı", message: "Farklı bir arama kriteri deneyiniz", animation: "not-found")
-//            } else {
-//                tableView.restoreToFullTableView()
-//            }
-//            return filteredCities.count
-//        }
-//        return sections.count
-        return 1
-    }
-
-    // Yanda çıkan title rehberdeki gibi
-//    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-//        if isFiltering {
-//            return filteredCities.map { $0.letter }
-//        }
-//        return sections.map { $0.letter }
-//    }
-
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if isFiltering {
-//            return filteredCities[section].letter
-//        }
-//        return sections[section].letter
-//    }
 }
 
 // MARK: ViewModel Delegate Functions
@@ -268,7 +188,6 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
 extension SehirlerDetayVController: SehirEkleVModelDelegate {
     func getCityListCompleted(data: [Location]) {
         cities = data
-        //       sections = createAlphabetSectionsFrom(data: data)
         removeSkeleton()
         sehirlerTableview.reloadData()
     }

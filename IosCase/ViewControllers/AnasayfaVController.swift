@@ -45,7 +45,6 @@ class AnasayfaVController: BaseVController {
     override func viewDidLoad() {
         Utility.netWorkConnectivityCheck()
         config()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -64,9 +63,9 @@ class AnasayfaVController: BaseVController {
             } else {
                 createSegmentedControl()
             }
-            
+
             addSkeleton()
-            
+
         } else {
             view.addSubview(emptyView)
             Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
@@ -80,11 +79,11 @@ class AnasayfaVController: BaseVController {
             let state = !segmentedControl!.isSkeletonable
             segmentedControl!.isSkeletonable = state
             state ? segmentedControl!.showAnimatedGradientSkeleton() : segmentedControl!.hideSkeleton()
-            
+
             if #available(iOS 13.0, *) {
                 segmentedControl!.selectedSegmentTintColor = state ? Colors.alpha : Colors.tint
             }
-            
+
             let attributes = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : Colors.segmentedControlNormalState]
             let attributesSelected = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : Colors.segmentedControlSelectedState]
             segmentedControl!.setTitleTextAttributes(attributes, for: .normal)
@@ -93,11 +92,11 @@ class AnasayfaVController: BaseVController {
         }
     }
 
-    func addSkeleton(){
+    func addSkeleton() {
         scrollViewAnasayfa.showAnimatedGradientSkeleton()
         switchSegmentControlSkeletonable()
     }
-    
+
     func removeSkeleton() {
         scrollViewAnasayfa.hideSkeleton()
         switchSegmentControlSkeletonable()
@@ -116,15 +115,13 @@ class AnasayfaVController: BaseVController {
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         dailyWeatherCV?.collectionViewLayout = layout
-    
+
         refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
 
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
-        
-
     }
 
     func setData() {
@@ -142,7 +139,6 @@ class AnasayfaVController: BaseVController {
     }
 
     func fetchData(selectedCityIndex: Int = 0) {
-        
         city = selectedCities[selectedCityIndex]
         let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
@@ -206,14 +202,7 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath) as! AnasayfaWeeklyWeatherTVCell
         let rowData = weeklyWeather.list[indexPath.row]
-
-        cell.imgWeatherTV.image = UIImage(named: rowData.icon!)
-        cell.lblMaxWeatherTV.text = rowData.max
-        cell.lblMinWeatherTV.text = rowData.min
-        do {
-            // EEEE direk gün ismi
-            cell.lblDay.text = try? Utility.dateFormatter(to: .toStr, value: rowData.dt, outputFormat: "EEEE") as? String
-        }
+        cell.set(data: rowData)
         return cell
     }
 }
@@ -223,7 +212,6 @@ extension AnasayfaVController: UIScrollViewDelegate {
         if scrollView.contentOffset.x != 0 && scrollView == scrollViewAnasayfa {
             scrollView.contentOffset.x = 0
         }
-
     }
 }
 
@@ -242,17 +230,8 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath) as! AnasayfaDailyWeatherCVCell
-
         let rowData = dataWeather.list[indexPath.row]
-
-        cell.hour.text = indexPath.row == 0 ? "Now" :
-        try? Utility.dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "HH:mm") as? String
-
-//        cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)?.withRenderingMode(.alwaysTemplate)
-        cell.imgWeather.image = UIImage(named: rowData.weather[0].icon!)
-        cell.imgWeather.layer.masksToBounds = true
-        cell.imgWeather.layer.cornerRadius = 12
-
+        cell.set(data: rowData ,indexPath: indexPath)
         return cell
     }
 }
@@ -268,7 +247,7 @@ extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
 
         if let collection = dailyWeatherCV {
             let width = (collection.bounds.width - totalSpacing) / numberOfItemsPerRow
-            return CGSize(width: width, height: collectionView.bounds.height-10)
+            return CGSize(width: width, height: collectionView.bounds.height - 10)
         } else {
             return CGSize(width: 0, height: 0)
         }

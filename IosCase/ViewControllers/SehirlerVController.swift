@@ -137,19 +137,13 @@ extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let rowData = weather[indexPath.row].list[0]
+        
+        let hava = weather[indexPath.row].list[0]
+        let cityName = weather[indexPath.row].city.cityName
         let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerTVCell.reuseIdentifier, for: indexPath) as! SehirlerTVCell
-        cell.sehirIsim.text = weather[indexPath.row].city.cityName
-        cell.derece.text = String(rowData.main.temp!) + "°C"
-        cell.weatherPic.image = UIImage(named: rowData.weather[0].icon!)
-
-//        cell.weatherPic.image =
-
-        do {
-            cell.tarih.text = try? Utility.dateFormatter(to: .strToStr, value: rowData.dt_text!, outputFormat: "dd/MM/yyyy") as? String
-        }
-
+        cell.setWeather(weather: hava, cityName: cityName!)
         return cell
+        
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
