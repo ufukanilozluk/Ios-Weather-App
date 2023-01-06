@@ -21,6 +21,5 @@ class SehirlerTVCell: UITableViewCell {
         weatherPic.image = UIImage(named: weather.weather[0].icon!)
         tarih.text = try? Utility.dateFormatter(to: .strToStr, value: weather.dt_text!, outputFormat: "dd/MM/yyyy")
                      as? String ?? "-"
-        
     }
 }

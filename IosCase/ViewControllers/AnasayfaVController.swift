@@ -191,18 +191,13 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
         return weeklyWeather.list.count
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return AnasayfaWeeklyWeatherTVCell.reuseIdentifier
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath) as! AnasayfaWeeklyWeatherTVCell
-        let rowData = weeklyWeather.list[indexPath.row]
-        cell.set(data: rowData)
+        cell.data = weeklyWeather.list[indexPath.row]
         return cell
     }
 }
@@ -231,7 +226,7 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath) as! AnasayfaDailyWeatherCVCell
         let rowData = dataWeather.list[indexPath.row]
-        cell.set(data: rowData ,indexPath: indexPath)
+        cell.set(data: rowData, indexPath: indexPath)
         return cell
     }
 }

@@ -47,7 +47,7 @@ class SehirlerDetayVController: BaseVController {
         searchTextField.layer.cornerRadius = 15
         searchTextField.textAlignment = .left
         searchTextField.leftView = nil
-        searchTextField.placeholder = " Search for a location"
+        searchTextField.placeholder = " Type minimum 3 characters"
         searchTextField.rightView = imageView
         searchTextField.rightViewMode = UITextField.ViewMode.always
         searchTextField.leftViewMode = UITextField.ViewMode.always
@@ -146,6 +146,16 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if cities.count == 0 && isFiltering {
+            let searchText: String = searchController.searchBar.text!
+            if searchText.count > 2 {
+                tableView.setEmptyView(title: "Location Not Found", message: "Try something different", animation: "not-found")
+            }
+
+        } else {
+            tableView.restoreToFullTableView()
+        }
+
         return cities.count
     }
 
@@ -155,7 +165,7 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
 
         cell.set(city: city!)
 
-//Refactor ?
+        // Refactor ?
         cell.ekleAction = {
             var citiesArray = SehirlerVController.getCities()
             let cityName = self.cities[indexPath.row].cityName!

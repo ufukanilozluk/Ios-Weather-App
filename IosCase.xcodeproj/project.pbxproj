@@ -17,7 +17,6 @@
 		E14B8DA1256EA32B0011E376 /* SehirlerVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */; };
 		E14B8DA4256EA38D0011E376 /* MainVModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */; };
 		E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA6256EAA620011E376 /* MainVModel.swift */; };
-		E168888225ACDAD60008E35F /* not-found.json in Resources */ = {isa = PBXBuildFile; fileRef = E168888125ACDAD60008E35F /* not-found.json */; };
 		E172B3FF259B451100390001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Colors.swift */; };
 		E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A6EB525798DA000FC2BD1 /* Hava.swift */; };
 		E18BF10125B0B227006AC78E /* welcome-page.json in Resources */ = {isa = PBXBuildFile; fileRef = E18BF10025B0B227006AC78E /* welcome-page.json */; };
@@ -28,6 +27,7 @@
 		E1B91B952566578A0031E020 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B91B932566578A0031E020 /* Main.storyboard */; };
 		E1B91B972566578A0031E020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B91B962566578A0031E020 /* Assets.xcassets */; };
 		E1B91B9A2566578A0031E020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B91B982566578A0031E020 /* LaunchScreen.storyboard */; };
+		E1D0D442296745A9008A2890 /* not-found.json in Resources */ = {isa = PBXBuildFile; fileRef = E1D0D441296745A9008A2890 /* not-found.json */; };
 		E1D66A1D258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1C258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift */; };
 		E1D66A20258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1F258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift */; };
 		E1E13CD328634EB6008767F9 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = E1E13CD228634EB6008767F9 /* SkeletonView */; };
@@ -60,7 +60,6 @@
 		E14B8DA0256EA32B0011E376 /* SehirlerVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SehirlerVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA3256EA38D0011E376 /* MainVModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModelDelegate.swift; sourceTree = "<group>"; };
 		E14B8DA6256EAA620011E376 /* MainVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModel.swift; sourceTree = "<group>"; };
-		E168888125ACDAD60008E35F /* not-found.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-found.json"; sourceTree = "<group>"; };
 		E172B3FE259B451100390001 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E18A6EB525798DA000FC2BD1 /* Hava.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hava.swift; sourceTree = "<group>"; };
 		E18BF10025B0B227006AC78E /* welcome-page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "welcome-page.json"; sourceTree = "<group>"; };
@@ -73,6 +72,7 @@
 		E1B91B962566578A0031E020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1B91B992566578A0031E020 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1B91B9B2566578A0031E020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1D0D441296745A9008A2890 /* not-found.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-found.json"; sourceTree = "<group>"; };
 		E1D66A1C258CD65100B03121 /* AnasayfaWeeklyWeatherTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnasayfaWeeklyWeatherTVCell.swift; sourceTree = "<group>"; };
 		E1D66A1F258CD69E00B03121 /* AnasayfaDailyWeatherCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnasayfaDailyWeatherCVCell.swift; sourceTree = "<group>"; };
 		E1EA113A259B5C3900C7D5F6 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -168,9 +168,9 @@
 		E168888025ACDA970008E35F /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				E1D0D441296745A9008A2890 /* not-found.json */,
 				E18BF10325B0C7AB006AC78E /* location.json */,
 				E18BF10025B0B227006AC78E /* welcome-page.json */,
-				E168888125ACDAD60008E35F /* not-found.json */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -324,9 +324,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E168888225ACDAD60008E35F /* not-found.json in Resources */,
 				E1F5B0F925A4AA94005CF4A4 /* Roboto-Bold.ttf in Resources */,
 				E1EA113F259B5C3900C7D5F6 /* Roboto-Regular.ttf in Resources */,
+				E1D0D442296745A9008A2890 /* not-found.json in Resources */,
 				E1EA113D259B5C3900C7D5F6 /* Roboto-Medium.ttf in Resources */,
 				E1B91B9A2566578A0031E020 /* LaunchScreen.storyboard in Resources */,
 				E1EA113E259B5C3900C7D5F6 /* Roboto-Light.ttf in Resources */,

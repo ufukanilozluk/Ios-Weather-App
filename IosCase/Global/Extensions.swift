@@ -11,11 +11,11 @@ import UIKit
 
 extension UITableView {
     func setEmptyView(title: String, message: String, image: UIImage? = nil, animation: String? = nil) {
-        let emptyView = UIView(frame: CGRect(x: center.x, y: center.y, width: bounds.size.width, height: bounds.size.height))
+        let emptyView = UIView()
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fill
+        stackView.distribution = .equalSpacing
         stackView.alignment = .center
         stackView.spacing = 10
 
@@ -30,19 +30,21 @@ extension UITableView {
             let imageView = UIImageView()
             imageView.image = image
             stackView.addArrangedSubview(imageView)
-//            imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-//            imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
         } else if let _ = animation {
             let animationView = UIView()
             NSLayoutConstraint.activate([
                 animationView.widthAnchor.constraint(equalToConstant: 100),
                 animationView.heightAnchor.constraint(equalToConstant: 100),
             ])
-
+            
             Utility.startAnimation(jsonFile: animation!, view: animationView)
             stackView.addArrangedSubview(animationView)
+            
         }
 
+        
+        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(messageLabel)
         emptyView.addSubview(stackView)
@@ -50,19 +52,10 @@ extension UITableView {
         stackView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
 
-//        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 20).isActive = true
-//        titleLabel.leftAnchor.constraint(equalTo: messageLabel.leftAnchor, constant: 0).isActive = true
-//        titleLabel.rightAnchor.constraint(equalTo: messageLabel.rightAnchor, constant: 0).isActive = true
-//
-//        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
-//        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
-//        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
-
         titleLabel.text = title
         messageLabel.text = message
-
         messageLabel.textAlignment = .center
-
+        titleLabel.textAlignment = .center
         // The only tricky part is here:
         backgroundView = emptyView
         separatorStyle = .none

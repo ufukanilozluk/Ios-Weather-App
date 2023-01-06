@@ -15,17 +15,16 @@ class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
 
     static let reuseIdentifier: String = "WeeklyWeatherTVCell"
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-
-    func set(data: Daily) {
-        imgWeatherTV.image = UIImage(named: data.icon!)
-        lblMaxWeatherTV.text = data.max
-        lblMinWeatherTV.text = data.min
-        // EEEE direk gün ismi
-        lblDay.text = try? Utility.dateFormatter(to: .toStr, value: data.dt, outputFormat: "EEEE") as? String ?? "-"
+    var data: Daily? {
+        didSet {
+            if let data = data {
+                imgWeatherTV.image = UIImage(named: data.icon!)
+                lblMaxWeatherTV.text = data.max
+                lblMinWeatherTV.text = data.min
+                // EEEE direk gün ismi
+                lblDay.text = try? Utility.dateFormatter(to: .toStr, value: data.dt, outputFormat: "EEEE")
+                              as? String ?? "-"
+            }
+        }
     }
 }
