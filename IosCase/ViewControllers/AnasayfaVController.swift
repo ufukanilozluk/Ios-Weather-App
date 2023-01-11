@@ -35,6 +35,8 @@ class AnasayfaVController: BaseVController {
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 4.0
     var selectedCities = SehirlerVController.getCities()
+    
+    let dispatchGroup = DispatchGroup()
 
     lazy var sehirlerVModel: CitiesMainVModel = {
         let vm = CitiesMainVModel(view: self.view)
@@ -143,8 +145,18 @@ class AnasayfaVController: BaseVController {
         let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
 //        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
+        dispatchGroup.enter()
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
+        dispatchGroup.enter()
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
+        
+        dispatchGroup.notify(queue: .main){
+            self.refreshControl.endRefreshing()
+            self.removeSkeleton()
+        } 
+        
+        refreshControl.endRefreshing()
+        removeSkeleton()
     }
 
     func createSegmentedControl() {
@@ -169,17 +181,14 @@ class AnasayfaVController: BaseVController {
 
 extension AnasayfaVController: SehirlerMainVModelDelegate {
     func getWeatherCastWeeklyCompleted(data: HavaDurumWeekly) {
+        dispatchGroup.leave()
         weeklyWeather = data
         lblUV.text = data.uv!
         weeklyWeatherTV.reloadData()
-        if weeklyWeather.list.count > 0 && dataWeather.list.count > 0 {
-            // Refreshle eklenen viewi kaldırmak için
-            refreshControl.endRefreshing()
-            removeSkeleton()
-        }
     }
 
     func getWeatherCastCompleted(data: HavaDurum) {
+        dispatchGroup.leave()
         dataWeather = data
         setData()
         dailyWeatherCV.reloadData()
