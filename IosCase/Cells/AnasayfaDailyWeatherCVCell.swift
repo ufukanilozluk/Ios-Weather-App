@@ -14,7 +14,7 @@ class AnasayfaDailyWeatherCVCell: UICollectionViewCell {
 
     static let reuseIdentifier: String = "DailyWeatherCVCell"
 
-    func set(data: Hava, indexPath: IndexPath) {
+    func set(data: HavaDurum.Hava, indexPath: IndexPath) {
         if indexPath.row == 0 {
             hour.text = "Now"
         } else {

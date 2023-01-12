@@ -11,6 +11,16 @@ import UIKit
 import XLPagerTabStrip
 
 class AnasayfaVController: BaseVController {
+    struct Petition: Codable {
+        var title: String
+        var body: String
+        var signatureCount: Int
+    }
+
+    struct Petitions: Codable {
+        var results: [Petition]
+    }
+
     @IBOutlet var mainStackView: UIStackView!
     @IBOutlet var emptyView: UIView!
     @IBOutlet var scrollViewAnasayfa: UIScrollView!
@@ -28,6 +38,8 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var lblUV: UILabel!
     @IBOutlet var welcomeAnimationView: UIView!
 
+
+
     let refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
@@ -35,7 +47,7 @@ class AnasayfaVController: BaseVController {
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 4.0
     var selectedCities = SehirlerVController.getCities()
-    
+
     let dispatchGroup = DispatchGroup()
 
     lazy var sehirlerVModel: CitiesMainVModel = {
@@ -149,14 +161,11 @@ class AnasayfaVController: BaseVController {
         sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
         dispatchGroup.enter()
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
-        
-        dispatchGroup.notify(queue: .main){
+
+        dispatchGroup.notify(queue: .main) {
             self.refreshControl.endRefreshing()
             self.removeSkeleton()
-        } 
-        
-        refreshControl.endRefreshing()
-        removeSkeleton()
+        }
     }
 
     func createSegmentedControl() {

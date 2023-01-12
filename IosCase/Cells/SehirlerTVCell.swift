@@ -15,7 +15,7 @@ class SehirlerTVCell: UITableViewCell {
 
     static let reuseIdentifier: String = "SehirlerTVCell"
 
-    func setWeather(weather: Hava, cityName: String) {
+    func setWeather(weather: HavaDurum.Hava, cityName: String) {
         sehirIsim.text = cityName
         derece.text = String(weather.main.temp!) + "°C"
         weatherPic.image = UIImage(named: weather.weather[0].icon!)

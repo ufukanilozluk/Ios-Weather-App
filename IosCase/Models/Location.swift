@@ -26,6 +26,8 @@ struct Location: Codable, Equatable {
             countryName = data["LocalizedName"] as? String ?? ""
         }
     }
+    
+   
 }
 
 // UserDefaultsa Struct kaydetmek için

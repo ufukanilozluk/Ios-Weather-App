@@ -15,7 +15,7 @@ class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
 
     static let reuseIdentifier: String = "WeeklyWeatherTVCell"
 
-    var data: Daily? {
+    var data: HavaDurumWeekly.Daily? {
         didSet {
             if let data = data {
                 imgWeatherTV.image = UIImage(named: data.icon!)
