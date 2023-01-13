@@ -27,7 +27,7 @@ class SehirlerVController: BaseVController {
         selectedCities = SehirlerVController.getCities()
         for item in selectedCities {
             let parameters: [String: Any] = ["q": item.cityName!, "cnt": 1] // cnt -> kaç gün
-            sehirlerVModel.getWeatherForecast(parameters: parameters)
+//            sehirlerVModel.getWeatherForecast(parameters: parameters)
         }
     }
 
@@ -104,21 +104,21 @@ extension SehirlerVController: SehirlerMainVModelDelegate {
     }
 
     func getWeatherCastCompleted(data: HavaDurum) {
-        weather.append(data)
-        if weather.count == selectedCities.count {
-            // Şehirler sırasındakine göre tüm verileri çektikten sonra sırala
-            weather.sort(by: { n1, n2 in
-                let index1 = selectedCities.firstIndex(where: {
-                    $0.cityName == n1.city.cityName
-                })
-                let index2 = selectedCities.firstIndex(where: {
-                    $0.cityName == n2.city.cityName
-                })
-                return index1! < index2!
-            })
-            removeSkeleton()
-            sehirlerTableView.reloadData()
-        }
+//        weather.append(data)
+//        if weather.count == selectedCities.count {
+//            // Şehirler sırasındakine göre tüm verileri çektikten sonra sırala
+//            weather.sort(by: { n1, n2 in
+//                let index1 = selectedCities.firstIndex(where: {
+//                    $0.cityName == n1.city.cityName
+//                })
+//                let index2 = selectedCities.firstIndex(where: {
+//                    $0.cityName == n2.city.cityName
+//                })
+//                return index1! < index2!
+//            })
+//            removeSkeleton()
+//            sehirlerTableView.reloadData()
+//        }
     }
 }
 
@@ -139,7 +139,7 @@ extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let hava = weather[indexPath.row].list[0]
-        let cityName = weather[indexPath.row].city.cityName
+        let cityName = weather[indexPath.row].city?.name
         let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerTVCell.reuseIdentifier, for: indexPath) as! SehirlerTVCell
         cell.setWeather(weather: hava, cityName: cityName!)
         return cell

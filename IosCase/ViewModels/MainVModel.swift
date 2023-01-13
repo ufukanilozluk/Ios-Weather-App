@@ -24,4 +24,6 @@ class MainVModel {
     func stopLoader(uiView: UIView) {
         spinner.stopAnimating()
     }
+    
+    
 }

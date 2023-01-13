@@ -7,75 +7,47 @@
 
 import Foundation
 
+struct City: Codable {
+    var name: String?
+    var country: String?
+    var coord: Coordinate
+
+    var locationName: String? {
+        "\(name!),\(country!)"
+    }
+}
+
+extension City {
+    struct Coordinate: Codable {
+        var lat: Double
+        var lon: Double
+    }
+}
+
 struct HavaDurum: Codable {
     var list: [Hava] = []
-    var city: Location
-    init(json: [String: Any]) {
-        if let weatherList = json["list"] as? [[String: Any]] {
-            for dic in weatherList {
-                list.append(Hava(json: dic))
-            }
-        }
-        let tmp = json["city"] as? [String: Any] ?? [:]
-        city = Location(json: ["LocalizedName": tmp["name"]])
-    }
+    var city: City?
 }
 
 extension HavaDurum {
     struct Hava: Codable {
-        var main: HavaMain = HavaMain(json: [:])
-        var weather: [Weather] = []
-        var wind: Wind = Wind(json: [:])
+        var main: HavaMain
+        var weather: [Weather]
+        var wind: Wind
         var visibility: Double?
-        var dt_text: String?
-
-        init(json: [String: Any]) {
-            if let mainList = json["main"] as? [String: Any] {
-                main = HavaMain(json: mainList)
-            }
-
-            if let weatherList = json["weather"] as? [[String: Any]] {
-                for dic in weatherList {
-                    weather.append(Weather(json: dic))
-                }
-            }
-
-            if let windJson = json["wind"] as? [String: Any] {
-                wind = Wind(json: windJson)
-            }
-
-            visibility = json["visibility"] as? Double ?? -100
-            dt_text = json["dt_txt"] as? String ?? "-"
-        }
+        var dt_txt: String?
     }
 }
 
 extension HavaDurum.Hava {
     struct HavaMain: Codable {
-        var temp: String?
-        var feels_like: Double?
-        var temp_min: String?
-        var temp_max: String?
-        var pressure: Double?
-        var sea_level: Double?
-        var grnd_level: Double?
-        var humidity: Double?
-        var temp_kf: Double?
-
-        init(json: [String: Any]) {
-            var tmp = json["temp"] as? Double ?? -100.0
-            // yuvarlama
-            temp = String(Int(tmp.rounded()))
-            feels_like = json["feels_like"] as? Double ?? -100.0
-            tmp = json["temp_min"] as? Double ?? -100.0
-            temp_min = String(Int(tmp.rounded()))
-            tmp = json["temp_max"] as? Double ?? -100.0
-            temp_max = String(Int(tmp.rounded()))
-            pressure = json["pressure"] as? Double ?? -100.0
-            sea_level = json["sea_level"] as? Double ?? -100.0
-            grnd_level = json["grnd_level"] as? Double ?? -100.0
-            humidity = json["humidity"] as? Double ?? -100.0
-            temp_kf = json["temp_kf"] as? Double ?? -100.0
+        var temp: Double
+        var temp_min: Double
+        var temp_max: Double
+        var humidity: Int?
+        
+        var degree : String{
+            "\(temp)°C"
         }
     }
 
@@ -84,24 +56,11 @@ extension HavaDurum.Hava {
         var main: String?
         var description: String?
         var icon: String?
-        // var icon:  computed value
-
-        init(json: [String: Any]) {
-            id = json["id"] as? Int ?? -1
-            main = json["main"] as? String ?? "-"
-            description = json["description"] as? String ?? "-"
-            icon = json["icon"] as? String ?? "-"
-        }
     }
 
     struct Wind: Codable {
         var speed: Double?
         var deg: Int?
-
-        init(json: [String: Any]) {
-            speed = json["speed"] as? Double ?? -100
-            deg = json["deg"] as? Int ?? -100
-        }
     }
 }
 

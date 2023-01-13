@@ -17,32 +17,7 @@ class CitiesMainVModel: MainVModel {
         selfView = view
     }
 
- 
 
-    func getWeatherForecast(parameters: Parameters? = nil) {
-        var merge_parameters: [String: Any] = parameters ?? [:]
-        merge_parameters.merge(dict: defaultParams)
-
-        startLoader(uiView: selfView)
-        let url = baseUrl + "forecast"
-        AF.request(url, method: .get, parameters: merge_parameters, encoding: URLEncoding.default).responseJSON { response in
-
-            switch response.result {
-            case let .success(JSON):
-
-                if let response = JSON as? [String: Any] {
-                    self.delegate?.getWeatherCastCompleted(data: HavaDurum(json: response))
-
-                } else {
-                    print("Cast olamadı")
-                }
-
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
-            self.stopLoader(uiView: self.selfView)
-        }
-    }
 
     func getWeatherForecastWeekly(parameters: Parameters? = nil) {
         var params: [String: Any] = parameters ?? [:]
@@ -67,6 +42,20 @@ class CitiesMainVModel: MainVModel {
                 print(error.localizedDescription)
             }
             self.stopLoader(uiView: self.selfView)
+        }
+    }
+
+    func getWeather(completion: @escaping(HavaDurum) -> Void) {
+        APIManager.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?appid=54bfbfe4aa755c3b005fded2b0741fa5&cnt=1&lang=tr&q=Bursa&units=metric") { (result: Result<HavaDurum, APIManager.APIError>) in
+            switch result {
+            case let .success(forecast):
+                completion(forecast)
+            case let .failure(error):
+                switch error {
+                case let .error(errorString):
+                    print(errorString)
+                }
+            }
         }
     }
 }

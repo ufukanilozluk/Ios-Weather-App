@@ -9,6 +9,7 @@ import UIKit
 
 class Utility {
     
+    
     private static var formerConnectivityStatus = true
     private static let spinner = NVActivityIndicatorView(
         frame: CGRect(x: 0, y: 0, width: 50, height: 50),

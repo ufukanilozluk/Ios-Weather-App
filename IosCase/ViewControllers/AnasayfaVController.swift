@@ -11,16 +11,6 @@ import UIKit
 import XLPagerTabStrip
 
 class AnasayfaVController: BaseVController {
-    struct Petition: Codable {
-        var title: String
-        var body: String
-        var signatureCount: Int
-    }
-
-    struct Petitions: Codable {
-        var results: [Petition]
-    }
-
     @IBOutlet var mainStackView: UIStackView!
     @IBOutlet var emptyView: UIView!
     @IBOutlet var scrollViewAnasayfa: UIScrollView!
@@ -38,12 +28,10 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var lblUV: UILabel!
     @IBOutlet var welcomeAnimationView: UIView!
 
-
-
     let refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
-    var dataWeather: HavaDurum = HavaDurum(json: [:])
+    var dataWeather: HavaDurum = HavaDurum()
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 4.0
     var selectedCities = SehirlerVController.getCities()
@@ -140,7 +128,7 @@ class AnasayfaVController: BaseVController {
 
     func setData() {
         let data = dataWeather.list[0]
-        lblTemperature.text = data.main.temp! + "°C"
+        lblTemperature.text = data.main.degree
         imgWeatherMain.image = UIImage(named: data.weather[0].icon!)
         lblDescription.text = data.weather[0].description?.capitalized
         lblVisibility.text = String(Int(data.visibility! / 1000)) + " km"
@@ -148,7 +136,7 @@ class AnasayfaVController: BaseVController {
         lblHumidity.text = "%" + String(data.main.humidity!)
 
         do {
-            lblDate.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_text!, outputFormat: "dd/MM/yyyy") as? String
+            lblDate.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_txt!, outputFormat: "dd/MM/yyyy") as? String
         }
     }
 
@@ -157,11 +145,16 @@ class AnasayfaVController: BaseVController {
         let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
 //        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
+
         dispatchGroup.enter()
-        sehirlerVModel.getWeatherForecast(parameters: parametersDaily)
+        sehirlerVModel.getWeather { [self] forecast in
+            self.dataWeather = forecast
+            self.setData()
+            self.dailyWeatherCV.reloadData()
+            dispatchGroup.leave()
+        }
         dispatchGroup.enter()
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
-
         dispatchGroup.notify(queue: .main) {
             self.refreshControl.endRefreshing()
             self.removeSkeleton()
@@ -230,15 +223,15 @@ extension AnasayfaVController: UIScrollViewDelegate {
 
 extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewDataSource {
     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return AnasayfaDailyWeatherCVCell.reuseIdentifier
+        AnasayfaDailyWeatherCVCell.reuseIdentifier
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataWeather.list.count
+        dataWeather.list.count
     }
 
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        5
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
