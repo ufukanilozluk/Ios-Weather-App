@@ -31,7 +31,14 @@ class AnasayfaVController: BaseVController {
     let refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
-    var dataWeather: HavaDurum = HavaDurum()
+    var dataWeather: HavaDurum = HavaDurum(){
+        didSet{
+            DispatchQueue.main.async {
+                self.setData()
+                self.dailyWeatherCV.reloadData()
+            }
+        }
+    }
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 4.0
     var selectedCities = SehirlerVController.getCities()
@@ -149,9 +156,7 @@ class AnasayfaVController: BaseVController {
         dispatchGroup.enter()
         sehirlerVModel.getWeather { [self] forecast in
             self.dataWeather = forecast
-            self.setData()
-            self.dailyWeatherCV.reloadData()
-            dispatchGroup.leave()
+            self.dispatchGroup.leave()
         }
         dispatchGroup.enter()
         sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
