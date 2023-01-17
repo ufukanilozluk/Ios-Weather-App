@@ -19,7 +19,7 @@ class SehirlerTVCell: UITableViewCell {
         sehirIsim.text = cityName
         derece.text = weather.main.degree
         weatherPic.image = UIImage(named: weather.weather[0].icon!)
-        tarih.text = try? Utility.dateFormatter(to: .strToStr, value: weather.dt_txt!, outputFormat: "dd/MM/yyyy")
+        tarih.text = try? Utility.dateFormatter(to: .strToStr, value: weather.dt_txt, outputFormat: "dd/MM/yyyy")
                      as? String ?? "-"
     }
 }

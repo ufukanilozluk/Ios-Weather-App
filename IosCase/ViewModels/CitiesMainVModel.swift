@@ -46,7 +46,9 @@ class CitiesMainVModel: MainVModel {
     }
 
     func getWeather(completion: @escaping(HavaDurum) -> Void) {
-        APIManager.getJSON(urlString: "https://api.openweathermap.org/data/2.5/forecast?appid=54bfbfe4aa755c3b005fded2b0741fa5&cnt=1&lang=tr&q=Bursa&units=metric") { (result: Result<HavaDurum, APIManager.APIError>) in
+        let endPoint = APIManager.Endpoint.daily(city: "Bursa", appId: "54bfbfe4aa755c3b005fded2b0741fa5")
+        print(endPoint)
+        APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
             switch result {
             case let .success(forecast):
                 completion(forecast)

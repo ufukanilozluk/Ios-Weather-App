@@ -138,12 +138,12 @@ class AnasayfaVController: BaseVController {
         lblTemperature.text = data.main.degree
         imgWeatherMain.image = UIImage(named: data.weather[0].icon!)
         lblDescription.text = data.weather[0].description?.capitalized
-        lblVisibility.text = String(Int(data.visibility! / 1000)) + " km"
+        lblVisibility.text = String(Int(data.visibility / 1000)) + " km"
         lblWind.text = String(data.wind.deg!) + "m/s"
         lblHumidity.text = "%" + String(data.main.humidity!)
 
         do {
-            lblDate.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_txt!, outputFormat: "dd/MM/yyyy") as? String
+            lblDate.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_txt, outputFormat: "dd/MM/yyyy") as? String
         }
     }
 
@@ -236,7 +236,7 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
     }
 
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        dataWeather.list.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

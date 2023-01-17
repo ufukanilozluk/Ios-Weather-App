@@ -2,19 +2,11 @@ import Alamofire
 import Foundation
 
 class APIManager {
-  
-    enum APIError: Error {
-        case error(_ errorString: String)
-    }
-    
-    static func getJSON<T: Decodable>(urlString: String,
-                               dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
-                               keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-                               completion: @escaping (Result<T, APIError>) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(.failure(.error(NSLocalizedString("Error: Invalid URL", comment: ""))))
-            return
-        }
+    static func getJSON<T: Decodable>(url: URL,
+                                      dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
+                                      keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
+                                      completion: @escaping (Result<T, APIError>) -> Void) {
+        
         let request = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
@@ -43,5 +35,49 @@ class APIManager {
 }
 
 extension APIManager {
+    enum APIError: Error {
+        case error(_ errorString: String)
+    }
+
+    struct Endpoint {
+        var host: String
+        var path: String
+        var queryItems: [URLQueryItem] = []
+
+        var url: URL {
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = host
+            components.path = "/" + path
+            components.queryItems = queryItems
+
+            guard let url = components.url else {
+                preconditionFailure(
+                    "Invalid URL components: \(components)"
+                )
+            }
+
+            return url
+        }
+
+        static func daily(city: String,
+                          cnt: String = "8", lang: String = "en", appId: String, units: String = "metric") -> Self {
+            Endpoint(
+                host: "api.openweathermap.org",
+                path: "data/2.5/forecast",
+                queryItems: [
+                    URLQueryItem(name: "appid", value: appId),
+                    URLQueryItem(name: "cnt", value: cnt),
+                    URLQueryItem(name: "lang", value: lang),
+                    URLQueryItem(name: "units", value: units),
+                    URLQueryItem(name: "q", value: city),
+                ]
+            )
+        }
+        
     
+        
+        
+        
+    }
 }

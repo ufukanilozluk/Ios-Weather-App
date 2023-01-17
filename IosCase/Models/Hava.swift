@@ -8,12 +8,12 @@
 import Foundation
 
 struct City: Codable {
-    var name: String?
-    var country: String?
+    var name: String
+    var country: String
     var coord: Coordinate
 
-    var locationName: String? {
-        "\(name!),\(country!)"
+    var locationName: String {
+        "\(name),\(country)"
     }
 }
 
@@ -34,8 +34,8 @@ extension HavaDurum {
         var main: HavaMain
         var weather: [Weather]
         var wind: Wind
-        var visibility: Double?
-        var dt_txt: String?
+        var visibility: Double
+        var dt_txt: String
     }
 }
 
@@ -47,7 +47,7 @@ extension HavaDurum.Hava {
         var humidity: Int?
         
         var degree : String{
-            "\(temp)°C"
+            "\( Int(temp) )°C"
         }
     }
 
