@@ -18,10 +18,10 @@ class AnasayfaDailyWeatherCVCell: UICollectionViewCell {
         if indexPath.row == 0 {
             hour.text = "Now"
         } else {
-            hour.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_txt, outputFormat: "HH:mm") as? String ?? "-"
+//            hour.text = try? Utility.dateFormatter(to: .strToStr, value: data.dateTxt, outputFormat: "HH:mm") as? String ?? "-"
         }
 
-        imgWeather.image = UIImage(named: data.weather[0].icon!)
+        imgWeather.image = UIImage(named: data.weather[0].icon)
         configImg()
     }
 

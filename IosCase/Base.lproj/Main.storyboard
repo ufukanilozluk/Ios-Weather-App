@@ -441,10 +441,10 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zFh-98-YpI">
-                                                                <rect key="frame" x="267" y="0.0" width="54.666666666666686" height="70.333333333333329"/>
+                                                                <rect key="frame" x="247.66666666666669" y="0.0" width="74" height="70.333333333333329"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="H4y-U2-0nB">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="54.666666666666664" height="32.666666666666664"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="74" height="32.666666666666664"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="ruzgar" translatesAutoresizingMaskIntoConstraints="NO" id="EvQ-4j-1Lt">
                                                                                 <rect key="frame" x="0.0" y="0.33333333333337123" width="16" height="32"/>
@@ -458,10 +458,10 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hsq-S1-0uW">
-                                                                                <rect key="frame" x="26" y="0.33333333333337301" width="28.666666666666671" height="31.666666666666671"/>
+                                                                                <rect key="frame" x="26" y="0.33333333333337301" width="48" height="31.666666666666671"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0k-aa-9Gb">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="28.666666666666668" height="14.333333333333334"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="48" height="14.333333333333334"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl2"/>
                                                                                         <nil key="highlightedColor"/>
@@ -471,7 +471,7 @@
                                                                                         </userDefinedRuntimeAttributes>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bom-7V-Bs1">
-                                                                                        <rect key="frame" x="0.0" y="17.333333333333371" width="28.666666666666668" height="14.333333333333336"/>
+                                                                                        <rect key="frame" x="0.0" y="17.333333333333371" width="48" height="14.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl3"/>
                                                                                         <nil key="highlightedColor"/>
@@ -491,9 +491,9 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="c9V-a3-eYy">
-                                                                        <rect key="frame" x="0.0" y="37.666666666666742" width="54.666666666666664" height="32.666666666666657"/>
+                                                                        <rect key="frame" x="0.0" y="37.666666666666742" width="74" height="32.666666666666657"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="01d" translatesAutoresizingMaskIntoConstraints="NO" id="DcZ-EH-fk3">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="pressure" translatesAutoresizingMaskIntoConstraints="NO" id="DcZ-EH-fk3">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="32.666666666666664"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="32.670000000000002" id="Cdf-6F-iIZ"/>
@@ -505,10 +505,10 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qMp-gb-ADc">
-                                                                                <rect key="frame" x="26" y="0.0" width="28.666666666666671" height="32.666666666666664"/>
+                                                                                <rect key="frame" x="26" y="0.0" width="48" height="32.666666666666664"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UV" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYk-Og-Kfa">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="28.666666666666668" height="16.333333333333332"/>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SYk-Og-Kfa">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="48" height="16.333333333333332"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl2"/>
                                                                                         <nil key="highlightedColor"/>
@@ -518,7 +518,7 @@
                                                                                         </userDefinedRuntimeAttributes>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAw-Vb-dlu">
-                                                                                        <rect key="frame" x="0.0" y="16.333333333333258" width="28.666666666666668" height="16.333333333333329"/>
+                                                                                        <rect key="frame" x="0.0" y="16.333333333333258" width="48" height="16.333333333333329"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl3"/>
                                                                                         <nil key="highlightedColor"/>
@@ -579,7 +579,7 @@
                                                         <rect key="frame" x="0.0" y="50" width="361.66666666666669" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IHk-gd-kSQ" id="qoa-56-HJX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="361.66666666666663" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="361.66666666666669" height="44"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="XRo-A7-L2B">
@@ -704,8 +704,8 @@
                         <outlet property="lblDate" destination="Qt5-Aj-ANT" id="9pR-ch-S3M"/>
                         <outlet property="lblDescription" destination="DP4-va-sy8" id="Fgo-0l-wRG"/>
                         <outlet property="lblHumidity" destination="cEW-RR-mB4" id="hHf-5t-TMd"/>
+                        <outlet property="lblPressure" destination="dAw-Vb-dlu" id="q86-hB-akT"/>
                         <outlet property="lblTemperature" destination="VuU-Vw-zVQ" id="aaY-po-0Cb"/>
-                        <outlet property="lblUV" destination="dAw-Vb-dlu" id="tra-1w-A04"/>
                         <outlet property="lblVisibility" destination="MRI-rc-OJi" id="OaG-EQ-6Nk"/>
                         <outlet property="lblWind" destination="Bom-7V-Bs1" id="2QL-OX-sOS"/>
                         <outlet property="mainStackView" destination="YRV-7N-qzf" id="ND5-Z7-3cR"/>
@@ -906,6 +906,7 @@
         <image name="damla" width="170.66667175292969" height="170.66667175292969"/>
         <image name="goz" width="170.66667175292969" height="170.66667175292969"/>
         <image name="konum" width="25" height="25"/>
+        <image name="pressure" width="170.66667175292969" height="170.66667175292969"/>
         <image name="ruzgar" width="170.66667175292969" height="170.66667175292969"/>
         <namedColor name="ColorLbl">
             <color red="0.19499999284744263" green="0.2070000022649765" blue="0.25200000405311584" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

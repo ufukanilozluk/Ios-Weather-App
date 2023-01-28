@@ -35,7 +35,16 @@ extension HavaDurum {
         var weather: [Weather]
         var wind: Wind
         var visibility: Double
-        var dt_txt: String
+        var dt: Date
+
+        var visibilityTxt: String {
+            " \(Int(visibility / 1000)) km"
+        }
+
+        var windTxt: String {
+            "\(wind.deg)m/s"
+        }
+        
     }
 }
 
@@ -44,23 +53,32 @@ extension HavaDurum.Hava {
         var temp: Double
         var temp_min: Double
         var temp_max: Double
-        var humidity: Int?
+        var humidity: Int
+        var pressure: Int
+
+        var degree: String {
+            "\(Int(temp))°C"
+        }
+
+        var humidityTxt: String {
+            "%\(humidity)"
+        }
         
-        var degree : String{
-            "\( Int(temp) )°C"
+        var pressureTxt: String {
+            "%\(pressure) mbar"
         }
     }
 
     struct Weather: Codable {
-        var id: Int?
-        var main: String?
-        var description: String?
-        var icon: String?
+        var id: Int
+        var main: String
+        var description: String
+        var icon: String
     }
 
     struct Wind: Codable {
-        var speed: Double?
-        var deg: Int?
+        var speed: Double
+        var deg: Int
     }
 }
 

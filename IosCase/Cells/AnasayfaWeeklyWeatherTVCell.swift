@@ -22,7 +22,7 @@ class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
                 lblMaxWeatherTV.text = data.max
                 lblMinWeatherTV.text = data.min
                 // EEEE direk gün ismi
-                lblDay.text = try? Utility.dateFormatter(to: .toStr, value: data.dt, outputFormat: "EEEE")
+//                lblDay.text = try? Utility.dateFormatter(to: .toStr, value: data.dt, outputFormat: "EEEE")
                               as? String ?? "-"
             }
         }

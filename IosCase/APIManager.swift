@@ -39,45 +39,4 @@ extension APIManager {
         case error(_ errorString: String)
     }
 
-    struct Endpoint {
-        var host: String
-        var path: String
-        var queryItems: [URLQueryItem] = []
-
-        var url: URL {
-            var components = URLComponents()
-            components.scheme = "https"
-            components.host = host
-            components.path = "/" + path
-            components.queryItems = queryItems
-
-            guard let url = components.url else {
-                preconditionFailure(
-                    "Invalid URL components: \(components)"
-                )
-            }
-
-            return url
-        }
-
-        static func daily(city: String,
-                          cnt: String = "8", lang: String = "en", appId: String, units: String = "metric") -> Self {
-            Endpoint(
-                host: "api.openweathermap.org",
-                path: "data/2.5/forecast",
-                queryItems: [
-                    URLQueryItem(name: "appid", value: appId),
-                    URLQueryItem(name: "cnt", value: cnt),
-                    URLQueryItem(name: "lang", value: lang),
-                    URLQueryItem(name: "units", value: units),
-                    URLQueryItem(name: "q", value: city),
-                ]
-            )
-        }
-        
-    
-        
-        
-        
-    }
 }

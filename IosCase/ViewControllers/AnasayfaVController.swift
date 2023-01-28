@@ -25,35 +25,33 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var lblVisibility: UILabel!
     @IBOutlet var lblWind: UILabel!
     @IBOutlet var lblHumidity: UILabel!
-    @IBOutlet var lblUV: UILabel!
+    @IBOutlet var lblPressure: UILabel!
     @IBOutlet var welcomeAnimationView: UIView!
 
     let refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
-    var dataWeather: HavaDurum = HavaDurum(){
-        didSet{
+    var dataWeather: HavaDurum = HavaDurum() {
+        didSet {
             DispatchQueue.main.async {
                 self.setData()
                 self.dailyWeatherCV.reloadData()
             }
         }
     }
+
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 4.0
     var selectedCities = SehirlerVController.getCities()
 
     let dispatchGroup = DispatchGroup()
-
-    lazy var sehirlerVModel: CitiesMainVModel = {
-        let vm = CitiesMainVModel(view: self.view)
-        vm.delegate = self
-        return vm
-    }()
+    var viewModel: CitiesMainVModel = CitiesMainVModel()
 
     override func viewDidLoad() {
         Utility.netWorkConnectivityCheck()
         config()
+        setData()
+       
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +71,7 @@ class AnasayfaVController: BaseVController {
                 createSegmentedControl()
             }
 
-            addSkeleton()
+//            addSkeleton()
 
         } else {
             view.addSubview(emptyView)
@@ -134,32 +132,74 @@ class AnasayfaVController: BaseVController {
     }
 
     func setData() {
-        let data = dataWeather.list[0]
-        lblTemperature.text = data.main.degree
-        imgWeatherMain.image = UIImage(named: data.weather[0].icon!)
-        lblDescription.text = data.weather[0].description?.capitalized
-        lblVisibility.text = String(Int(data.visibility / 1000)) + " km"
-        lblWind.text = String(data.wind.deg!) + "m/s"
-        lblHumidity.text = "%" + String(data.main.humidity!)
-
-        do {
-            lblDate.text = try? Utility.dateFormatter(to: .strToStr, value: data.dt_txt, outputFormat: "dd/MM/yyyy") as? String
+        viewModel.bigIcon.bind { [weak self] bigIcon in
+            DispatchQueue.main.async {
+                self?.imgWeatherMain.image = bigIcon
+            }
         }
+
+        viewModel.description.bind { [weak self] description in
+            DispatchQueue.main.async {
+                self?.lblDescription.text = description
+            }
+        }
+
+        viewModel.humidity.bind { [weak self] humidity in
+            DispatchQueue.main.async {
+                self?.lblHumidity.text = humidity
+            }
+        }
+
+        viewModel.wind.bind { [weak self] wind in
+            DispatchQueue.main.async {
+                self?.lblWind.text = wind
+            }
+        }
+
+        viewModel.temperature.bind { [weak self] temperature in
+            
+            DispatchQueue.main.async {
+                self?.lblTemperature.text = temperature
+            }
+        }
+        
+        viewModel.visibility.bind { [weak self] visibility in
+            
+            DispatchQueue.main.async {
+                self?.lblVisibility.text = visibility
+            }
+        }
+
+        viewModel.pressure.bind { [weak self] pressure in
+            
+            DispatchQueue.main.async {
+                self?.lblPressure.text = pressure
+            }
+        }
+        
+        viewModel.date.bind { [weak self] date in
+            
+            DispatchQueue.main.async {
+                self?.lblDate.text = date
+            }
+        }
+
+        
     }
 
     func fetchData(selectedCityIndex: Int = 0) {
         city = selectedCities[selectedCityIndex]
-        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
+//        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
         let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
 //        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
 
         dispatchGroup.enter()
-        sehirlerVModel.getWeather { [self] forecast in
-            self.dataWeather = forecast
-            self.dispatchGroup.leave()
-        }
-        dispatchGroup.enter()
-        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
+//        sehirlerVModel.getWeather { [self] forecast in
+//            self.dataWeather = forecast
+//            self.dispatchGroup.leave()
+//        }
+//        dispatchGroup.enter()
+//        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
         dispatchGroup.notify(queue: .main) {
             self.refreshControl.endRefreshing()
             self.removeSkeleton()
@@ -183,22 +223,6 @@ class AnasayfaVController: BaseVController {
     @objc func didPullToRefresh() {
         fetchData()
         addSkeleton()
-    }
-}
-
-extension AnasayfaVController: SehirlerMainVModelDelegate {
-    func getWeatherCastWeeklyCompleted(data: HavaDurumWeekly) {
-        dispatchGroup.leave()
-        weeklyWeather = data
-        lblUV.text = data.uv!
-        weeklyWeatherTV.reloadData()
-    }
-
-    func getWeatherCastCompleted(data: HavaDurum) {
-        dispatchGroup.leave()
-        dataWeather = data
-        setData()
-        dailyWeatherCV.reloadData()
     }
 }
 

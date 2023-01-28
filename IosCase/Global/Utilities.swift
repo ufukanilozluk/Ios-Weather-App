@@ -132,41 +132,6 @@ class Utility {
         close.backgroundColor = color
     }
 
-    static func dateFormatter(to date: DateConvertType, value: Any, inputFormat: String = "yyyy-MM-dd HH:mm:ss", outputFormat: String = "dd.MM.yyyy HH:mm") throws -> Any {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en-US")
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        formatter.dateFormat = inputFormat
-        let rv: Any
 
-        switch date {
-        case .toDate:
-            rv = formatter.date(from: value as! String)!
-            break
-        case .toStr:
-            formatter.dateFormat = outputFormat
-            rv = formatter.string(from: value as! Date)
-            break
-        case .strToStr:
-            let date = try dateFormatter(to: .toDate, value: value, inputFormat: inputFormat) as! Date
-            formatter.dateFormat = outputFormat
-            rv = formatter.string(from: date)
-
-            //        Yada yukarısı olmadan aşağıdaki gibi recursive de yapabilirsin ilk stringi date çevirdikten sonra
-            //        rv = try dateFormatter(to: .toStr, value: date, inputFormat: inputFormat, outputFormat: outputFormat) as! String
-            break
-        }
-
-        return rv
-    }
 }
 
-extension Utility {
-    
-    enum DateConvertType: Int {
-         case toStr
-         case toDate
-         case strToStr
-     }
-    
-}

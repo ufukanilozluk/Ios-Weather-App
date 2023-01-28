@@ -10,48 +10,43 @@ import Foundation
 import UIKit
 
 class CitiesMainVModel: MainVModel {
-    var delegate: SehirlerMainVModelDelegate? // Delegator Class
-    let selfView: UIView
+    
+    private let dateFormatter: DateFormatter = {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "d MMMM EEEE"
+      return dateFormatter
+    }()
+    
+    let temperature = Box("")
+    let bigIcon: Box<UIImage?> = Box(nil) // no image initially
+    let description = Box("")
+    let visibility = Box("")
+    let wind = Box("")
+    let humidity = Box("")
+    let pressure = Box("")
+    let date = Box("")
 
-    init(view: UIView) {
-        selfView = view
+    override init() {
+        super.init()
+        getWeather()
     }
 
+    func getWeather() {
+        let endPoint = Endpoint.daily(city: "Bursa", appId: "54bfbfe4aa755c3b005fded2b0741fa5")
 
-
-    func getWeatherForecastWeekly(parameters: Parameters? = nil) {
-        var params: [String: Any] = parameters ?? [:]
-        params.merge(dict: defaultParams)
-
-        startLoader(uiView: selfView)
-        let url = baseUrl + "onecall"
-        AF.request(url, method: .get, parameters: params, encoding: URLEncoding.default).responseJSON { response in
-
-            switch response.result {
-            case let .success(JSON):
-
-                if let response = JSON as? [String: Any] {
-                    self.delegate?.getWeatherCastWeeklyCompleted(data: HavaDurumWeekly(json: response))
-
-                } else {
-                    print("Cast olamadı")
-                }
-
-            case let .failure(error):
-                // TODO: moobil_log // type error olarak loglanıcak
-                print(error.localizedDescription)
-            }
-            self.stopLoader(uiView: self.selfView)
-        }
-    }
-
-    func getWeather(completion: @escaping(HavaDurum) -> Void) {
-        let endPoint = APIManager.Endpoint.daily(city: "Bursa", appId: "54bfbfe4aa755c3b005fded2b0741fa5")
-        print(endPoint)
         APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
             switch result {
             case let .success(forecast):
-                completion(forecast)
+                let data = forecast.list[0]
+                self.temperature.value = data.main.degree
+                self.bigIcon.value = UIImage(named: data.weather[0].icon)
+                self.description.value = data.weather[0].description.capitalized
+                self.visibility.value = data.visibilityTxt
+                self.wind.value = data.windTxt
+                self.humidity.value = data.main.humidityTxt
+                self.pressure.value = data.main.pressureTxt
+                self.date.value =  self.dateFormatter.string(from: data.dt)
+
             case let .failure(error):
                 switch error {
                 case let .error(errorString):
@@ -60,4 +55,20 @@ class CitiesMainVModel: MainVModel {
             }
         }
     }
+
+    //    func getWeatherForecastWeekly(completion: @escaping (HavaDurum) -> Void) {
+    //        let endPoint = Endpoint.weeklyForecast(exclude: "current,minutely,hourly,alerts", lan: , lot: )
+    //
+    //        APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
+    //            switch result {
+    //            case let .success(forecast):
+    //                completion(forecast)
+    //            case let .failure(error):
+    //                switch error {
+    //                case let .error(errorString):
+    //                    print(errorString)
+    //                }
+    //            }
+    //        }
+    //    }
 }

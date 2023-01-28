@@ -15,6 +15,7 @@ class MainVModel {
         ]
     let spinner = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballRotateChase, color: UIColor(red: 0.26, green: 0.41, blue: 0.62, alpha: 1.00))
     
+    
     func startLoader(uiView: UIView) {
         spinner.center = uiView.center
         uiView.addSubview(spinner)
@@ -24,6 +25,8 @@ class MainVModel {
     func stopLoader(uiView: UIView) {
         spinner.stopAnimating()
     }
+    
+   
     
     
 }
