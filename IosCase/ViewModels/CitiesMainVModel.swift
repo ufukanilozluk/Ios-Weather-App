@@ -11,11 +11,7 @@ import UIKit
 
 class CitiesMainVModel: MainVModel {
     
-    private let dateFormatter: DateFormatter = {
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "d MMMM EEEE"
-      return dateFormatter
-    }()
+   
     
     let temperature = Box("")
     let bigIcon: Box<UIImage?> = Box(nil) // no image initially
@@ -25,6 +21,7 @@ class CitiesMainVModel: MainVModel {
     let humidity = Box("")
     let pressure = Box("")
     let date = Box("")
+    let weatherData : Box<[HavaDurum.Hava]> = Box([])
 
     override init() {
         super.init()
@@ -40,12 +37,13 @@ class CitiesMainVModel: MainVModel {
                 let data = forecast.list[0]
                 self.temperature.value = data.main.degree
                 self.bigIcon.value = UIImage(named: data.weather[0].icon)
-                self.description.value = data.weather[0].description.capitalized
+                self.description.value = data.weather[0].descriptionTxt
                 self.visibility.value = data.visibilityTxt
                 self.wind.value = data.windTxt
                 self.humidity.value = data.main.humidityTxt
                 self.pressure.value = data.main.pressureTxt
-                self.date.value =  self.dateFormatter.string(from: data.dt)
+                self.date.value =  data.dateTxtLong
+                self.weatherData.value = forecast.list
 
             case let .failure(error):
                 switch error {

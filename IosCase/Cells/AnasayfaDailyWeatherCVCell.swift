@@ -15,12 +15,7 @@ class AnasayfaDailyWeatherCVCell: UICollectionViewCell {
     static let reuseIdentifier: String = "DailyWeatherCVCell"
 
     func set(data: HavaDurum.Hava, indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            hour.text = "Now"
-        } else {
-//            hour.text = try? Utility.dateFormatter(to: .strToStr, value: data.dateTxt, outputFormat: "HH:mm") as? String ?? "-"
-        }
-
+        hour.text = indexPath.row == 0 ? "Now" : data.time
         imgWeather.image = UIImage(named: data.weather[0].icon)
         configImg()
     }

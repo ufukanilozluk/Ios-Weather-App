@@ -37,14 +37,11 @@ extension UITableView {
                 animationView.widthAnchor.constraint(equalToConstant: 100),
                 animationView.heightAnchor.constraint(equalToConstant: 100),
             ])
-            
+
             Utility.startAnimation(jsonFile: animation!, view: animationView)
             stackView.addArrangedSubview(animationView)
-            
         }
 
-        
-        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(messageLabel)
         emptyView.addSubview(stackView)
@@ -67,13 +64,12 @@ extension UITableView {
     }
 }
 
-
 // MARK: Dictionary
 
 extension Dictionary {
     mutating func merge(dict: [Key: Value]) {
         for (k, v) in dict {
-            updateValue(v, forKey: k)   // k varsa v yi güncelliyor yoksa k,v ekliyor bu func
+            updateValue(v, forKey: k) // k varsa v yi güncelliyor yoksa k,v ekliyor bu func
         }
     }
 }
@@ -81,7 +77,6 @@ extension Dictionary {
 // MARK: UIView
 
 extension UIView {
-
     var width: CGFloat {
         return frame.size.width
     }
@@ -95,13 +90,11 @@ extension UIView {
             addSubview(view)
         }
     }
-
 }
 
 // MARK: UIViewController
 
 extension UIViewController {
-    
     func setEmptyView(title: String, message: String, image: UIImage? = nil) {
         let emptyView = UIView(frame: CGRect(x: view.center.x, y: view.center.y, width: view.bounds.size.width, height: view.bounds.size.height))
         let stackView = UIStackView()
@@ -148,7 +141,6 @@ extension UIViewController {
     }
 }
 
-
 // MARK: SegmentedControl
 
 extension UISegmentedControl {
@@ -160,7 +152,6 @@ extension UISegmentedControl {
             insertSegment(withTitle: segment, at: numberOfSegments, animated: false)
         }
     }
-
 }
 
 // MARK: UIImageView
@@ -174,5 +165,20 @@ extension UIImageView {
         self.init(image: image)
         self.contentMode = contentMode
         translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
+extension Date {
+    func timeIn24HourFormat() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: self)
+    }
+
+    func dateAndTimeLong() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMMM EEEE"
+        return formatter.string(from: self)
     }
 }

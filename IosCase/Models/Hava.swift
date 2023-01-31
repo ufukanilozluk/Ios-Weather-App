@@ -45,6 +45,13 @@ extension HavaDurum {
             "\(wind.deg)m/s"
         }
         
+        var dateTxtLong : String{
+            dt.dateAndTimeLong()
+        }
+        
+        var time : String{
+            dt.timeIn24HourFormat()
+        }
     }
 }
 
@@ -63,7 +70,7 @@ extension HavaDurum.Hava {
         var humidityTxt: String {
             "%\(humidity)"
         }
-        
+
         var pressureTxt: String {
             "%\(pressure) mbar"
         }
@@ -74,6 +81,10 @@ extension HavaDurum.Hava {
         var main: String
         var description: String
         var icon: String
+
+        var descriptionTxt: String {
+            description.capitalized
+        }
     }
 
     struct Wind: Codable {

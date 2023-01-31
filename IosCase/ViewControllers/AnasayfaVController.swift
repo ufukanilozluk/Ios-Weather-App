@@ -31,10 +31,9 @@ class AnasayfaVController: BaseVController {
     let refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
-    var dataWeather: HavaDurum = HavaDurum() {
+    var dataWeather: [HavaDurum.Hava]? {
         didSet {
             DispatchQueue.main.async {
-                self.setData()
                 self.dailyWeatherCV.reloadData()
             }
         }
@@ -51,7 +50,6 @@ class AnasayfaVController: BaseVController {
         Utility.netWorkConnectivityCheck()
         config()
         setData()
-       
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -157,34 +155,43 @@ class AnasayfaVController: BaseVController {
         }
 
         viewModel.temperature.bind { [weak self] temperature in
-            
+
             DispatchQueue.main.async {
                 self?.lblTemperature.text = temperature
             }
         }
-        
+
         viewModel.visibility.bind { [weak self] visibility in
-            
+
             DispatchQueue.main.async {
                 self?.lblVisibility.text = visibility
             }
         }
 
         viewModel.pressure.bind { [weak self] pressure in
-            
+
             DispatchQueue.main.async {
                 self?.lblPressure.text = pressure
             }
         }
-        
+
         viewModel.date.bind { [weak self] date in
-            
+
             DispatchQueue.main.async {
                 self?.lblDate.text = date
             }
         }
 
-        
+        viewModel.date.bind { [weak self] date in
+
+            DispatchQueue.main.async {
+                self?.lblDate.text = date
+            }
+        }
+
+        viewModel.weatherData.bind { [weak self] weatherData in
+            self?.dataWeather = weatherData
+        }
     }
 
     func fetchData(selectedCityIndex: Int = 0) {
@@ -256,17 +263,22 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataWeather.list.count
+        dataWeather?.count ?? 0
     }
 
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataWeather.list.count
+        dataWeather?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath) as! AnasayfaDailyWeatherCVCell
-        let rowData = dataWeather.list[indexPath.row]
-        cell.set(data: rowData, indexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath)
+
+        if let cell = cell as? AnasayfaDailyWeatherCVCell {
+            if let rowData = dataWeather?[indexPath.row] {
+                cell.set(data: rowData, indexPath: indexPath)
+            }
+        }
+
         return cell
     }
 }
