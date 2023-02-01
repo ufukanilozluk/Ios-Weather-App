@@ -25,11 +25,10 @@ class CitiesMainVModel: MainVModel {
 
     override init() {
         super.init()
-        getWeather()
     }
 
-    func getWeather() {
-        let endPoint = Endpoint.daily(city: "Bursa", appId: "54bfbfe4aa755c3b005fded2b0741fa5")
+    func getWeather(city:String,  completion: @escaping()->Void ) {
+        let endPoint = Endpoint.daily(city: city)
 
         APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
             switch result {
@@ -44,7 +43,7 @@ class CitiesMainVModel: MainVModel {
                 self.pressure.value = data.main.pressureTxt
                 self.date.value =  data.dateTxtLong
                 self.weatherData.value = forecast.list
-
+                completion()
             case let .failure(error):
                 switch error {
                 case let .error(errorString):

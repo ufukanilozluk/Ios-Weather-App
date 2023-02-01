@@ -38,7 +38,7 @@ extension HavaDurum {
         var dt: Date
 
         var visibilityTxt: String {
-            " \(Int(visibility / 1000)) km"
+            "\(Int(visibility / 1000)) km"
         }
 
         var windTxt: String {

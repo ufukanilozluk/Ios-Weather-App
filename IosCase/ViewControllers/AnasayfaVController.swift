@@ -28,16 +28,10 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var lblPressure: UILabel!
     @IBOutlet var welcomeAnimationView: UIView!
 
-    let refreshControl = UIRefreshControl()
+    lazy var refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
-    var dataWeather: [HavaDurum.Hava]? {
-        didSet {
-            DispatchQueue.main.async {
-                self.dailyWeatherCV.reloadData()
-            }
-        }
-    }
+    var dataWeather: [HavaDurum.Hava]?
 
     var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
     private let spacing: CGFloat = 4.0
@@ -49,10 +43,10 @@ class AnasayfaVController: BaseVController {
     override func viewDidLoad() {
         Utility.netWorkConnectivityCheck()
         config()
-        setData()
+        fetchData()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    func updateHome() {
         selectedCities = SehirlerVController.getCities()
         if !selectedCities.isEmpty {
             emptyView.removeFromSuperview()
@@ -69,7 +63,7 @@ class AnasayfaVController: BaseVController {
                 createSegmentedControl()
             }
 
-//            addSkeleton()
+            addSkeleton()
 
         } else {
             view.addSubview(emptyView)
@@ -79,32 +73,16 @@ class AnasayfaVController: BaseVController {
         }
     }
 
-    func switchSegmentControlSkeletonable() {
-        if let _ = segmentedControl {
-            let state = !segmentedControl!.isSkeletonable
-            segmentedControl!.isSkeletonable = state
-            state ? segmentedControl!.showAnimatedGradientSkeleton() : segmentedControl!.hideSkeleton()
-
-            if #available(iOS 13.0, *) {
-                segmentedControl!.selectedSegmentTintColor = state ? Colors.alpha : Colors.tint
-            }
-
-            let attributes = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : Colors.segmentedControlNormalState]
-            let attributesSelected = [NSAttributedString.Key.foregroundColor: state ? Colors.alpha : Colors.segmentedControlSelectedState]
-            segmentedControl!.setTitleTextAttributes(attributes, for: .normal)
-            segmentedControl!.setTitleTextAttributes(attributesSelected, for: .selected)
-            segmentedControl!.backgroundColor = Colors.segmentedControlSelectedState
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        updateHome()
     }
 
     func addSkeleton() {
         scrollViewAnasayfa.showAnimatedGradientSkeleton()
-        switchSegmentControlSkeletonable()
     }
 
     func removeSkeleton() {
         scrollViewAnasayfa.hideSkeleton()
-        switchSegmentControlSkeletonable()
     }
 
     func config() {
@@ -129,7 +107,7 @@ class AnasayfaVController: BaseVController {
         weeklyWeatherTV.estimatedRowHeight = 50
     }
 
-    func setData() {
+    func setBindings() {
         viewModel.bigIcon.bind { [weak self] bigIcon in
             DispatchQueue.main.async {
                 self?.imgWeatherMain.image = bigIcon
@@ -194,23 +172,35 @@ class AnasayfaVController: BaseVController {
         }
     }
 
-    func fetchData(selectedCityIndex: Int = 0) {
-        city = selectedCities[selectedCityIndex]
-//        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
-        let parametersDaily: [String: Any] = ["q": city.cityName!, "cnt": 5]
-//        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
-
-        dispatchGroup.enter()
-//        sehirlerVModel.getWeather { [self] forecast in
-//            self.dataWeather = forecast
-//            self.dispatchGroup.leave()
-//        }
-//        dispatchGroup.enter()
-//        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
-        dispatchGroup.notify(queue: .main) {
+    func updateUI() {
+        setBindings()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.dailyWeatherCV.reloadData()
             self.refreshControl.endRefreshing()
             self.removeSkeleton()
         }
+    }
+
+    func fetchData(selectedCityIndex: Int = 0) {
+        city = selectedCities[selectedCityIndex]
+        viewModel.getWeather(city: city.cityName!) {
+            self.updateUI()
+        }
+
+//        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
+
+//        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
+
+//        dispatchGroup.enter()
+        ////        sehirlerVModel.getWeather { [self] forecast in
+        ////            self.dataWeather = forecast
+        ////            self.dispatchGroup.leave()
+        ////        }
+        ////        dispatchGroup.enter()
+        ////        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
+//        dispatchGroup.notify(queue: .main) {
+
+//        }
     }
 
     func createSegmentedControl() {
@@ -220,6 +210,15 @@ class AnasayfaVController: BaseVController {
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
         segmentedControl!.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
         mainStackView.insertArrangedSubview(segmentedControl!, at: 0)
+
+        let attributes = [NSAttributedString.Key.foregroundColor: Colors.segmentedControlNormalState]
+        let attributesSelected = [NSAttributedString.Key.foregroundColor: Colors.segmentedControlSelectedState]
+        segmentedControl!.setTitleTextAttributes(attributes, for: .normal)
+        segmentedControl!.setTitleTextAttributes(attributesSelected, for: .selected)
+        segmentedControl!.backgroundColor = Colors.segmentedControlSelectedState
+        if #available(iOS 13.0, *) {
+            segmentedControl!.selectedSegmentTintColor = Colors.tint
+        }
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
@@ -228,7 +227,7 @@ class AnasayfaVController: BaseVController {
     }
 
     @objc func didPullToRefresh() {
-        fetchData()
+        fetchData(selectedCityIndex: segmentedControl!.selectedSegmentIndex)
         addSkeleton()
     }
 }

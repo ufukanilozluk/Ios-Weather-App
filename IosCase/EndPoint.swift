@@ -32,8 +32,8 @@ extension Endpoint {
 }
 
 extension Endpoint {
-    static func daily(city: String,
-                      cnt: String = "8", lang: String = "en", appId: String, units: String = "metric") -> Self {
+    static func daily(city: String, cnt: String = "7", lang: String = "en",
+                      appId: String = "54bfbfe4aa755c3b005fded2b0741fa5", units: String = "metric") -> Self {
         Endpoint(
             host: "api.openweathermap.org",
             path: "data/2.5/forecast",
