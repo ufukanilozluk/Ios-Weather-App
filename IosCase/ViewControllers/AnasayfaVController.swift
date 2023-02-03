@@ -42,7 +42,7 @@ class AnasayfaVController: BaseVController {
 
     override func viewDidLoad() {
         Utility.netWorkConnectivityCheck()
-        config()
+        configUI()
         fetchData()
     }
 
@@ -51,7 +51,7 @@ class AnasayfaVController: BaseVController {
         if !selectedCities.isEmpty {
             emptyView.removeFromSuperview()
             scrollViewAnasayfa.isHidden = false
-            fetchData()
+
             if let _ = segmentedControl {
                 if SehirlerVController.shouldUpdateSegments {
                     let items = SehirlerVController.getCities().map({ $0.cityName! })
@@ -63,6 +63,7 @@ class AnasayfaVController: BaseVController {
                 createSegmentedControl()
             }
 
+            fetchData(selectedCityIndex: segmentedControl!.selectedSegmentIndex)
             addSkeleton()
 
         } else {
@@ -85,19 +86,12 @@ class AnasayfaVController: BaseVController {
         scrollViewAnasayfa.hideSkeleton()
     }
 
-    func config() {
+    func configUI() {
         weeklyWeatherTV.dataSource = self
         weeklyWeatherTV.delegate = self
         scrollViewAnasayfa.delegate = self
         dailyWeatherCV.delegate = self
         dailyWeatherCV.dataSource = self
-
-//         Collection view cell equaled size config
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        dailyWeatherCV?.collectionViewLayout = layout
 
         refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
@@ -105,6 +99,8 @@ class AnasayfaVController: BaseVController {
 
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
+     
+    
     }
 
     func setBindings() {
@@ -280,22 +276,16 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
 
         return cell
     }
+    
 }
-
-// Collection view cell equaled size delegate method
 
 extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let numberOfItemsPerRow: CGFloat = 5
-        let spacingBetweenCells: CGFloat = 15
-
-        let totalSpacing = (2 * spacing) + ((numberOfItemsPerRow - 1) * spacingBetweenCells) // Amount of total spacing in a row
-
-        if let collection = dailyWeatherCV {
-            let width = (collection.bounds.width - totalSpacing) / numberOfItemsPerRow
-            return CGSize(width: width, height: collectionView.bounds.height - 10)
-        } else {
-            return CGSize(width: 0, height: 0)
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+            return 30
+        }
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+            return 30
         }
     }
-}
+
