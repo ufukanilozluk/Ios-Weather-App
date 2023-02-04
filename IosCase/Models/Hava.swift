@@ -44,13 +44,13 @@ extension HavaDurum {
         var windTxt: String {
             "\(wind.deg)m/s"
         }
-        
-        var dateTxtLong : String{
+
+        var dateTxtLong: String {
             dt.dateAndTimeLong()
         }
-        
-        var time : String{
-            dt.timeIn24HourFormat()
+
+        var time: String {
+            dt.timeIn24Hour()
         }
     }
 }
@@ -94,37 +94,37 @@ extension HavaDurum.Hava {
 }
 
 struct HavaDurumWeekly: Codable {
-    var list: [Daily] = []
-    var uv: String?
-
-    init(json: [String: Any]) {
-        if let weatherList = json["daily"] as? [[String: Any]] {
-            uv = String(weatherList[0]["uvi"] as! Double)
-            for dic in weatherList {
-                list.append(Daily(json: dic))
-            }
-        }
-    }
+    var lat : Double
+    var daily: [Daily]
 }
 
 extension HavaDurumWeekly {
     struct Daily: Codable {
-        var icon: String?
-        var min: String = ""
-        var max: String = ""
         var dt: Date
-
-        init(json: [String: Any]) {
-            if let data = json["temp"] as? [String: Any] {
-                var tmp = data["min"] as? Double ?? -100.0
-                min = String(Int(tmp.rounded())) + "°" + "C"
-                tmp = data["max"] as? Double ?? -100.0
-                max = String(Int(tmp.rounded())) + "°" + "C"
-            }
-            if let temp = json["weather"] as? [[String: Any]] {
-                icon = temp[0]["icon"] as? String ?? ""
-            }
-            dt = Date(timeIntervalSince1970: json["dt"] as! Double)
+        var temp: Temp
+        var weather: [Weather]
+        
+        var dtTxt : String {
+            dt.dayLong()
         }
+    }
+}
+
+extension HavaDurumWeekly.Daily {
+    struct Temp: Codable {
+        var min: Double
+        var max: Double
+        
+        var minTxt: String {
+            "\(Int(min))°C"
+        }
+        
+        var maxTxt: String {
+            "\(Int(max))°C"
+        }
+    }
+
+    struct Weather: Codable {
+        var icon: String
     }
 }

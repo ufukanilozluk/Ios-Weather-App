@@ -32,46 +32,42 @@ class AnasayfaVController: BaseVController {
     var segmentedControl: UISegmentedControl?
     var city: Location = Location(json: [:])
     var dataWeather: [HavaDurum.Hava]?
-
-    var weeklyWeather: HavaDurumWeekly = HavaDurumWeekly(json: [:])
+    var weeklyWeather: HavaDurumWeekly?
     private let spacing: CGFloat = 4.0
-    var selectedCities = SehirlerVController.getCities()
-
-    let dispatchGroup = DispatchGroup()
+    var selectedCities: [Location]?
+    var selectedCity: Location?
     var viewModel: CitiesMainVModel = CitiesMainVModel()
 
     override func viewDidLoad() {
         Utility.netWorkConnectivityCheck()
         configUI()
-        fetchData()
     }
 
     func updateHome() {
-        selectedCities = SehirlerVController.getCities()
-        if !selectedCities.isEmpty {
-            emptyView.removeFromSuperview()
-            scrollViewAnasayfa.isHidden = false
-
-            if let _ = segmentedControl {
-                if SehirlerVController.shouldUpdateSegments {
-                    let items = SehirlerVController.getCities().map({ $0.cityName! })
-                    segmentedControl?.replaceSegments(segments: items)
-                    segmentedControl?.selectedSegmentIndex = 0
-                    SehirlerVController.shouldUpdateSegments = false
-                }
-            } else {
-                createSegmentedControl()
-            }
-
-            fetchData(selectedCityIndex: segmentedControl!.selectedSegmentIndex)
-            addSkeleton()
-
-        } else {
+        guard let cities = SehirlerVController.getCities() else {
             view.addSubview(emptyView)
             Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
+            return
         }
+        selectedCities = cities
+        emptyView.removeFromSuperview()
+        scrollViewAnasayfa.isHidden = false
+
+        if let _ = segmentedControl {
+            if SehirlerVController.shouldUpdateSegments {
+                let items = selectedCities!.map({ $0.cityName! })
+                segmentedControl?.replaceSegments(segments: items)
+                segmentedControl?.selectedSegmentIndex = 0
+                SehirlerVController.shouldUpdateSegments = false
+            }
+        } else {
+            createSegmentedControl()
+        }
+        selectedCity = selectedCities![segmentedControl!.selectedSegmentIndex]
+        fetchData(for: selectedCity!)
+        addSkeleton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,8 +95,6 @@ class AnasayfaVController: BaseVController {
 
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
-     
-    
     }
 
     func setBindings() {
@@ -166,20 +160,30 @@ class AnasayfaVController: BaseVController {
         viewModel.weatherData.bind { [weak self] weatherData in
             self?.dataWeather = weatherData
         }
+
+        viewModel.weeklyWeatherData.bind { [weak self] weeklyWeatherData in
+            self?.weeklyWeather = weeklyWeatherData
+        }
     }
 
     func updateUI() {
         setBindings()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.dailyWeatherCV.reloadData()
+            self.weeklyWeatherTV.reloadData()
             self.refreshControl.endRefreshing()
             self.removeSkeleton()
         }
     }
 
-    func fetchData(selectedCityIndex: Int = 0) {
-        city = selectedCities[selectedCityIndex]
-        viewModel.getWeather(city: city.cityName!) {
+    func fetchData(for city: Location) {
+//        viewModel.getWeather(city: city.cityName!) {
+//            self.viewModel.getWeatherForecastWeekly(lat: String(self.city.lat!), lon: String(self.city.lon!)) {
+//                self.updateUI()
+//            }
+//        }
+
+        viewModel.getForecast(city: city) {
             self.updateUI()
         }
 
@@ -200,7 +204,7 @@ class AnasayfaVController: BaseVController {
     }
 
     func createSegmentedControl() {
-        let items = selectedCities.map({ $0.cityName! })
+        let items = selectedCities!.map({ $0.cityName! })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
@@ -218,19 +222,20 @@ class AnasayfaVController: BaseVController {
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
-        fetchData(selectedCityIndex: segmentedControl.selectedSegmentIndex)
+        selectedCity = selectedCities![segmentedControl.selectedSegmentIndex]
+        fetchData(for: selectedCity!)
         addSkeleton()
     }
 
     @objc func didPullToRefresh() {
-        fetchData(selectedCityIndex: segmentedControl!.selectedSegmentIndex)
+        fetchData(for: selectedCity!)
         addSkeleton()
     }
 }
 
 extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weeklyWeather.list.count
+        return weeklyWeather?.daily.count ?? 0
     }
 
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
@@ -238,8 +243,10 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath) as! AnasayfaWeeklyWeatherTVCell
-        cell.data = weeklyWeather.list[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath)
+        if let cell = cell as? AnasayfaWeeklyWeatherTVCell {
+            cell.data = weeklyWeather!.daily[indexPath.row]
+        }
         return cell
     }
 }
@@ -276,16 +283,14 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
 
         return cell
     }
-    
 }
 
 extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return 30
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 30
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 30
     }
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 30
+    }
+}

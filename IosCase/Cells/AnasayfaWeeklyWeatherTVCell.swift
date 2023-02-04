@@ -18,12 +18,10 @@ class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
     var data: HavaDurumWeekly.Daily? {
         didSet {
             if let data = data {
-                imgWeatherTV.image = UIImage(named: data.icon!)
-                lblMaxWeatherTV.text = data.max
-                lblMinWeatherTV.text = data.min
-                // EEEE direk gün ismi
-//                lblDay.text = try? Utility.dateFormatter(to: .toStr, value: data.dt, outputFormat: "EEEE")
-                              as? String ?? "-"
+                imgWeatherTV.image = UIImage(named: data.weather[0].icon)
+                lblMaxWeatherTV.text = data.temp.maxTxt
+                lblMinWeatherTV.text = data.temp.minTxt
+                lblDay.text = data.dtTxt
             }
         }
     }

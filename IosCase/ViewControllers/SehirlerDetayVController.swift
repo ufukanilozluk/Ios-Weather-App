@@ -69,7 +69,7 @@ class SehirlerDetayVController: BaseVController {
                         var citiesArray = SehirlerVController.getCities()
                         let cityName = placeMark.administrativeArea
                         if !self.once {
-                            if let _ = citiesArray.first(where: { $0.cityName! == cityName! }) {
+                            if let _ = citiesArray?.first(where: { $0.cityName! == cityName! }) {
                                 Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
 
                             } else {
@@ -78,8 +78,8 @@ class SehirlerDetayVController: BaseVController {
                                 city.countryName = placeMark.country
                                 city.lon = location.coordinate.longitude as Double
                                 city.lat = location.coordinate.latitude as Double
-                                citiesArray.append(city)
-                                SehirlerDetayVController.saveCities(arrayCity: citiesArray)
+                                citiesArray?.append(city)
+                                SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
                                 Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
                                 self.searchController.searchBar.text = ""
                                 self.cities = []
@@ -170,7 +170,7 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
             var citiesArray = SehirlerVController.getCities()
             let cityName = self.cities[indexPath.row].cityName!
             var city = self.cities.first(where: { $0.cityName == cityName })
-            if let _ = citiesArray.first(where: { $0.cityName! == city?.cityName! }) {
+            if let _ = citiesArray?.first(where: { $0.cityName! == city?.cityName! }) {
                 throw SehirEkleError.sameSelection
             }
 
@@ -178,8 +178,8 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
                 city?.lat = data?["Latitude"] as? Double
                 city?.lon = data?["Longitude"] as? Double
 
-                citiesArray.append(city!)
-                SehirlerDetayVController.saveCities(arrayCity: citiesArray)
+                citiesArray?.append(city!)
+                SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
                 Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
                 SehirlerVController.shouldUpdateSegments = true
                 self.searchController.searchBar.text = ""

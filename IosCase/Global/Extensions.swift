@@ -169,7 +169,7 @@ extension UIImageView {
 }
 
 extension Date {
-    func timeIn24HourFormat() -> String {
+    func timeIn24Hour() -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .none
         formatter.dateFormat = "HH:mm"
@@ -179,6 +179,12 @@ extension Date {
     func dateAndTimeLong() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMMM EEEE"
+        return formatter.string(from: self)
+    }
+    
+    func dayLong() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
         return formatter.string(from: self)
     }
 }

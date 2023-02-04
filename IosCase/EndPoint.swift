@@ -53,19 +53,21 @@ extension Endpoint {
     }
 
     static func weeklyForecast(
-        exclude: String?,
-        lan: String,
-        lot: String,
+        exclude: String = "current,minutely,hourly,alerts" ,
+        units: String = "metric" ,
+        lat: String,
+        lon: String,
         appId: String = "54bfbfe4aa755c3b005fded2b0741fa5"
     ) -> Self {
         Endpoint(
             host: "api.openweathermap.org",
-            path: "onecall",
+            path: "data/2.5/onecall",
             queryItems: [
                 URLQueryItem(name: "appid", value: appId),
                 URLQueryItem(name: "exclude", value: exclude),
-                URLQueryItem(name: "lot", value: lot),
-                URLQueryItem(name: "lan", value: lan),
+                URLQueryItem(name: "lat", value: lat),
+                URLQueryItem(name: "lon", value: lon),
+                URLQueryItem(name: "units", value: units),
             ]
         )
     }

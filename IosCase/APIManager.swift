@@ -26,7 +26,7 @@ class APIManager {
                 completion(.success(decodedData))
                 return
             } catch let decodingError {
-                completion(.failure(APIError.error("Error: \(decodingError.localizedDescription)")))
+                completion(.failure(APIError.error("Error: \(String(describing: decodingError))")))
                 return
             }
 
