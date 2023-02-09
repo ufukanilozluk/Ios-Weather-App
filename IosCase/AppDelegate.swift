@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 19.11.2020.
-//
-
 import Network
 import UIKit
 

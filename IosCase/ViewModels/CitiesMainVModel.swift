@@ -1,10 +1,3 @@
-//
-//  CitiesMainVModel.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 30.11.2020.
-//
-
 import Alamofire
 import Foundation
 import UIKit
@@ -20,11 +13,15 @@ class CitiesMainVModel: MainVModel {
     let date = Box("")
     let weatherData: Box<[HavaDurum.Hava]> = Box([])
     let weeklyWeatherData: Box<HavaDurumWeekly?> = Box(nil)
+    let allCitiesWeatherData: Box<[HavaDurum]> = Box([])
 
     let dispatchGroup = DispatchGroup()
 
     override init() {
         super.init()
+    }
+
+    func setBindings() {
     }
 
     func getWeather(city: String) {
@@ -50,7 +47,7 @@ class CitiesMainVModel: MainVModel {
                 }
             }
         }
-        self.dispatchGroup.leave()
+        dispatchGroup.leave()
     }
 
     func getWeatherForecastWeekly(lat: String, lon: String) {
@@ -67,7 +64,7 @@ class CitiesMainVModel: MainVModel {
                 }
             }
         }
-        self.dispatchGroup.leave()
+        dispatchGroup.leave()
     }
 
     func getForecast(city: Location, completion: @escaping () -> Void) {
@@ -77,6 +74,43 @@ class CitiesMainVModel: MainVModel {
         getWeatherForecastWeekly(lat: String(city.lat!), lon: String(city.lon!))
         dispatchGroup.notify(queue: .main) {
             completion()
+        }
+    }
+
+    func getForecastForAllCities(completion: @escaping () -> Void) {
+        var weather: [HavaDurum] = []
+        let selectedCities: [Location] = AnasayfaVController.selectedCities!
+        for city in selectedCities {
+            dispatchGroup.enter()
+            let endPoint = Endpoint.daily(city: city.cityName!, cnt: "1")
+            APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
+                switch result {
+                case let .success(forecast):
+                    weather.append(forecast)
+                case let .failure(error):
+                    switch error {
+                    case let .error(errorString):
+                        print(errorString)
+                    }
+                }
+                self.dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            // Şehirler sırasındakine göre tüm verileri çektikten sonra sırala
+
+            weather.sort(by: { n1, n2 in
+                let index1 = selectedCities.firstIndex(where: {
+                    $0.cityTxt == n1.city!.nameTxt
+                })
+                let index2 = selectedCities.firstIndex(where: {
+                    $0.cityTxt == n2.city!.nameTxt
+                })
+                return index1! < index2!
+            })
+            completion()
+            self.allCitiesWeatherData.value = weather
         }
     }
 }

@@ -1,10 +1,3 @@
-//
-
-//  isortagim
-//
-//  Created by Ufuk on 7.10.2019.
-//  Copyright © 2019 Ufuk Anıl Özlük. All rights reserved.
-//
 import UIKit
 
 // MARK: UITableView

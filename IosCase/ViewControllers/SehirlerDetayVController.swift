@@ -1,8 +1,3 @@
-//
-//  SehirlerDetayVController.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük
 
 import SkeletonView
 import UIKit
@@ -21,7 +16,7 @@ class SehirlerDetayVController: BaseVController {
     let searchController = UISearchController(searchResultsController: nil)
     lazy var sehirlerVModel: SehirlerVModel = {
         let vm = SehirlerVModel(view: self.view)
-        vm.delegate = self
+//        vm.delegate = self
         return vm
     }()
 
@@ -195,13 +190,13 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
 
 // MARK: ViewModel Delegate Functions
 
-extension SehirlerDetayVController: SehirEkleVModelDelegate {
-    func getCityListCompleted(data: [Location]) {
-        cities = data
-        removeSkeleton()
-        sehirlerTableview.reloadData()
-    }
-}
+//extension SehirlerDetayVController: SehirEkleVModelDelegate {
+//    func getCityListCompleted(data: [Location]) {
+//        cities = data
+//        removeSkeleton()
+//        sehirlerTableview.reloadData()
+//    }
+//}
 
 extension SehirlerDetayVController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

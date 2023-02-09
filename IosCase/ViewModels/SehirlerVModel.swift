@@ -1,16 +1,9 @@
-//
-//  CitiesVModel.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 19.11.2020.
-//
-
 import Alamofire
 import Foundation
 import UIKit
 
 class SehirlerVModel: MainVModel {
-    var delegate: SehirEkleVModelDelegate?
+//    var delegate: SehirEkleVModelDelegate?
     let selfView: UIView
     typealias FindCooordinateCompletion = ((_ data: [String:Any]?) -> Void)
 
@@ -31,7 +24,7 @@ class SehirlerVModel: MainVModel {
                     for el in response {
                         data.append(Location(json: el))
                     }
-                    self.delegate?.getCityListCompleted(data: data)
+//                    self.delegate?.getCityListCompleted(data: data)
 
                 } else {
                     print("Cast olamadı")

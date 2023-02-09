@@ -1,10 +1,3 @@
-//
-//  AnasayfaVController.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 19.11.2020.
-//
-
 import Network
 import SkeletonView
 import UIKit
@@ -34,7 +27,7 @@ class AnasayfaVController: BaseVController {
     var dataWeather: [HavaDurum.Hava]?
     var weeklyWeather: HavaDurumWeekly?
     private let spacing: CGFloat = 4.0
-    var selectedCities: [Location]?
+    static var selectedCities: [Location]?
     var selectedCity: Location?
     var viewModel: CitiesMainVModel = CitiesMainVModel()
 
@@ -51,13 +44,13 @@ class AnasayfaVController: BaseVController {
             scrollViewAnasayfa.isHidden = true
             return
         }
-        selectedCities = cities
+        AnasayfaVController.selectedCities = cities
         emptyView.removeFromSuperview()
         scrollViewAnasayfa.isHidden = false
 
         if let _ = segmentedControl {
             if SehirlerVController.shouldUpdateSegments {
-                let items = selectedCities!.map({ $0.cityName! })
+                let items = AnasayfaVController.selectedCities!.map({ $0.cityTxt })
                 segmentedControl?.replaceSegments(segments: items)
                 segmentedControl?.selectedSegmentIndex = 0
                 SehirlerVController.shouldUpdateSegments = false
@@ -65,7 +58,7 @@ class AnasayfaVController: BaseVController {
         } else {
             createSegmentedControl()
         }
-        selectedCity = selectedCities![segmentedControl!.selectedSegmentIndex]
+        selectedCity = AnasayfaVController.selectedCities![segmentedControl!.selectedSegmentIndex]
         fetchData(for: selectedCity!)
         addSkeleton()
     }
@@ -177,34 +170,13 @@ class AnasayfaVController: BaseVController {
     }
 
     func fetchData(for city: Location) {
-//        viewModel.getWeather(city: city.cityName!) {
-//            self.viewModel.getWeatherForecastWeekly(lat: String(self.city.lat!), lon: String(self.city.lon!)) {
-//                self.updateUI()
-//            }
-//        }
-
         viewModel.getForecast(city: city) {
             self.updateUI()
         }
-
-//        let parametersWeekly: [String: Any] = ["lon": String(city.lon!), "lat": String(city.lat!), "exclude": "current,minutely,hourly,alerts"]
-
-//        let parametersWeekly: [String: Any] = ["q": city.cityName!, "cnt": 7]
-
-//        dispatchGroup.enter()
-        ////        sehirlerVModel.getWeather { [self] forecast in
-        ////            self.dataWeather = forecast
-        ////            self.dispatchGroup.leave()
-        ////        }
-        ////        dispatchGroup.enter()
-        ////        sehirlerVModel.getWeatherForecastWeekly(parameters: parametersWeekly)
-//        dispatchGroup.notify(queue: .main) {
-
-//        }
     }
 
     func createSegmentedControl() {
-        let items = selectedCities!.map({ $0.cityName! })
+        let items = AnasayfaVController.selectedCities!.map({ $0.cityTxt })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
@@ -222,7 +194,7 @@ class AnasayfaVController: BaseVController {
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
-        selectedCity = selectedCities![segmentedControl.selectedSegmentIndex]
+        selectedCity = AnasayfaVController.selectedCities![segmentedControl.selectedSegmentIndex]
         fetchData(for: selectedCity!)
         addSkeleton()
     }

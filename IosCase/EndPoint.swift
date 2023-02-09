@@ -1,10 +1,3 @@
-//
-//  EndPoint.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 18.01.2023.
-//
-
 import Foundation
 
 struct Endpoint {

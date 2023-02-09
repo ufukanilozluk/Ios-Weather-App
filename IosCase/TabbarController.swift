@@ -1,10 +1,3 @@
-//
-//  TabbarController.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 5.01.2021.
-//
-
 import Network
 import UIKit
 

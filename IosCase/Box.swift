@@ -8,6 +8,7 @@ final class Box<T> {
     var value: T {
        
         didSet {
+            print(value)
             listener?(value)
         }
     }

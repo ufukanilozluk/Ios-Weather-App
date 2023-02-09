@@ -1,10 +1,3 @@
-//
-//  SehirlerDetayTVCell.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük
-//
-
 import UIKit
 
 class SehirlerDetayTVCell: UITableViewCell {

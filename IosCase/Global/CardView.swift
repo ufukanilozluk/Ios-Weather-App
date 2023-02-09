@@ -1,11 +1,3 @@
-//
-//  DesingTableCell.swift
-//  isortagim
-//
-//  Created by Ufuk Anıl Özlük on 18.11.2019.
-//  Copyright © 2019 Ufuk Anıl Özlük. All rights reserved.
-//
-
 import Foundation
 import UIKit
 

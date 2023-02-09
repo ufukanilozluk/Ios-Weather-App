@@ -1,10 +1,3 @@
-//
-//  BaseVController.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 5.01.2021.
-//
-
 import UIKit
 
 class BaseVController: UIViewController {

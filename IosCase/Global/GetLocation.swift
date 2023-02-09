@@ -1,9 +1,3 @@
-//
-//  GetLocation.swift
-//  endavet_portal
-//
-//  Created by Ufuk on 26.08.2020.
-
 import CoreLocation
 
 public class GetLocation: NSObject, CLLocationManagerDelegate {

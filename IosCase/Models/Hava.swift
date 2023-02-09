@@ -1,10 +1,3 @@
-//
-//  Hava.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 4.12.2020.
-//
-
 import Foundation
 
 struct City: Codable {
@@ -14,6 +7,10 @@ struct City: Codable {
 
     var locationName: String {
         "\(name),\(country)"
+    }
+
+    var nameTxt: String {
+        name.replacingOccurrences(of: " Province", with: "")
     }
 }
 
@@ -94,7 +91,7 @@ extension HavaDurum.Hava {
 }
 
 struct HavaDurumWeekly: Codable {
-    var lat : Double
+    var lat: Double
     var daily: [Daily]
 }
 
@@ -103,8 +100,8 @@ extension HavaDurumWeekly {
         var dt: Date
         var temp: Temp
         var weather: [Weather]
-        
-        var dtTxt : String {
+
+        var dtTxt: String {
             dt.dayLong()
         }
     }
@@ -114,11 +111,11 @@ extension HavaDurumWeekly.Daily {
     struct Temp: Codable {
         var min: Double
         var max: Double
-        
+
         var minTxt: String {
             "\(Int(min))°C"
         }
-        
+
         var maxTxt: String {
             "\(Int(max))°C"
         }

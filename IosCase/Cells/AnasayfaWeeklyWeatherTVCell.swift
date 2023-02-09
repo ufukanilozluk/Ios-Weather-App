@@ -1,10 +1,3 @@
-//
-//  AnasayfaWeeklyWeatherTVCell.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 18.12.2020.
-//
-
 import UIKit
 
 class AnasayfaWeeklyWeatherTVCell: UITableViewCell {

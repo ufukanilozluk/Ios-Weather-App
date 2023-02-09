@@ -1,10 +1,3 @@
-//
-//  Cities.swift
-//  IosCase
-//
-//  Created by Ufuk Anıl Özlük on 19.11.2020.
-//
-
 import Foundation
 
 // Karşılaştırmada (contains kısmı) kullanmak için equatable gerekir
@@ -17,6 +10,10 @@ struct Location: Codable, Equatable {
 
     var locationName: String? {
         "\(cityName!),\(countryName!)"
+    }
+    
+    var cityTxt : String {
+         cityName!.replacingOccurrences(of: " Province", with: "")
     }
 
     init(json: [String: Any]) {
