@@ -3,26 +3,15 @@ import SkeletonView
 import UIKit
 
 class SehirlerDetayVController: BaseVController {
-    struct Section {
-        let letter: String
-        let names: [String]
-    }
-
+    
     @IBOutlet var sehirlerTableview: UITableView!
 
-    var once: Bool = false
-    var sections = [Section]()
     var cities: [Location] = []
     let searchController = UISearchController(searchResultsController: nil)
-    lazy var sehirlerVModel: SehirlerVModel = {
-        let vm = SehirlerVModel(view: self.view)
-//        vm.delegate = self
-        return vm
-    }()
-
+    let sehirlerVModel = SehirlerVModel()
     lazy var searchBar = UISearchBar()
     var segueIdentifier = "goToSehir"
-    var filteredCities: [Section] = []
+
 
     var isSearchBarEmpty: Bool {
         searchController.searchBar.text?.isEmpty ?? true
@@ -63,26 +52,24 @@ class SehirlerDetayVController: BaseVController {
 
                         var citiesArray = SehirlerVController.getCities()
                         let cityName = placeMark.administrativeArea
-                        if !self.once {
-                            if let _ = citiesArray?.first(where: { $0.cityName! == cityName! }) {
-                                Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
 
-                            } else {
-                                var city = Location(json: [:])
-                                city.cityName = cityName
-                                city.countryName = placeMark.country
-                                city.lon = location.coordinate.longitude as Double
-                                city.lat = location.coordinate.latitude as Double
-                                citiesArray?.append(city)
-                                SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
-                                Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
-                                self.searchController.searchBar.text = ""
-                                self.cities = []
-                                self.sehirlerTableview.reloadData()
-                                self.searchController.searchBar.endEditing(true)
-                                SehirlerVController.shouldUpdateSegments = true
-                            }
-                            self.once = true
+                        if let _ = citiesArray?.first(where: { $0.cityName! == cityName! }) {
+                            Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
+
+                        } else {
+                            var city = Location(json: [:])
+                            city.cityName = cityName
+                            city.countryName = placeMark.country
+                            city.lon = location.coordinate.longitude as Double
+                            city.lat = location.coordinate.latitude as Double
+                            citiesArray?.append(city)
+                            SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
+                            Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
+                            self.searchController.searchBar.text = ""
+                            self.cities = []
+                            self.sehirlerTableview.reloadData()
+                            self.searchController.searchBar.endEditing(true)
+                            SehirlerVController.shouldUpdateSegments = true
                         }
                     }
                     )
@@ -190,13 +177,13 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
 
 // MARK: ViewModel Delegate Functions
 
-//extension SehirlerDetayVController: SehirEkleVModelDelegate {
+// extension SehirlerDetayVController: SehirEkleVModelDelegate {
 //    func getCityListCompleted(data: [Location]) {
 //        cities = data
 //        removeSkeleton()
 //        sehirlerTableview.reloadData()
 //    }
-//}
+// }
 
 extension SehirlerDetayVController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {

@@ -13,7 +13,6 @@ class SehirlerVController: BaseVController {
 
     func setBindings() {
         viewModel.allCitiesWeatherData.bind { [weak self] weatherData in
-            print(weatherData)
             self?.weather = weatherData
         }
     }

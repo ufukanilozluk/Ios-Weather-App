@@ -21,8 +21,6 @@ class CitiesMainVModel: MainVModel {
         super.init()
     }
 
-    func setBindings() {
-    }
 
     func getWeather(city: String) {
         let endPoint = Endpoint.daily(city: city)

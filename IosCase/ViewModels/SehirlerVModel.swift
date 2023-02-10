@@ -4,66 +4,54 @@ import UIKit
 
 class SehirlerVModel: MainVModel {
 //    var delegate: SehirEkleVModelDelegate?
-    let selfView: UIView
-    typealias FindCooordinateCompletion = ((_ data: [String:Any]?) -> Void)
 
-    init(view: UIView) {
-        selfView = view
+    typealias FindCooordinateCompletion = (_ data: [String: Any]?) -> Void
+
+    let locationSearchData: Box<[Location]> = Box([])
+
+//    func findCity(query: String) {
+//        var data: [Location] = []
+//        let url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + query
+//    }
+//
+//    func findCoordinate(query: String, completion: @escaping FindCooordinateCompletion) {
+//        let searchText = query.replacingOccurrences(of: " ", with: "%20")
+//        let url = "https://dataservice.accuweather.com/locations/v1/search?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + searchText
+//    }
+
+    override init() {
+        super.init()
     }
 
     func findCity(query: String) {
-        var data: [Location] = []
-        let url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + query
-        startLoader(uiView: selfView)
-        AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { [self] response in
+        let endPoint = Endpoint.daily(city: city)
 
-            switch response.result {
-            case let .success(JSON):
-
-                if let response = JSON as? [[String: Any]] {
-                    for el in response {
-                        data.append(Location(json: el))
-                    }
-//                    self.delegate?.getCityListCompleted(data: data)
-
-                } else {
-                    print("Cast olamadı")
-                }
-
+        APIManager.getJSON(url: endPoint.url) { (result: Result<[Location], APIManager.APIError>) in
+            switch result {
+            case let .success(locations):
+                self.locationSearchData.value = locations
             case let .failure(error):
-                // TODO: moobil_log // type error olarak loglanıcak
-                print(error.localizedDescription)
+                switch error {
+                case let .error(errorString):
+                    print(errorString)
+                }
             }
-            stopLoader(uiView: self.selfView)
         }
     }
 
-    func findCoordinate(query: String,completion: @escaping FindCooordinateCompletion){
-      
-        let searchText = query.replacingOccurrences(of: " ", with: "%20")
-        let url = "https://dataservice.accuweather.com/locations/v1/search?apikey=ViMALGnwtd6ZwguzkrnCM7phryDuVKY3&q=" + searchText
-        startLoader(uiView: selfView)
-        AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { [self] response in
+    func findCoordinate(query: String, completion: @escaping FindCooordinateCompletion) {
+        let endPoint = Endpoint.daily(city: city)
 
-            switch response.result {
-            case let .success(JSON):
-
-                if let response = JSON as? [[String: Any]] {
-                    if response.count > 0 {
-                        let json = response[0]["GeoPosition"]
-                        completion(json as? [String : Any])
-                    }
-
-                } else {
-                    print("Cast olamadı")
-                }
-
+        APIManager.getJSON(url: endPoint.url) { (result: Result<[Location], APIManager.APIError>) in
+            switch result {
+            case let .success(locations):
+                self.locationSearchData.value = locations
             case let .failure(error):
-                // TODO: moobil_log // type error olarak loglanıcak
-                print(error.localizedDescription)
+                switch error {
+                case let .error(errorString):
+                    print(errorString)
+                }
             }
-            stopLoader(uiView: self.selfView)
         }
-     
     }
 }
