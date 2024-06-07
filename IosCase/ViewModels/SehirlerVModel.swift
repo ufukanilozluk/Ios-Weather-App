@@ -4,8 +4,8 @@ import UIKit
 class SehirlerVModel{
 
     typealias FindCooordinateCompletion = (_ data: [String: Any]?) -> Void
-    let locationSearchData: Box<[Location]> = Box([])
-    let location: Box<[Location]> = Box([])
+    let locationSearchData: ObservableValue<[Location]> = ObservableValue([])
+    let location: ObservableValue<[Location]> = ObservableValue([])
     
 
   

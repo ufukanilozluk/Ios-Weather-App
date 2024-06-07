@@ -14,7 +14,6 @@
 		E11AF94E261F998B00EAD8E3 /* GetLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AF94D261F998B00EAD8E3 /* GetLocation.swift */; };
 		E1416F9A257E551D00B548ED /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F98257E551D00B548ED /* Utilities.swift */; };
 		E1416F9B257E551D00B548ED /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F99257E551D00B548ED /* CardView.swift */; };
-		E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B8DA6256EAA620011E376 /* MainVModel.swift */; };
 		E14BA9462C09BFA600903392 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BA9452C09BFA600903392 /* Helpers.swift */; };
 		E172B3FF259B451100390001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Colors.swift */; };
 		E18A6EB625798DA000FC2BD1 /* Hava.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A6EB525798DA000FC2BD1 /* Hava.swift */; };
@@ -71,7 +70,6 @@
 		E11AF94D261F998B00EAD8E3 /* GetLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLocation.swift; sourceTree = "<group>"; };
 		E1416F98257E551D00B548ED /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		E1416F99257E551D00B548ED /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		E14B8DA6256EAA620011E376 /* MainVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVModel.swift; sourceTree = "<group>"; };
 		E14BA9452C09BFA600903392 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		E172B3FE259B451100390001 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E18A6EB525798DA000FC2BD1 /* Hava.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hava.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 		E101EF79257B9767003ACC06 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E14B8DA6256EAA620011E376 /* MainVModel.swift */,
 				E10236DA25757114007219EA /* CitiesMainVModel.swift */,
 				E1F1D27225668764001149FE /* SehirlerVModel.swift */,
 			);
@@ -477,7 +474,6 @@
 				E1F5B0FF25A4E909005CF4A4 /* BaseVController.swift in Sources */,
 				E14BA9462C09BFA600903392 /* Helpers.swift in Sources */,
 				E1B91B8E2566578A0031E020 /* AppDelegate.swift in Sources */,
-				E14B8DA7256EAA620011E376 /* MainVModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

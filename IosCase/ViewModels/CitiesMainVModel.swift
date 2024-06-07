@@ -1,17 +1,17 @@
 import UIKit
 
 class CitiesMainVModel {
-    let temperature = Box("")
-    let bigIcon: Box<UIImage?> = Box(nil)
-    let description = Box("")
-    let visibility = Box("")
-    let wind = Box("")
-    let humidity = Box("")
-    let pressure = Box("")
-    let date = Box("")
-    let weatherData: Box<[HavaDurum.Hava]> = Box([])
-    let weeklyWeatherData: Box<HavaDurumWeekly?> = Box(nil)
-    let allCitiesWeatherData: Box<[HavaDurum]> = Box([])
+    let temperature = ObservableValue("")
+    let bigIcon: ObservableValue<UIImage?> = ObservableValue(nil)
+    let description = ObservableValue("")
+    let visibility = ObservableValue("")
+    let wind = ObservableValue("")
+    let humidity = ObservableValue("")
+    let pressure = ObservableValue("")
+    let date = ObservableValue("")
+    let weatherData: ObservableValue<[HavaDurum.Hava]> = ObservableValue([])
+    let weeklyWeatherData: ObservableValue<HavaDurumWeekly?> = ObservableValue(nil)
+    let allCitiesWeatherData: ObservableValue<[HavaDurum]> = ObservableValue([])
 
     let dispatchGroup = DispatchGroup()
 
