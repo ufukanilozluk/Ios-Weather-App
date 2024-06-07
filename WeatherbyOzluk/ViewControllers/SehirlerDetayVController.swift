@@ -179,7 +179,6 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
             self?.cities = []
             self?.sehirlerTableview.reloadData()
             self?.searchController.searchBar.endEditing(true)
-            SehirlerVController.shouldUpdateSegments = true
             UserDefaultsHelper.saveCity(city: (self?.locationToAdd![0])!)
           }
         case let .failure(error):

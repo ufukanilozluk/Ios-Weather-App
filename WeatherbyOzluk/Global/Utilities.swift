@@ -1,20 +1,13 @@
 import Foundation
 import Lottie
 import Network
-import NVActivityIndicatorView
-import SCLAlertView
 import UIKit
 
 class Utility {
     
     
     private static var formerConnectivityStatus = true
-    private static let spinner = NVActivityIndicatorView(
-        frame: CGRect(x: 0, y: 0, width: 50, height: 50),
-        type: .ballRotateChase,
-        color: UIColor(red: 0.26, green: 0.41, blue: 0.62, alpha: 1.00)
-    )
-
+   
     static func showToast(controller: UIViewController? = nil, message: String, seconds: Double, alertType: AlertType = .info) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         switch alertType {
@@ -69,12 +62,9 @@ class Utility {
         monitor.start(queue: DispatchQueue(label: "Network"))
     }
 
-    static func stopLoader(uiView: UIView) {
-        Utility.spinner.stopAnimating()
-    }
 
     static func startAnimation(jsonFile: String, view: UIView) {
-        var animationView = AnimationView()
+        var animationView = LottieAnimationView()
         animationView = .init(name: jsonFile)
         animationView.contentMode = .scaleToFill
         animationView.loopMode = .loop

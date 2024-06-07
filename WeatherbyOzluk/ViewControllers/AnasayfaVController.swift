@@ -31,11 +31,13 @@ class AnasayfaVController: BaseVController {
     var viewModel: CitiesMainVModel = CitiesMainVModel()
 
     override func viewDidLoad() {
+      
         Utility.netWorkConnectivityCheck()
         configUI()
     }
 
     func updateHome() {
+      AnasayfaVController.selectedCities = UserDefaultsHelper.getCities()
       guard  !AnasayfaVController.selectedCities.isEmpty else {
             view.addSubview(emptyView)
             Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
@@ -49,7 +51,6 @@ class AnasayfaVController: BaseVController {
 
         if let _ = segmentedControl {
             if SehirlerVController.shouldUpdateSegments {
-                AnasayfaVController.selectedCities = UserDefaultsHelper.getCities()
                 let items = AnasayfaVController.selectedCities.map({ $0.cityTxt })
                 segmentedControl?.replaceSegments(segments: items)
                 segmentedControl?.selectedSegmentIndex = 0
@@ -92,6 +93,7 @@ class AnasayfaVController: BaseVController {
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
         
+      self.setBindings()
     }
 
     func setBindings() {
@@ -109,6 +111,7 @@ class AnasayfaVController: BaseVController {
 
         viewModel.humidity.bind { [weak self] humidity in
             DispatchQueue.main.async {
+                 print(humidity+"WTF")
                 self?.lblHumidity.text = humidity
             }
         }
@@ -147,14 +150,7 @@ class AnasayfaVController: BaseVController {
                 self?.lblDate.text = date
             }
         }
-
-        viewModel.date.bind { [weak self] date in
-
-            DispatchQueue.main.async {
-                self?.lblDate.text = date
-            }
-        }
-
+      
         viewModel.weatherData.bind { [weak self] weatherData in
             self?.dataWeather = weatherData
         }
@@ -165,7 +161,7 @@ class AnasayfaVController: BaseVController {
     }
 
     func updateUI() {
-        setBindings()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.dailyWeatherCV.reloadData()
             self.weeklyWeatherTV.reloadData()
