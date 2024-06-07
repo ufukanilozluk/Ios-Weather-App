@@ -3,98 +3,92 @@ import SkeletonView
 import UIKit
 
 class SehirlerVController: BaseVController {
-    @IBOutlet var sehirlerTableView: UITableView!
-
-    var weather: [HavaDurum]?
-    var selectedCities: [Location]?
-    var newCityAdded = false
-    static var shouldUpdateSegments = false
-    var viewModel: CitiesMainVModel = CitiesMainVModel()
-
-    func setBindings() {
-        viewModel.allCitiesWeatherData.bind { [weak self] weatherData in
-            self?.weather = weatherData
-        }
+  @IBOutlet var sehirlerTableView: UITableView!
+  
+  var weather: [HavaDurum]?
+  var selectedCities: [Location] = UserDefaultsHelper.getCities()
+  var newCityAdded = false
+  static var shouldUpdateSegments = false
+  var viewModel: CitiesMainVModel = CitiesMainVModel()
+  
+  func setBindings() {
+    viewModel.allCitiesWeatherData.bind { [weak self] weatherData in
+      self?.weather = weatherData
     }
-
-    func updateUI() {
-        setBindings()
-        sehirlerTableView.reloadData()
-        removeSkeleton()
+  }
+  
+  func updateUI() {
+    setBindings()
+    sehirlerTableView.reloadData()
+    removeSkeleton()
+  }
+  
+  fileprivate func getWeatherInfo() {
+    viewModel.getForecastForAllCities {
+      self.updateUI()
     }
-
-    fileprivate func getWeatherInfo() {
-        viewModel.getForecastForAllCities {
-            self.updateUI()
-        }
+  }
+  
+  override func viewDidLoad() {
+    // Drag-drop da delegatelar ataman lazım
+    
+    //    super.viewDidLoad()
+    setConfig()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    guard !selectedCities.isEmpty else {
+      sehirlerTableView.setEmptyView(title: "No location Found", message: "Start by adding a location", animation: "location")
+      return
     }
+    getWeatherInfo()
+    addSkeleton()
+  }
+  
+  func addSkeleton() {
+    sehirlerTableView.showAnimatedGradientSkeleton()
+  }
+  
+  func removeSkeleton() {
+    sehirlerTableView.hideSkeleton()
+  }
+  
+  override func setConfig() {
+    super.setConfig()
+    sehirlerTableView.delegate = self
+    sehirlerTableView.dataSource = self
+    sehirlerTableView.dragDelegate = self
+    sehirlerTableView.dropDelegate = self
+    sehirlerTableView.dragInteractionEnabled = false
+    
+    // Bir sonraki sayfadaki geri butonunun texti burada ayarlanır.
+    navigationItem.backBarButtonItem = UIBarButtonItem(
+      title: "", style: .plain, target: nil, action: nil)
+    // Use the edit button provided by the view controller.
+    editButtonItem.title = "Edit"
+    navigationItem.leftBarButtonItem = editButtonItem // editbutton swiftten geliyor
+    sehirlerTableView.allowsSelection = false
+    sehirlerTableView.estimatedRowHeight = 60
+  }
+  
+  // Edit state function
+  
+  override func setEditing(_ editing: Bool, animated: Bool) {
+    // Takes care of toggling the button's title.
+    super.setEditing(editing, animated: true)
+    // Toggle table view editing.
+    sehirlerTableView.setEditing(editing, animated: true)
+    sehirlerTableView.dragInteractionEnabled = editing
+    // Edit button text ayarlama
+    // Swiftten geliyor isEditing
+    editButtonItem.title = isEditing ? "Done" : "Edit"
+  }
+  
+  @IBAction func sehirEkle(_ sender: Any) {
+    performSegue(withIdentifier: "goToSehirlerDetay", sender: nil)
+  }
+  
 
-    override func viewDidLoad() {
-        // Drag-drop da delegatelar ataman lazım
-
-        //    super.viewDidLoad()
-        setConfig()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        guard let cities = SehirlerVController.getCities() else {
-            sehirlerTableView.setEmptyView(title: "No location Found", message: "Start by adding a location", animation: "location")
-            return
-        }
-        selectedCities = cities
-        getWeatherInfo()
-        addSkeleton()
-    }
-
-    func addSkeleton() {
-        sehirlerTableView.showAnimatedGradientSkeleton()
-    }
-
-    func removeSkeleton() {
-        sehirlerTableView.hideSkeleton()
-    }
-
-    override func setConfig() {
-        super.setConfig()
-        sehirlerTableView.delegate = self
-        sehirlerTableView.dataSource = self
-        sehirlerTableView.dragDelegate = self
-        sehirlerTableView.dropDelegate = self
-        sehirlerTableView.dragInteractionEnabled = false
-
-        // Bir sonraki sayfadaki geri butonunun texti burada ayarlanır.
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: "", style: .plain, target: nil, action: nil)
-        // Use the edit button provided by the view controller.
-        editButtonItem.title = "Edit"
-        navigationItem.leftBarButtonItem = editButtonItem // editbutton swiftten geliyor
-        sehirlerTableView.allowsSelection = false
-        sehirlerTableView.estimatedRowHeight = 60
-    }
-
-    // Edit state function
-
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        // Takes care of toggling the button's title.
-        super.setEditing(editing, animated: true)
-        // Toggle table view editing.
-        sehirlerTableView.setEditing(editing, animated: true)
-        sehirlerTableView.dragInteractionEnabled = editing
-        // Edit button text ayarlama
-        // Swiftten geliyor isEditing
-        editButtonItem.title = isEditing ? "Done" : "Edit"
-    }
-
-    @IBAction func sehirEkle(_ sender: Any) {
-        performSegue(withIdentifier: "goToSehirlerDetay", sender: nil)
-    }
-
-    // UserDefaultsa kaydedilen structları almak için
-    class func getCities() -> [Location]? {
-        guard let cityData = UserDefaults.standard.object(forKey: "cities") as? [Data] else { return nil }
-//        Finally, there’s compactMap, which lets us discard any nil values that our transform might produce
-        return cityData.compactMap { return Location(data: $0) }
-    }
 }
 
 extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource {
@@ -103,7 +97,7 @@ extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let _ = selectedCities else {
+      guard !selectedCities.isEmpty else {
             tableView.setEmptyView(title: "No location found", message: "Start by adding a location", animation: "location")
             return 0
         }
@@ -131,16 +125,16 @@ extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource 
         // Update the model
         let mover = weather!.remove(at: sourceIndexPath.row) // sildiğini dönüyor. Yani mover bir Location
         weather!.insert(mover, at: destinationIndexPath.row)
-        selectedCities!.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-        SehirlerDetayVController.saveCities(arrayCity: selectedCities!)
+        selectedCities.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        UserDefaultsHelper.moveCity(sourceIndexPath.row, destinationIndexPath.row)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             weather!.remove(at: indexPath.row)
-            selectedCities!.remove(at: indexPath.row)
+            selectedCities.remove(at: indexPath.row)
             sehirlerTableView.deleteRows(at: [indexPath], with: .automatic)
-            SehirlerDetayVController.saveCities(arrayCity: selectedCities!)
+            UserDefaultsHelper.removeCity(at: indexPath.row)
             SehirlerVController.shouldUpdateSegments = true
         }
     }

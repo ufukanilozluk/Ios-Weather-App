@@ -1,4 +1,3 @@
-import Alamofire
 import Foundation
 
 class APIManager {
@@ -21,6 +20,11 @@ class APIManager {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = dateDecodingStrategy
             decoder.keyDecodingStrategy = keyDecodingStrategy
+//          
+//          if let jsonString = String(data: data, encoding: .utf8) {
+//                      print("Received JSON: \(jsonString)")
+//          }
+          
             do {
                 let decodedData = try decoder.decode(T.self, from: data)
                 completion(.success(decodedData))
@@ -38,5 +42,5 @@ extension APIManager {
     enum APIError: Error {
         case error(_ errorString: String)
     }
-
+    
 }

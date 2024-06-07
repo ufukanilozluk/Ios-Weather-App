@@ -1,10 +1,8 @@
-import Alamofire
-import Foundation
 import UIKit
 
-class CitiesMainVModel: MainVModel {
+class CitiesMainVModel {
     let temperature = Box("")
-    let bigIcon: Box<UIImage?> = Box(nil) // no image initially
+    let bigIcon: Box<UIImage?> = Box(nil)
     let description = Box("")
     let visibility = Box("")
     let wind = Box("")
@@ -17,11 +15,7 @@ class CitiesMainVModel: MainVModel {
 
     let dispatchGroup = DispatchGroup()
 
-    override init() {
-        super.init()
-    }
-
-
+  
     func getWeather(city: String) {
         let endPoint = Endpoint.daily(city: city)
 
@@ -66,10 +60,11 @@ class CitiesMainVModel: MainVModel {
     }
 
     func getForecast(city: Location, completion: @escaping () -> Void) {
+      guard let lat = city.GeoPosition?.Latitude, let lon = city.GeoPosition?.Longitude else {return}
         dispatchGroup.enter()
-        getWeather(city: city.cityName!)
+      getWeather(city: city.LocalizedName)
         dispatchGroup.enter()
-        getWeatherForecastWeekly(lat: String(city.lat!), lon: String(city.lon!))
+      getWeatherForecastWeekly(lat: String(lat), lon: String(lon))
         dispatchGroup.notify(queue: .main) {
             completion()
         }
@@ -77,10 +72,10 @@ class CitiesMainVModel: MainVModel {
 
     func getForecastForAllCities(completion: @escaping () -> Void) {
         var weather: [HavaDurum] = []
-        let selectedCities: [Location] = AnasayfaVController.selectedCities!
+        let selectedCities: [Location] = AnasayfaVController.selectedCities
         for city in selectedCities {
             dispatchGroup.enter()
-            let endPoint = Endpoint.daily(city: city.cityName!, cnt: "1")
+          let endPoint = Endpoint.daily(city: city.LocalizedName, cnt: "1")
             APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
                 switch result {
                 case let .success(forecast):

@@ -4,12 +4,12 @@
 target 'IosCase' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'XLPagerTabStrip'
-  pod 'Alamofire'
   pod 'NVActivityIndicatorView'
   pod 'SCLAlertView'
-#  pod 'lottie-ios'
 
   # Pods for IosCase
 
+  # ignore all warnings from all pods
+  inhibit_all_warnings!
+  
 end

@@ -1,7 +1,6 @@
 import Network
 import SkeletonView
 import UIKit
-import XLPagerTabStrip
 
 class AnasayfaVController: BaseVController {
     @IBOutlet var mainStackView: UIStackView!
@@ -23,11 +22,11 @@ class AnasayfaVController: BaseVController {
 
     lazy var refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
-    var city: Location = Location(json: [:])
+//    var city: Location = Location()
     var dataWeather: [HavaDurum.Hava]?
     var weeklyWeather: HavaDurumWeekly?
     private let spacing: CGFloat = 4.0
-    static var selectedCities: [Location]?
+    static var selectedCities: [Location] = UserDefaultsHelper.getCities()
     var selectedCity: Location?
     var viewModel: CitiesMainVModel = CitiesMainVModel()
 
@@ -37,20 +36,21 @@ class AnasayfaVController: BaseVController {
     }
 
     func updateHome() {
-        guard let cities = SehirlerVController.getCities() else {
+      guard  !AnasayfaVController.selectedCities.isEmpty else {
             view.addSubview(emptyView)
             Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
             return
         }
-        AnasayfaVController.selectedCities = cities
+
         emptyView.removeFromSuperview()
         scrollViewAnasayfa.isHidden = false
 
         if let _ = segmentedControl {
             if SehirlerVController.shouldUpdateSegments {
-                let items = AnasayfaVController.selectedCities!.map({ $0.cityTxt })
+                AnasayfaVController.selectedCities = UserDefaultsHelper.getCities()
+                let items = AnasayfaVController.selectedCities.map({ $0.cityTxt })
                 segmentedControl?.replaceSegments(segments: items)
                 segmentedControl?.selectedSegmentIndex = 0
                 SehirlerVController.shouldUpdateSegments = false
@@ -58,15 +58,18 @@ class AnasayfaVController: BaseVController {
         } else {
             createSegmentedControl()
         }
-        selectedCity = AnasayfaVController.selectedCities![segmentedControl!.selectedSegmentIndex]
+        selectedCity = AnasayfaVController.selectedCities[segmentedControl!.selectedSegmentIndex]
         fetchData(for: selectedCity!)
-        addSkeleton()
     }
 
+
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateHome()
     }
 
+
+    
     func addSkeleton() {
         scrollViewAnasayfa.showAnimatedGradientSkeleton()
     }
@@ -88,6 +91,7 @@ class AnasayfaVController: BaseVController {
 
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
+        
     }
 
     func setBindings() {
@@ -128,6 +132,7 @@ class AnasayfaVController: BaseVController {
                 self?.lblVisibility.text = visibility
             }
         }
+        
 
         viewModel.pressure.bind { [weak self] pressure in
 
@@ -170,13 +175,14 @@ class AnasayfaVController: BaseVController {
     }
 
     func fetchData(for city: Location) {
+        addSkeleton()
         viewModel.getForecast(city: city) {
             self.updateUI()
         }
     }
 
     func createSegmentedControl() {
-        let items = AnasayfaVController.selectedCities!.map({ $0.cityTxt })
+        let items = AnasayfaVController.selectedCities.map({ $0.cityTxt })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
@@ -194,7 +200,7 @@ class AnasayfaVController: BaseVController {
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
-        selectedCity = AnasayfaVController.selectedCities![segmentedControl.selectedSegmentIndex]
+        selectedCity = AnasayfaVController.selectedCities[segmentedControl.selectedSegmentIndex]
         fetchData(for: selectedCity!)
         addSkeleton()
     }
@@ -257,6 +263,7 @@ extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewD
     }
 }
 
+
 extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 30
@@ -266,3 +273,4 @@ extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
         return 30
     }
 }
+
