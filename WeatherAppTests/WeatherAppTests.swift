@@ -5,7 +5,7 @@
 //  Created by Ufuk Anıl Özlük on 6.04.2023.
 //
 
-@testable import IosCase
+@testable import WeatherbyOzluk
 import XCTest
 
 final class WeatherAppTests: XCTestCase {
