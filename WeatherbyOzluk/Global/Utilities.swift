@@ -20,9 +20,9 @@ class Utility {
         switch alertType {
         case .warning:
             alert.view.backgroundColor = .yellow
-        case .err:
+        case .error:
             alert.view.backgroundColor = .red
-        case .succ:
+        case .success:
             alert.view.backgroundColor = .green
         case .info:
             alert.view.backgroundColor = .blue
@@ -89,47 +89,6 @@ class Utility {
         animationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         animationView.play()
     }
-
-    static func alert(msg: String!, type: AlertType = .err, title: String = "", completion: (() -> Void)? = nil) {
-        let alertOptions = SCLAlertView.SCLAppearance(
-            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
-            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
-            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
-            showCloseButton: false,
-            showCircularIcon: true,
-            shouldAutoDismiss: true
-        )
-        var color: UIColor?
-        let alertView = SCLAlertView(appearance: alertOptions)
-
-        switch type {
-        case .err:
-            color = UIColor(red: 0.79, green: 0.11, blue: 0.18, alpha: 1.0)
-            alertView.showError(title.isEmpty ? "Error!" : title, subTitle: msg!)
-
-            break
-        case .succ:
-            color = UIColor(red: 0.00, green: 0.71, blue: 0.47, alpha: 1.0)
-            alertView.showSuccess(title.isEmpty ? "Success" : title, subTitle: msg!)
-            break
-        case .warning:
-            color = UIColor(red: 1.00, green: 0.81, blue: 0.25, alpha: 1.0)
-            alertView.showWarning(title.isEmpty ? "Warning!" : title, subTitle: msg!)
-            break
-        case .info:
-            color = UIColor(red: 0.00, green: 0.41, blue: 0.73, alpha: 1.0)
-            alertView.showInfo(title.isEmpty ? "Info" : title, subTitle: msg!)
-            break
-        }
-
-        let close = alertView.addButton("Close") {
-            if completion != nil {
-                completion!()
-            }
-        }
-        close.backgroundColor = color
-    }
-
 
 }
 

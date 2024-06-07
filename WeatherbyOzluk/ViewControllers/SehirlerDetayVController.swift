@@ -10,7 +10,7 @@ class SehirlerDetayVController: BaseVController {
     let sehirlerVModel = SehirlerVModel()
     lazy var searchBar = UISearchBar()
     var segueIdentifier = "goToSehir"
-  var locationToAdd : Location?
+  var locationToAdd : [Location]?
 
     var isSearchBarEmpty: Bool {
         searchController.searchBar.text?.isEmpty ?? true
@@ -83,7 +83,7 @@ class SehirlerDetayVController: BaseVController {
   
   private func setBindingforCoordinate() {
     sehirlerVModel.location.bind { [weak self] location in
-      self?.locationToAdd = location[0]
+      self?.locationToAdd = location
     }
     sehirlerVModel.locationSearchData.bind { [weak self] searchdata in
       self?.cities = searchdata
@@ -156,7 +156,7 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
     let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerDetayTVCell.reuseIdentifier, for: indexPath) as! SehirlerDetayTVCell
     let city = cities[indexPath.row].locationName
     
-    cell.set(city: city!)
+    cell.set(city: city!, parentVC: self)
     
     // Refactor ?
     cell.ekleAction = {
@@ -173,14 +173,14 @@ extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSo
         switch result {
         case .success:
           DispatchQueue.main.async {
-            Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
+            self?.showAlert(title: CustomAlerts.added.alertTitle , alertType: CustomAlerts.added.alertType)
             SehirlerVController.shouldUpdateSegments = true
             self?.searchController.searchBar.text = ""
             self?.cities = []
             self?.sehirlerTableview.reloadData()
             self?.searchController.searchBar.endEditing(true)
             SehirlerVController.shouldUpdateSegments = true
-            UserDefaultsHelper.saveCity(city: (self?.locationToAdd!)!)
+            UserDefaultsHelper.saveCity(city: (self?.locationToAdd![0])!)
           }
         case let .failure(error):
           self?.showAlert(title: "Error", message: error.localizedDescription)

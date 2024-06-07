@@ -2,6 +2,8 @@ import UIKit
 
 class SehirlerDetayTVCell: UITableViewCell {
     var ekleAction: (() throws -> Void)?
+  weak var parentViewController: SehirlerDetayVController?
+
     static let reuseIdentifier: String = "SehirlerDetayTVCell"
 
     @IBOutlet var sehirName: UILabel!
@@ -10,13 +12,14 @@ class SehirlerDetayTVCell: UITableViewCell {
         do {
             try ekleAction?()
         } catch SehirEkleError.sameSelection {
-            Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
+          parentViewController?.showAlert(title: CustomAlerts.sameCity.alertTitle)
         } catch let error {
             print("Unexpected error: \(error).")
         }
     }
     
-    func set(city : String ){
+  func set(city : String , parentVC : SehirlerDetayVController ){
         sehirName.text = city
+        parentViewController = parentVC
     }
 }

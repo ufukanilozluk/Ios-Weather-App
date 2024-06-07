@@ -3,8 +3,8 @@ import Foundation
 
 enum AlertType {
     case warning
-    case err
-    case succ
+    case error
+    case success
     case info
 }
 
@@ -16,8 +16,8 @@ struct Alerts {
 
 enum CustomAlerts {
     static let sameCity = Alerts(alertType: .info, alertTitle: "Already Added")
-    static let added = Alerts(alertType: .succ, alertTitle: "Added")
-    static let internetNotConnected = Alerts(alertType: .err, alertTitle: "Internet Not Connected")
-    static let internetConnected = Alerts(alertType: .succ, alertTitle: "Internet Reconnected")
+    static let added = Alerts(alertType: .success, alertTitle: "Added")
+    static let internetNotConnected = Alerts(alertType: .error, alertTitle: "Internet Not Connected")
+    static let internetConnected = Alerts(alertType: .success, alertTitle: "Internet Reconnected")
 }
 

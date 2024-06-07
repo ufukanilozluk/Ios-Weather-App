@@ -4,7 +4,6 @@
 target 'IosCase' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'NVActivityIndicatorView'
   pod 'SCLAlertView'
 
   # Pods for IosCase
