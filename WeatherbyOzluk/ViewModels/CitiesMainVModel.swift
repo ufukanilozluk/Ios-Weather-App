@@ -44,7 +44,6 @@ class CitiesMainVModel {
 
     func getWeatherForecastWeekly(lat: String, lon: String) {
         let endPoint = Endpoint.weeklyForecast(lat: lat, lon: lon)
-        print(endPoint.url)
         APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurumWeekly, APIManager.APIError>) in
             switch result {
             case let .success(weeklyForecast):

@@ -82,10 +82,10 @@ class AnasayfaVController: BaseVController {
     func configUI() {
         weeklyWeatherTV.dataSource = self
         weeklyWeatherTV.delegate = self
-        scrollViewAnasayfa.delegate = self
         dailyWeatherCV.delegate = self
         dailyWeatherCV.dataSource = self
-
+    
+    
         refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
@@ -95,6 +95,7 @@ class AnasayfaVController: BaseVController {
         
       self.setBindings()
     }
+
 
     func setBindings() {
         viewModel.bigIcon.bind { [weak self] bigIcon in
@@ -111,7 +112,6 @@ class AnasayfaVController: BaseVController {
 
         viewModel.humidity.bind { [weak self] humidity in
             DispatchQueue.main.async {
-                 print(humidity+"WTF")
                 self?.lblHumidity.text = humidity
             }
         }
@@ -222,14 +222,6 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
             cell.data = weeklyWeather!.daily[indexPath.row]
         }
         return cell
-    }
-}
-
-extension AnasayfaVController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x != 0 && scrollView == scrollViewAnasayfa {
-            scrollView.contentOffset.x = 0
-        }
     }
 }
 

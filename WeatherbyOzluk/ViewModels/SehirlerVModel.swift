@@ -29,7 +29,6 @@ class SehirlerVModel{
     func findCoordinate(query: String, closure: @escaping (Result<(), Error>) -> Void) {
      let searchText = query.replacingOccurrences(of: " ", with: "%20")
      let endPoint = Endpoint.findCoordinate(q: searchText)
-      print(endPoint.url)
      APIManager.getJSON(url: endPoint.url) { (result: Result<[Location], APIManager.APIError>) in
        switch result {
        case let .success(location):
