@@ -166,7 +166,7 @@
                                 <rect key="frame" x="10" y="10" width="373" height="832"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YRV-7N-qzf">
-                                        <rect key="frame" x="0.0" y="0.0" width="373" height="1000"/>
+                                        <rect key="frame" x="0.0" y="10" width="373" height="1000"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fYT-da-4jM" customClass="CardView" customModule="WeatherbyOzluk" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="150"/>
@@ -185,7 +185,7 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VuU-Vw-zVQ">
-                                                                <rect key="frame" x="79" y="31.666666666666664" width="98" height="46.999999999999993"/>
+                                                                <rect key="frame" x="79" y="31.666666666666671" width="98" height="47"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="40"/>
                                                                 <color key="textColor" name="mor"/>
                                                                 <nil key="highlightedColor"/>
@@ -677,7 +677,7 @@
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="YRV-7N-qzf" firstAttribute="top" secondItem="efX-KP-Zms" secondAttribute="top" id="7LI-99-wBH"/>
+                                    <constraint firstItem="YRV-7N-qzf" firstAttribute="top" secondItem="efX-KP-Zms" secondAttribute="top" constant="10" id="7LI-99-wBH"/>
                                     <constraint firstItem="YRV-7N-qzf" firstAttribute="width" secondItem="efX-KP-Zms" secondAttribute="width" id="JPe-FR-AOS"/>
                                     <constraint firstAttribute="trailing" secondItem="YRV-7N-qzf" secondAttribute="trailing" id="UQG-q9-RCv"/>
                                     <constraint firstAttribute="bottom" secondItem="YRV-7N-qzf" secondAttribute="bottom" id="vEI-jC-EVY"/>
