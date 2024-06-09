@@ -11,9 +11,7 @@ class AnasayfaVController: BaseVController {
     @IBOutlet var lblTemperature: UILabel!
     @IBOutlet var imgWeatherMain: UIImageView!
     @IBOutlet var lblDescription: UILabel!
-    @IBOutlet var lblLowestTemperature: UILabel!
     @IBOutlet var lblDate: UILabel!
-    @IBOutlet var lblHighestTemperature: UILabel!
     @IBOutlet var lblVisibility: UILabel!
     @IBOutlet var lblWind: UILabel!
     @IBOutlet var lblHumidity: UILabel!
@@ -31,7 +29,6 @@ class AnasayfaVController: BaseVController {
     var viewModel: CitiesMainVModel = CitiesMainVModel()
 
     override func viewDidLoad() {
-      
         Utility.netWorkConnectivityCheck()
         configUI()
     }
@@ -61,16 +58,16 @@ class AnasayfaVController: BaseVController {
         }
         selectedCity = AnasayfaVController.selectedCities[segmentedControl!.selectedSegmentIndex]
         fetchData(for: selectedCity!)
+        
     }
 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateHome()
+        
     }
 
-
-    
     func addSkeleton() {
         scrollViewAnasayfa.showAnimatedGradientSkeleton()
     }
@@ -78,21 +75,49 @@ class AnasayfaVController: BaseVController {
     func removeSkeleton() {
         scrollViewAnasayfa.hideSkeleton()
     }
+  
+  func calculateTotalContentWidth() -> CGFloat {
+      var totalWidth: CGFloat = 0.0
+    
+      if let collectionViewFlowLayout =  dailyWeatherCV.collectionViewLayout as? UICollectionViewFlowLayout {
+          let numberOfItems = dailyWeatherCV.numberOfItems(inSection: 0)
+          let interitemSpacing = collectionViewFlowLayout.minimumInteritemSpacing
+          
+          for itemIndex in 0..<numberOfItems {
+              let cellWidth = collectionViewFlowLayout.itemSize.width // Her hücrenin genişliği
+              totalWidth += cellWidth
+              
+              // İlk hücre hariç her hücrenin arasına interitemSpacing kadar boşluk ekle
+              if itemIndex > 0 {
+                  totalWidth += interitemSpacing
+              }
+          }
+      }
+      return totalWidth
+  }
 
+  
+  
     func configUI() {
         weeklyWeatherTV.dataSource = self
         weeklyWeatherTV.delegate = self
         dailyWeatherCV.delegate = self
         dailyWeatherCV.dataSource = self
     
-    
+      let layout = UICollectionViewFlowLayout()
+      layout.scrollDirection = .horizontal
+      dailyWeatherCV.collectionViewLayout = layout
         refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
-
         // for skeletonview
         weeklyWeatherTV.estimatedRowHeight = 50
-        
+      if let layout = dailyWeatherCV.collectionViewLayout as? UICollectionViewFlowLayout {
+          layout.scrollDirection = .horizontal
+      }
+
+      
+      
       self.setBindings()
     }
 
@@ -166,12 +191,12 @@ class AnasayfaVController: BaseVController {
             self.dailyWeatherCV.reloadData()
             self.weeklyWeatherTV.reloadData()
             self.refreshControl.endRefreshing()
-            self.removeSkeleton()
+          self.view.removeSpinner()
         }
     }
 
     func fetchData(for city: Location) {
-        addSkeleton()
+      self.view.showSpinner()
         viewModel.getForecast(city: city) {
             self.updateUI()
         }
@@ -226,39 +251,35 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
 }
 
 extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewDataSource {
-    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        AnasayfaDailyWeatherCVCell.reuseIdentifier
+  func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+    AnasayfaDailyWeatherCVCell.reuseIdentifier
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    dataWeather?.count ?? 0
+  }
+  
+  func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    dataWeather?.count ?? 0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath)
+    
+    if let cell = cell as? AnasayfaDailyWeatherCVCell {
+      if let rowData = dataWeather?[indexPath.row] {
+        cell.set(data: rowData, indexPath: indexPath)
+      }
     }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataWeather?.count ?? 0
-    }
-
-    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataWeather?.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier, for: indexPath)
-
-        if let cell = cell as? AnasayfaDailyWeatherCVCell {
-            if let rowData = dataWeather?[indexPath.row] {
-                cell.set(data: rowData, indexPath: indexPath)
-            }
-        }
-
-        return cell
-    }
+    
+    return cell
+  }
 }
-
 
 extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 30
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 30
-    }
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+      return CGSize(width: 75, height: 100)
+  }
 }
+
 

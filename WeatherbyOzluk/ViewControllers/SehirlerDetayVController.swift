@@ -121,7 +121,6 @@ class SehirlerDetayVController: BaseVController {
         }
       }
     }
-
     func addSkeleton() {
         view.showSkeleton()
     }
