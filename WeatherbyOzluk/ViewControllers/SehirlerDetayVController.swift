@@ -1,5 +1,3 @@
-
-import SkeletonView
 import UIKit
 
 class SehirlerDetayVController: BaseVController {
@@ -112,31 +110,22 @@ class SehirlerDetayVController: BaseVController {
     }
 
     func filterContentForSearchText(_ searchText: String) {
-        addSkeleton()
+      view.showSpinner()
         let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
       sehirlerVModel.findCity(query: searchTxt) { [weak self] in
         DispatchQueue.main.async{
-          self?.removeSkeleton()
+          self?.view.removeSpinner()
           self?.sehirlerTableview.reloadData()
         }
       }
     }
-    func addSkeleton() {
-        view.showSkeleton()
-    }
-
-    func removeSkeleton() {
-        view.hideSkeleton()
-    }
+  
 }
 
 // MARK: TableView Functions
 
-extension SehirlerDetayVController: UITableViewDelegate, SkeletonTableViewDataSource {
-  func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-    return SehirlerDetayTVCell.reuseIdentifier
-  }
-  
+extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
+ 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if cities.count == 0 && isFiltering {
       let searchText: String = searchController.searchBar.text!

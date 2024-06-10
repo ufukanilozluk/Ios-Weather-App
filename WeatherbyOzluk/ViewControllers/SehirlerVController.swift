@@ -1,5 +1,3 @@
-
-import SkeletonView
 import UIKit
 
 class SehirlerVController: BaseVController {
@@ -18,22 +16,23 @@ class SehirlerVController: BaseVController {
   }
   
   func updateUI() {
-    setBindings()
+    view.removeSpinner()
     sehirlerTableView.reloadData()
-    removeSkeleton()
   }
   
   fileprivate func getWeatherInfo() {
-    viewModel.getForecastForAllCities {
-      self.updateUI()
+    self.view.showSpinner()
+    viewModel.getForecastForAllCities { [weak self] in
+      DispatchQueue.main.async {
+                  self?.updateUI()
+      }
     }
   }
   
   override func viewDidLoad() {
-    // Drag-drop da delegatelar ataman lazım
-    
-    //    super.viewDidLoad()
+    super.viewDidLoad()
     setConfig()
+    setBindings()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -42,16 +41,8 @@ class SehirlerVController: BaseVController {
       return
     }
     getWeatherInfo()
-    addSkeleton()
   }
-  
-  func addSkeleton() {
-    sehirlerTableView.showAnimatedGradientSkeleton()
-  }
-  
-  func removeSkeleton() {
-    sehirlerTableView.hideSkeleton()
-  }
+
   
   override func setConfig() {
     super.setConfig()
@@ -91,10 +82,8 @@ class SehirlerVController: BaseVController {
 
 }
 
-extension SehirlerVController: UITableViewDelegate, SkeletonTableViewDataSource {
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return SehirlerTVCell.reuseIdentifier
-    }
+extension SehirlerVController: UITableViewDelegate,UITableViewDataSource {
+   
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       guard !selectedCities.isEmpty else {

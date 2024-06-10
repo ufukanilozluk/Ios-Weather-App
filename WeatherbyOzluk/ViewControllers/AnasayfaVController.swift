@@ -1,5 +1,4 @@
 import Network
-import SkeletonView
 import UIKit
 
 class AnasayfaVController: BaseVController {
@@ -68,13 +67,7 @@ class AnasayfaVController: BaseVController {
         
     }
 
-    func addSkeleton() {
-        scrollViewAnasayfa.showAnimatedGradientSkeleton()
-    }
-
-    func removeSkeleton() {
-        scrollViewAnasayfa.hideSkeleton()
-    }
+    
   
   func calculateTotalContentWidth() -> CGFloat {
       var totalWidth: CGFloat = 0.0
@@ -99,7 +92,7 @@ class AnasayfaVController: BaseVController {
   
   
     func configUI() {
-        weeklyWeatherTV.dataSource = self
+      weeklyWeatherTV.dataSource = self
         weeklyWeatherTV.delegate = self
         dailyWeatherCV.delegate = self
         dailyWeatherCV.dataSource = self
@@ -223,23 +216,20 @@ class AnasayfaVController: BaseVController {
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
         selectedCity = AnasayfaVController.selectedCities[segmentedControl.selectedSegmentIndex]
         fetchData(for: selectedCity!)
-        addSkeleton()
+        
     }
 
     @objc func didPullToRefresh() {
         fetchData(for: selectedCity!)
-        addSkeleton()
     }
 }
 
-extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource {
+extension AnasayfaVController: UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weeklyWeather?.daily.count ?? 0
     }
 
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return AnasayfaWeeklyWeatherTVCell.reuseIdentifier
-    }
+
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath)
@@ -250,16 +240,10 @@ extension AnasayfaVController: UITableViewDelegate, SkeletonTableViewDataSource 
     }
 }
 
-extension AnasayfaVController: UICollectionViewDelegate, SkeletonCollectionViewDataSource {
-  func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-    AnasayfaDailyWeatherCVCell.reuseIdentifier
-  }
+extension AnasayfaVController: UICollectionViewDelegate,UICollectionViewDataSource {
+ 
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    dataWeather?.count ?? 0
-  }
-  
-  func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     dataWeather?.count ?? 0
   }
   
