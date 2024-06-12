@@ -8,8 +8,9 @@ class SehirlerDetayVController: BaseVController {
     let sehirlerVModel = SehirlerVModel()
     lazy var searchBar = UISearchBar()
     var segueIdentifier = "goToSehir"
-  var locationToAdd : [Location]?
-
+    var locationToAdd : [Location]?
+    var cityNames : [String] = []
+ 
     var isSearchBarEmpty: Bool {
         searchController.searchBar.text?.isEmpty ?? true
     }
@@ -83,8 +84,12 @@ class SehirlerDetayVController: BaseVController {
     sehirlerVModel.location.bind { [weak self] location in
       self?.locationToAdd = location
     }
-    sehirlerVModel.locationSearchData.bind { [weak self] searchdata in
-      self?.cities = searchdata
+    sehirlerVModel.locationSearchData.bind { [weak self] searchData in
+      self?.cities = searchData
+    }
+    
+    sehirlerVModel.cityNames.bind { [weak self] cityNames in
+      self?.cityNames = cityNames
     }
   }
 
@@ -142,9 +147,8 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerDetayTVCell.reuseIdentifier, for: indexPath) as! SehirlerDetayTVCell
-    let city = cities[indexPath.row].locationName
-    
-    cell.set(city: city!, parentVC: self)
+    let city = cityNames[indexPath.row]
+    cell.set(city: city, parentVC: self)
     
     // Refactor ?
     cell.ekleAction = {

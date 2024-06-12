@@ -12,9 +12,17 @@ class CitiesMainVModel {
     let weatherData: ObservableValue<[HavaDurum.Hava]> = ObservableValue([])
     let weeklyWeatherData: ObservableValue<HavaDurumWeekly?> = ObservableValue(nil)
     let allCitiesWeatherData: ObservableValue<[HavaDurum]> = ObservableValue([])
-
     let dispatchGroup = DispatchGroup()
+    let degree: ObservableValue<[String]> = ObservableValue([])
+    let dates: ObservableValue<[String]> = ObservableValue([])
+    let times: ObservableValue<[String]> = ObservableValue([])
+    let mins: ObservableValue<[String]> = ObservableValue([])
+    let maxs: ObservableValue<[String]> = ObservableValue([])
+    let days: ObservableValue<[String]> = ObservableValue([])
+    let cityNames: ObservableValue<[String]> = ObservableValue([])
 
+
+  
   
     func getWeather(city: String) {
         let endPoint = Endpoint.daily(city: city)
@@ -23,15 +31,19 @@ class CitiesMainVModel {
             switch result {
             case let .success(forecast):
                 let data = forecast.list[0]
-                self.temperature.value = data.main.degree
+                self.temperature.value = "\(Int(data.main.temp))°C"
                 self.bigIcon.value = UIImage(named: data.weather[0].icon)
-                self.description.value = data.weather[0].descriptionTxt
-                self.visibility.value = data.visibilityTxt
-                self.wind.value = data.windTxt
-                self.humidity.value = data.main.humidityTxt
-                self.pressure.value = data.main.pressureTxt
-                self.date.value = data.dateTxtLong
+                self.description.value = data.weather[0].description.capitalized
+                self.visibility.value = "\(Int(data.visibility / 1000)) km"
+                self.wind.value = "\(data.wind.deg)m/s"
+                self.humidity.value = "%\(data.main.humidity)"
+                self.pressure.value = "%\(data.main.pressure) mbar"
+                self.date.value =  data.dt.dateAndTimeLong()
                 self.weatherData.value = forecast.list
+                self.times.value = forecast.list.enumerated().map { $0.offset == 0 ? "Now" : $0.element.dt.timeIn24Hour() }
+              
+              
+              
             case let .failure(error):
                 switch error {
                 case let .error(errorString):
@@ -48,6 +60,9 @@ class CitiesMainVModel {
             switch result {
             case let .success(weeklyForecast):
                 self.weeklyWeatherData.value = weeklyForecast
+                self.maxs.value = weeklyForecast.daily.map({ "\(Int($0.temp.max))°C"})
+              self.mins.value = weeklyForecast.daily.map({ "\(Int($0.temp.min))°C"})
+              self.days.value = weeklyForecast.daily.map({ $0.dt.dayLong()})
             case let .failure(error):
                 switch error {
                 case let .error(errorString):
@@ -94,15 +109,20 @@ class CitiesMainVModel {
 
             weather.sort(by: { n1, n2 in
                 let index1 = selectedCities.firstIndex(where: {
-                    $0.cityTxt == n1.city!.nameTxt
+                  $0.LocalizedName.replacingOccurrences(of: " Province", with: "") == n1.city!.name.replacingOccurrences(of: " Province", with: "")
                 })
                 let index2 = selectedCities.firstIndex(where: {
-                    $0.cityTxt == n2.city!.nameTxt
+                  $0.LocalizedName.replacingOccurrences(of: " Province", with: "") == n2.city!.name.replacingOccurrences(of: " Province", with: "")
                 })
                 return index1! < index2!
             })
             completion()
             self.allCitiesWeatherData.value = weather
+          let temp = weather.map({$0.list})
+          let temp2 = temp.map({$0[0]})
+          self.degree.value = temp2.map({ "\(Int($0.main.temp))°C" })
+          self.dates.value = temp2.map({ $0.dt.dateAndTimeLong() })
+          self.cityNames.value = weather.map({$0.city!.name.replacingOccurrences(of: " Province", with: "")})
         }
     }
 }

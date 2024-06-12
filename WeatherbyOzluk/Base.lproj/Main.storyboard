@@ -54,7 +54,6 @@
                                                                 <constraint firstAttribute="width" constant="32" id="TFd-zz-URn"/>
                                                                 <constraint firstAttribute="height" constant="32" id="exk-PP-BwX"/>
                                                             </constraints>
-                                                           
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="g3H-vq-Juf">
                                                             <rect key="frame" x="64" y="0.33333333333333215" width="156" height="37.333333333333343"/>
@@ -64,27 +63,22 @@
                                                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                                     <color key="textColor" name="colorLbl3"/>
                                                                     <nil key="highlightedColor"/>
-                                                                    
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJu-0E-yAZ">
                                                                     <rect key="frame" x="0.0" y="20.666666666666664" width="156" height="16.666666666666664"/>
                                                                     <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                                                     <color key="textColor" name="mor"/>
                                                                     <nil key="highlightedColor"/>
-                                                                    
                                                                 </label>
                                                             </subviews>
-                                                            
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7L-Ea-GVE">
                                                             <rect key="frame" x="252" y="7.0000000000000018" width="49" height="23.666666666666671"/>
                                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                                             <color key="textColor" name="mor"/>
                                                             <nil key="highlightedColor"/>
-                                                          
                                                         </label>
                                                     </subviews>
-                                                    
                                                 </stackView>
                                             </subviews>
                                             <constraints>
@@ -93,19 +87,16 @@
                                                 <constraint firstAttribute="trailing" secondItem="eHQ-OJ-KYW" secondAttribute="trailing" constant="36" id="M5T-j8-omH"/>
                                                 <constraint firstAttribute="bottom" secondItem="eHQ-OJ-KYW" secondAttribute="bottom" constant="10" id="fGF-Le-m3r"/>
                                             </constraints>
-                                           
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                        
                                         <connections>
                                             <outlet property="derece" destination="F7L-Ea-GVE" id="091-8q-JBh"/>
                                             <outlet property="sehirIsim" destination="vbd-Ou-E0f" id="GYr-S2-80K"/>
                                             <outlet property="tarih" destination="hJu-0E-yAZ" id="ncK-Pb-RbA"/>
-                                            <outlet property="weatherPic" destination="cZi-hC-sjq" id="d9t-gp-sKp"/>
+                                            <outlet property="weatherPicImageView" destination="cZi-hC-sjq" id="bWB-cD-TQy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bRi-79-Bax"/>
@@ -116,7 +107,6 @@
                             <constraint firstItem="bRi-79-Bax" firstAttribute="trailing" secondItem="8W9-Hx-UJO" secondAttribute="trailing" constant="10" id="dAe-EU-LNI"/>
                             <constraint firstItem="8W9-Hx-UJO" firstAttribute="bottom" secondItem="bRi-79-Bax" secondAttribute="bottom" constant="10" id="n4a-S7-kd7"/>
                         </constraints>
-                        
                     </view>
                     <navigationItem key="navigationItem" title="Locations" largeTitleDisplayMode="always" id="EnQ-5K-40X">
                         <barButtonItem key="rightBarButtonItem" title="Add" id="IWa-po-eQD">
@@ -160,14 +150,12 @@
                                                                     <constraint firstAttribute="width" constant="64" id="bQI-j0-XzW"/>
                                                                     <constraint firstAttribute="height" constant="64" id="uH7-9G-csi"/>
                                                                 </constraints>
-                                                        
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VuU-Vw-zVQ">
                                                                 <rect key="frame" x="79" y="31.666666666666671" width="98" height="47"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="40"/>
                                                                 <color key="textColor" name="mor"/>
                                                                 <nil key="highlightedColor"/>
-                                                               
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UP8-xn-I9n">
                                                                 <rect key="frame" x="192" y="37" width="121" height="36"/>
@@ -177,20 +165,16 @@
                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                                         <color key="textColor" name="ColorLbl"/>
                                                                         <nil key="highlightedColor"/>
-                                                                        
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qt5-Aj-ANT">
                                                                         <rect key="frame" x="0.0" y="21.666666666666671" width="29.666666666666668" height="14.333333333333336"/>
                                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                                                         <color key="textColor" name="mor"/>
                                                                         <nil key="highlightedColor"/>
-                                                                     
                                                                     </label>
                                                                 </subviews>
-                                                                
                                                             </stackView>
                                                         </subviews>
-                                    
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -201,19 +185,17 @@
                                                     <constraint firstAttribute="trailing" secondItem="emy-9s-Zsa" secondAttribute="trailing" constant="20" symbolic="YES" id="gse-pG-Z6U"/>
                                                     <constraint firstItem="emy-9s-Zsa" firstAttribute="leading" secondItem="fYT-da-4jM" secondAttribute="leading" constant="20" symbolic="YES" id="xCR-c3-1Sc"/>
                                                 </constraints>
-                                                
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Today" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mip-Kk-nIW">
                                                 <rect key="frame" x="0.0" y="170" width="353" height="19"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                                 <color key="textColor" name="colorLbl2"/>
                                                 <nil key="highlightedColor"/>
-                                                
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cm1-bW-mk7" customClass="CardView" customModule="WeatherbyOzluk" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="209" width="353" height="125"/>
                                                 <subviews>
-                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Oci-DG-qkw">
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Oci-DG-qkw">
                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="125"/>
                                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                         <constraints>
@@ -242,17 +224,14 @@
                                                                                         <constraint firstAttribute="height" constant="35" id="0Vd-Gi-h95"/>
                                                                                         <constraint firstAttribute="width" constant="35" id="Qc8-sz-TCi"/>
                                                                                     </constraints>
-                                                                                    
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XVR-m8-S5K">
                                                                                     <rect key="frame" x="0.0" y="35" width="35" height="14.333333333333336"/>
                                                                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                     <color key="textColor" name="ColorLbl"/>
                                                                                     <nil key="highlightedColor"/>
-                                                                                    
                                                                                 </label>
                                                                             </subviews>
-                                                                            
                                                                         </stackView>
                                                                     </subviews>
                                                                     <constraints>
@@ -261,16 +240,13 @@
                                                                         <constraint firstItem="QcB-Bc-n0D" firstAttribute="leading" secondItem="Qpc-pz-Q5E" secondAttribute="leading" constant="20" symbolic="YES" id="TZ5-ba-Ixh"/>
                                                                         <constraint firstAttribute="bottom" secondItem="QcB-Bc-n0D" secondAttribute="bottom" constant="20" symbolic="YES" id="VLR-C6-ua9"/>
                                                                     </constraints>
-                                                                  
                                                                 </collectionViewCellContentView>
-                                                                
                                                                 <connections>
                                                                     <outlet property="hour" destination="XVR-m8-S5K" id="Fqu-zy-BuA"/>
                                                                     <outlet property="imgWeather" destination="PQH-B3-Amj" id="b1q-ly-e8x"/>
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
-                                              
                                                     </collectionView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -280,7 +256,6 @@
                                                     <constraint firstAttribute="bottom" secondItem="Oci-DG-qkw" secondAttribute="bottom" id="TCe-FK-VO0"/>
                                                     <constraint firstAttribute="trailing" secondItem="Oci-DG-qkw" secondAttribute="trailing" id="amz-EP-zi0"/>
                                                 </constraints>
-                                          
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ceF-Bb-1og" customClass="CardView" customModule="WeatherbyOzluk" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="354" width="353" height="110.33333333333331"/>
@@ -300,7 +275,6 @@
                                                                                     <constraint firstAttribute="height" constant="32.669998168945312" id="Bq5-uv-uO9"/>
                                                                                     <constraint firstAttribute="width" constant="16" id="ddc-gt-QR1"/>
                                                                                 </constraints>
-                                                                                
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="sav-lv-REa">
                                                                                 <rect key="frame" x="31" y="0.0" width="49" height="32.666666666666664"/>
@@ -310,23 +284,16 @@
                                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl2"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                        <userDefinedRuntimeAttributes>
-                                                                                            
-                                                            
-                                                                                        </userDefinedRuntimeAttributes>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEW-RR-mB4">
                                                                                         <rect key="frame" x="0.0" y="17.333333333333314" width="49" height="15.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl3"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                       
                                                                                     </label>
                                                                                 </subviews>
-                                                                               
                                                                             </stackView>
                                                                         </subviews>
-                                                                        
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="GsJ-xT-RhA">
                                                                         <rect key="frame" x="0.0" y="37.666666666666686" width="80" height="32.666666666666657"/>
@@ -337,7 +304,6 @@
                                                                                     <constraint firstAttribute="width" constant="16" id="AeG-yQ-aEK"/>
                                                                                     <constraint firstAttribute="height" constant="32.670000000000002" id="kTi-R7-TTx"/>
                                                                                 </constraints>
-                                                                                
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ESP-GD-L1K">
                                                                                 <rect key="frame" x="31" y="0.0" width="49" height="32.666666666666664"/>
@@ -347,23 +313,18 @@
                                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl2"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                     
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRI-rc-OJi">
                                                                                         <rect key="frame" x="0.0" y="16.333333333333314" width="49" height="16.333333333333329"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl3"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                        
                                                                                     </label>
                                                                                 </subviews>
-                                                                               
                                                                             </stackView>
                                                                         </subviews>
-                                                                        
                                                                     </stackView>
                                                                 </subviews>
-                                                                
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zFh-98-YpI">
                                                                 <rect key="frame" x="239" y="0.0" width="74" height="70.333333333333329"/>
@@ -377,7 +338,6 @@
                                                                                     <constraint firstAttribute="height" constant="32" id="Aex-Dg-rIF"/>
                                                                                     <constraint firstAttribute="width" constant="16" id="zcT-tb-kBA"/>
                                                                                 </constraints>
-                                                                               
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hsq-S1-0uW">
                                                                                 <rect key="frame" x="26" y="0.66666666666668739" width="48" height="31.666666666666671"/>
@@ -387,20 +347,16 @@
                                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl2"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                      
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bom-7V-Bs1">
                                                                                         <rect key="frame" x="0.0" y="17.333333333333314" width="48" height="14.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl3"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                     
                                                                                     </label>
                                                                                 </subviews>
-                                                                         
                                                                             </stackView>
                                                                         </subviews>
-                                                                        
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="c9V-a3-eYy">
                                                                         <rect key="frame" x="0.0" y="37.666666666666686" width="74" height="32.666666666666657"/>
@@ -411,7 +367,6 @@
                                                                                     <constraint firstAttribute="height" constant="32.670000000000002" id="Cdf-6F-iIZ"/>
                                                                                     <constraint firstAttribute="width" constant="16" id="XlL-V9-9ig"/>
                                                                                 </constraints>
-                                                                                
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qMp-gb-ADc">
                                                                                 <rect key="frame" x="26" y="0.0" width="48" height="32.666666666666664"/>
@@ -421,26 +376,20 @@
                                                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl2"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                        
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAw-Vb-dlu">
                                                                                         <rect key="frame" x="0.0" y="16.333333333333314" width="48" height="16.333333333333329"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                                                         <color key="textColor" name="colorLbl3"/>
                                                                                         <nil key="highlightedColor"/>
-                                                                                      
                                                                                     </label>
                                                                                 </subviews>
-                                                                              
                                                                             </stackView>
                                                                         </subviews>
-                                                                        
                                                                     </stackView>
                                                                 </subviews>
-                                                                
                                                             </stackView>
                                                         </subviews>
-                                                        
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -450,14 +399,12 @@
                                                     <constraint firstAttribute="trailing" secondItem="0ew-kW-Zxr" secondAttribute="trailing" constant="20" id="Hm2-CT-yBM"/>
                                                     <constraint firstItem="0ew-kW-Zxr" firstAttribute="top" secondItem="ceF-Bb-1og" secondAttribute="top" constant="20" id="oq2-N2-e1s"/>
                                                 </constraints>
-                                              
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1f-s8-Kr7">
                                                 <rect key="frame" x="0.0" y="484.33333333333337" width="353" height="485.66666666666663"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                                 <color key="textColor" name="colorLbl2"/>
                                                 <nil key="highlightedColor"/>
-                                                
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="999" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TAC-47-tos">
                                                 <rect key="frame" x="0.0" y="990" width="353" height="50"/>
@@ -478,7 +425,6 @@
                                                                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                             <color key="textColor" name="colorLbl2"/>
                                                                             <nil key="highlightedColor"/>
-                                                                            
                                                                         </label>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="tSJ-I7-wjl">
                                                                             <rect key="frame" x="161.66666666666663" y="0.0" width="161.33333333333337" height="14"/>
@@ -489,27 +435,22 @@
                                                                                         <constraint firstAttribute="width" constant="25" id="gw0-g2-npD"/>
                                                                                         <constraint firstAttribute="height" constant="25" id="gzs-Qe-mZz"/>
                                                                                     </constraints>
-                                                                                
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gel-mN-P8k">
                                                                                     <rect key="frame" x="58.666666666666686" y="0.0" width="44" height="14"/>
                                                                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                                                     <color key="textColor" name="colorLbl2"/>
                                                                                     <nil key="highlightedColor"/>
-                                                                                    
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyW-fa-Rbe">
                                                                                     <rect key="frame" x="117.66666666666667" y="0.0" width="43.666666666666671" height="14"/>
                                                                                     <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="14"/>
                                                                                     <color key="textColor" name="colorLbl2"/>
                                                                                     <nil key="highlightedColor"/>
-                                                                                    
                                                                                 </label>
                                                                             </subviews>
-                                                                            
                                                                         </stackView>
                                                                     </subviews>
-                                                                 
                                                                 </stackView>
                                                             </subviews>
                                                             <constraints>
@@ -518,10 +459,8 @@
                                                                 <constraint firstItem="XRo-A7-L2B" firstAttribute="top" secondItem="qoa-56-HJX" secondAttribute="top" constant="15" id="R8y-R8-bOF"/>
                                                                 <constraint firstAttribute="trailing" secondItem="XRo-A7-L2B" secondAttribute="trailing" constant="15" id="S1B-ho-Fv1"/>
                                                             </constraints>
-                                                           
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                                       
                                                         <connections>
                                                             <outlet property="imgWeatherTV" destination="4x8-wr-zOF" id="sZZ-Va-iqV"/>
                                                             <outlet property="lblDay" destination="9jX-ly-NPA" id="Np1-tW-giG"/>
@@ -530,13 +469,11 @@
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
-                                                
                                             </tableView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1040" id="tl0-hD-QiG"/>
                                         </constraints>
-                                        
                                     </stackView>
                                 </subviews>
                                 <constraints>
@@ -546,7 +483,6 @@
                                     <constraint firstItem="YRV-7N-qzf" firstAttribute="leading" secondItem="MMz-2t-iBU" secondAttribute="leading" id="pkM-PS-KYu"/>
                                     <constraint firstItem="YRV-7N-qzf" firstAttribute="width" secondItem="MMz-2t-iBU" secondAttribute="width" id="zFy-H2-jX5"/>
                                 </constraints>
-                                
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="HLv-Lg-ceZ"/>
@@ -557,7 +493,6 @@
                             <constraint firstItem="MMz-2t-iBU" firstAttribute="top" secondItem="lN3-6E-wr3" secondAttribute="top" constant="20" id="dyR-d7-lH6"/>
                             <constraint firstAttribute="trailing" secondItem="MMz-2t-iBU" secondAttribute="trailing" constant="20" id="f5y-qi-Zbh"/>
                         </constraints>
-                        
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="02d" id="adE-08-49p"/>
                     <connections>
@@ -682,7 +617,6 @@
                                                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                             <color key="textColor" name="colorLbl3"/>
                                                             <nil key="highlightedColor"/>
-                                                            
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5v-4J-aA4">
                                                             <rect key="frame" x="323" y="0.33333333333333393" width="30" height="29"/>
@@ -690,13 +624,11 @@
                                                             <state key="normal" title="Add">
                                                                 <color key="titleColor" name="mor"/>
                                                             </state>
-                                                            
                                                             <connections>
                                                                 <action selector="sehirEkle:" destination="cME-xy-NJD" eventType="touchUpInside" id="tis-sM-7nu"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
-                                                   
                                                 </stackView>
                                             </subviews>
                                             <constraints>
@@ -705,16 +637,13 @@
                                                 <constraint firstAttribute="bottom" secondItem="ewu-PL-BVB" secondAttribute="bottom" constant="10" id="Ro6-G5-VfQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="ewu-PL-BVB" secondAttribute="trailing" constant="10" id="jju-Ki-avu"/>
                                             </constraints>
-                                           
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                      
                                         <connections>
                                             <outlet property="sehirName" destination="anh-Cb-Vi6" id="W2h-5o-jwF"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7zA-SA-DVZ"/>
@@ -725,7 +654,6 @@
                             <constraint firstItem="EWK-Mn-mh0" firstAttribute="leading" secondItem="7zA-SA-DVZ" secondAttribute="leading" constant="10" id="mRP-3W-qH7"/>
                             <constraint firstAttribute="trailing" secondItem="EWK-Mn-mh0" secondAttribute="trailing" constant="10" id="ucG-1z-iUq"/>
                         </constraints>
-                        
                     </view>
                     <navigationItem key="navigationItem" title=" " id="HAL-eY-3ef">
                         <barButtonItem key="rightBarButtonItem" image="current-location" id="TFc-Le-Jef">
@@ -745,6 +673,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="IfI-vH-t3G"/>
         <segue reference="7kv-7T-Hf9"/>
     </inferredMetricsTieBreakers>
     <resources>

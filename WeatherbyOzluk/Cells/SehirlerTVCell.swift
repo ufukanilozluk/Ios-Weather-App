@@ -4,14 +4,14 @@ class SehirlerTVCell: UITableViewCell {
     @IBOutlet var derece: UILabel!
     @IBOutlet var tarih: UILabel!
     @IBOutlet var sehirIsim: UILabel!
-    @IBOutlet var weatherPic: UIImageView!
+    @IBOutlet var weatherPicImageView: UIImageView!
 
     static let reuseIdentifier: String = "SehirlerTVCell"
 
-    func setWeather(weather: HavaDurum.Hava, cityName: String) {
+  func setWeather(weatherPic: UIImage, cityName: String , degree: String, date: String) {
         sehirIsim.text = cityName
-        derece.text = weather.main.degree
-        weatherPic.image = UIImage(named: weather.weather[0].icon)
-        tarih.text = weather.dateTxtLong
+        derece.text = degree
+        weatherPicImageView.image = weatherPic
+        tarih.text = date
      }
 }

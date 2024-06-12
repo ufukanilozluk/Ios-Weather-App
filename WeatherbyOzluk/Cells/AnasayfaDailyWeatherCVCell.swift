@@ -7,9 +7,9 @@ class AnasayfaDailyWeatherCVCell: UICollectionViewCell {
 
     static let reuseIdentifier: String = "DailyWeatherCVCell"
 
-    func set(data: HavaDurum.Hava, indexPath: IndexPath) {
-        hour.text = indexPath.row == 0 ? "Now" : data.time
-        imgWeather.image = UIImage(named: data.weather[0].icon)
+  func set(time: String,image : UIImage) {
+        hour.text = time
+        imgWeather.image = image
         configImg()
     }
 

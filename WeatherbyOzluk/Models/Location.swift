@@ -7,14 +7,6 @@ struct Location : Codable {
     var LocalizedName: String
     var Country: Country
     var GeoPosition : GeoPosition?
-  
-    var locationName: String? {
-      "\(LocalizedName),\(self.Country.LocalizedName)"
-    }
-    
-    var cityTxt : String {
-         LocalizedName.replacingOccurrences(of: " Province", with: "")
-    }
 }
 
 extension Location{

@@ -8,10 +8,24 @@ class SehirlerVController: BaseVController {
   var newCityAdded = false
   static var shouldUpdateSegments = false
   var viewModel: CitiesMainVModel = CitiesMainVModel()
+  var degrees : [String] = []
+  var dates : [String] = []
+  var cityNames: [String] = []
   
   func setBindings() {
     viewModel.allCitiesWeatherData.bind { [weak self] weatherData in
       self?.weather = weatherData
+    }
+    
+    viewModel.degree.bind { [weak self] degrees in
+      self?.degrees = degrees
+    }
+    
+    viewModel.dates.bind { [weak self] dates in
+      self?.dates = dates
+    }
+    viewModel.cityNames.bind { [weak self] cityNames in
+      self?.cityNames = cityNames
     }
   }
   
@@ -96,9 +110,15 @@ extension SehirlerVController: UITableViewDelegate,UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let hava = weather![indexPath.row].list[0]
-        let cityName = weather![indexPath.row].city?.name
         let cell = tableView.dequeueReusableCell(withIdentifier: SehirlerTVCell.reuseIdentifier, for: indexPath) as! SehirlerTVCell
-        cell.setWeather(weather: hava, cityName: cityName!)
+      
+      let row = indexPath.row
+      cell.setWeather(
+        weatherPic: UIImage(named: hava.weather[0].icon)!,
+        cityName: cityNames[row],
+        degree: degrees[row],
+        date: dates[row]
+      )
         return cell
     }
 

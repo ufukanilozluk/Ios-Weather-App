@@ -26,7 +26,11 @@ class AnasayfaVController: BaseVController {
     static var selectedCities: [Location] = UserDefaultsHelper.getCities()
     var selectedCity: Location?
     var viewModel: CitiesMainVModel = CitiesMainVModel()
-
+    var times : [String] = []
+    var mins  : [String] = []
+    var maxs  : [String] = []
+    var days  : [String] = []
+  
     override func viewDidLoad() {
         Utility.netWorkConnectivityCheck()
         configUI()
@@ -47,7 +51,7 @@ class AnasayfaVController: BaseVController {
 
         if let _ = segmentedControl {
             if SehirlerVController.shouldUpdateSegments {
-                let items = AnasayfaVController.selectedCities.map({ $0.cityTxt })
+              let items = AnasayfaVController.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
                 segmentedControl?.replaceSegments(segments: items)
                 segmentedControl?.selectedSegmentIndex = 0
                 SehirlerVController.shouldUpdateSegments = false
@@ -96,11 +100,10 @@ class AnasayfaVController: BaseVController {
         weeklyWeatherTV.delegate = self
         dailyWeatherCV.delegate = self
         dailyWeatherCV.dataSource = self
-    
+      
       let layout = UICollectionViewFlowLayout()
       layout.scrollDirection = .horizontal
       dailyWeatherCV.collectionViewLayout = layout
-        refreshControl.attributedTitle = NSAttributedString(string: "Updating")
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
         scrollViewAnasayfa.addSubview(refreshControl)
         // for skeletonview
@@ -128,7 +131,7 @@ class AnasayfaVController: BaseVController {
             }
         }
 
-        viewModel.humidity.bind { [weak self] humidity in
+      viewModel.humidity.bind { [weak self] humidity in
             DispatchQueue.main.async {
                 self?.lblHumidity.text = humidity
             }
@@ -176,6 +179,23 @@ class AnasayfaVController: BaseVController {
         viewModel.weeklyWeatherData.bind { [weak self] weeklyWeatherData in
             self?.weeklyWeather = weeklyWeatherData
         }
+      
+      viewModel.times.bind { [weak self] times in
+        self?.times = times
+        }
+      
+      viewModel.days.bind { [weak self] days in
+        self?.days = days
+        }
+      
+      viewModel.mins.bind { [weak self] mins in
+        self?.mins = mins
+        }
+      
+      viewModel.maxs.bind { [weak self] maxs in
+        self?.maxs = maxs
+        }
+      
     }
 
     func updateUI() {
@@ -196,7 +216,7 @@ class AnasayfaVController: BaseVController {
     }
 
     func createSegmentedControl() {
-        let items = AnasayfaVController.selectedCities.map({ $0.cityTxt })
+      let items = AnasayfaVController.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
@@ -234,7 +254,10 @@ extension AnasayfaVController: UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier, for: indexPath)
         if let cell = cell as? AnasayfaWeeklyWeatherTVCell {
-            cell.data = weeklyWeather!.daily[indexPath.row]
+          let row = indexPath.row
+          let rowData = weeklyWeather!.daily[row]
+          let image = UIImage(named: rowData.weather[0].icon)!
+          cell.set(img: image, maxTemp: maxs[row], minTemp: mins[row], day: days[row])
         }
         return cell
     }
@@ -252,7 +275,8 @@ extension AnasayfaVController: UICollectionViewDelegate,UICollectionViewDataSour
     
     if let cell = cell as? AnasayfaDailyWeatherCVCell {
       if let rowData = dataWeather?[indexPath.row] {
-        cell.set(data: rowData, indexPath: indexPath)
+        let image = UIImage(named: rowData.weather[0].icon)!
+        cell.set(time: times[indexPath.row], image: image)
       }
     }
     

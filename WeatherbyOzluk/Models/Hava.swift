@@ -4,14 +4,6 @@ struct City: Codable {
     var name: String
     var country: String
     var coord: Coordinate
-
-    var locationName: String {
-        "\(name),\(country)"
-    }
-
-    var nameTxt: String {
-        name.replacingOccurrences(of: " Province", with: "")
-    }
 }
 
 extension City {
@@ -33,22 +25,6 @@ extension HavaDurum {
         var wind: Wind
         var visibility: Double
         var dt: Date
-
-        var visibilityTxt: String {
-            "\(Int(visibility / 1000)) km"
-        }
-
-        var windTxt: String {
-            "\(wind.deg)m/s"
-        }
-
-        var dateTxtLong: String {
-            dt.dateAndTimeLong()
-        }
-
-        var time: String {
-            dt.timeIn24Hour()
-        }
     }
 }
 
@@ -59,18 +35,6 @@ extension HavaDurum.Hava {
         var temp_max: Double
         var humidity: Int
         var pressure: Int
-
-        var degree: String {
-            "\(Int(temp))°C"
-        }
-
-        var humidityTxt: String {
-            "%\(humidity)"
-        }
-
-        var pressureTxt: String {
-            "%\(pressure) mbar"
-        }
     }
 
     struct Weather: Codable {
@@ -78,10 +42,6 @@ extension HavaDurum.Hava {
         var main: String
         var description: String
         var icon: String
-
-        var descriptionTxt: String {
-            description.capitalized
-        }
     }
 
     struct Wind: Codable {
@@ -100,10 +60,6 @@ extension HavaDurumWeekly {
         var dt: Date
         var temp: Temp
         var weather: [Weather]
-
-        var dtTxt: String {
-            dt.dayLong()
-        }
     }
 }
 
@@ -111,14 +67,6 @@ extension HavaDurumWeekly.Daily {
     struct Temp: Codable {
         var min: Double
         var max: Double
-
-        var minTxt: String {
-            "\(Int(min))°C"
-        }
-
-        var maxTxt: String {
-            "\(Int(max))°C"
-        }
     }
 
     struct Weather: Codable {

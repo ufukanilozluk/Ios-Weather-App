@@ -6,6 +6,7 @@ class SehirlerVModel{
     typealias FindCooordinateCompletion = (_ data: [String: Any]?) -> Void
     let locationSearchData: ObservableValue<[Location]> = ObservableValue([])
     let location: ObservableValue<[Location]> = ObservableValue([])
+    let cityNames: ObservableValue<[String]> = ObservableValue([])
     
 
   
@@ -15,6 +16,7 @@ class SehirlerVModel{
             switch result {
             case let .success(locations):
                 self.locationSearchData.value = locations
+              self.cityNames.value = locations.map({"\($0.LocalizedName),\($0.Country.LocalizedName)"})
                 completion()
             case let .failure(error):
                 switch error {

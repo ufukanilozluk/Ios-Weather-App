@@ -7,15 +7,11 @@ class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
     @IBOutlet var lblMinWeatherTV: UILabel!
 
     static let reuseIdentifier: String = "WeeklyWeatherTVCell"
-
-    var data: HavaDurumWeekly.Daily? {
-        didSet {
-            if let data = data {
-                imgWeatherTV.image = UIImage(named: data.weather[0].icon)
-                lblMaxWeatherTV.text = data.temp.maxTxt
-                lblMinWeatherTV.text = data.temp.minTxt
-                lblDay.text = data.dtTxt
-            }
-        }
-    }
+  
+    func set(img : UIImage , maxTemp: String , minTemp : String , day : String){
+    imgWeatherTV.image = img
+    lblMaxWeatherTV.text = maxTemp
+    lblMinWeatherTV.text = minTemp
+    lblDay.text = day
+  }
 }
