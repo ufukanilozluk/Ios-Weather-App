@@ -166,7 +166,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
         case .success:
           DispatchQueue.main.async {
             self?.showAlert(title: CustomAlerts.added.alertTitle , alertType: CustomAlerts.added.alertType)
-            SehirlerVController.shouldUpdateSegments = true
+            GlobalSettings.shouldUpdateSegments = true
             self?.searchController.searchBar.text = ""
             self?.cities = []
             self?.sehirlerTableview.reloadData()

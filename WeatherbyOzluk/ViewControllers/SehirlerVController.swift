@@ -6,7 +6,6 @@ class SehirlerVController: BaseVController {
   var weather: [HavaDurum]?
   var selectedCities: [Location] = UserDefaultsHelper.getCities()
   var newCityAdded = false
-  static var shouldUpdateSegments = false
   var viewModel: CitiesMainVModel = CitiesMainVModel()
   var degrees : [String] = []
   var dates : [String] = []
@@ -50,6 +49,7 @@ class SehirlerVController: BaseVController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
+    selectedCities = UserDefaultsHelper.getCities()
     guard !selectedCities.isEmpty else {
       sehirlerTableView.setEmptyView(title: "No location Found", message: "Start by adding a location", animation: "location")
       return
@@ -144,7 +144,7 @@ extension SehirlerVController: UITableViewDelegate,UITableViewDataSource {
             selectedCities.remove(at: indexPath.row)
             sehirlerTableView.deleteRows(at: [indexPath], with: .automatic)
             UserDefaultsHelper.removeCity(at: indexPath.row)
-            SehirlerVController.shouldUpdateSegments = true
+            GlobalSettings.shouldUpdateSegments = true
         }
     }
 }
@@ -154,7 +154,7 @@ extension SehirlerVController: UITableViewDragDelegate, UITableViewDropDelegate 
     }
 
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        SehirlerVController.shouldUpdateSegments = true
+        GlobalSettings.shouldUpdateSegments = true
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
         dragItem.localObject = weather![indexPath.row]
         return [dragItem]

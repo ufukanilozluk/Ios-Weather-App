@@ -6,7 +6,7 @@ import UIKit
 class Utility {
     
     
-    private static var formerConnectivityStatus = true
+    
    
     static func showToast(controller: UIViewController? = nil, message: String, seconds: Double, alertType: AlertType = .info) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -42,15 +42,15 @@ class Utility {
         monitor.pathUpdateHandler = { path in
 
             if path.status == .satisfied {
-                if !formerConnectivityStatus {
+              if !GlobalSettings.formerConnectivityStatus {
                     DispatchQueue.main.async {
                         showToast(message: CustomAlerts.internetConnected.alertTitle, seconds: 5, alertType: CustomAlerts.internetConnected.alertType)
                     }
                 }
-                formerConnectivityStatus = true
+              GlobalSettings.formerConnectivityStatus = true
 
             } else {
-                formerConnectivityStatus = false
+              GlobalSettings.formerConnectivityStatus = false
                 DispatchQueue.main.async {
                     showToast(message: CustomAlerts.internetNotConnected.alertTitle, seconds: 5, alertType: CustomAlerts.internetNotConnected.alertType)
                 }

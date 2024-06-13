@@ -23,7 +23,6 @@ class AnasayfaVController: BaseVController {
     var dataWeather: [HavaDurum.Hava]?
     var weeklyWeather: HavaDurumWeekly?
     private let spacing: CGFloat = 4.0
-    static var selectedCities: [Location] = UserDefaultsHelper.getCities()
     var selectedCity: Location?
     var viewModel: CitiesMainVModel = CitiesMainVModel()
     var times : [String] = []
@@ -37,8 +36,8 @@ class AnasayfaVController: BaseVController {
     }
 
     func updateHome() {
-      AnasayfaVController.selectedCities = UserDefaultsHelper.getCities()
-      guard  !AnasayfaVController.selectedCities.isEmpty else {
+      GlobalSettings.selectedCities = UserDefaultsHelper.getCities()
+      guard  !GlobalSettings.selectedCities.isEmpty else {
             view.addSubview(emptyView)
             Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
             emptyView.center = view.center
@@ -50,16 +49,16 @@ class AnasayfaVController: BaseVController {
         scrollViewAnasayfa.isHidden = false
 
         if let _ = segmentedControl {
-            if SehirlerVController.shouldUpdateSegments {
-              let items = AnasayfaVController.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
+            if GlobalSettings.shouldUpdateSegments {
+              let items = GlobalSettings.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
                 segmentedControl?.replaceSegments(segments: items)
                 segmentedControl?.selectedSegmentIndex = 0
-                SehirlerVController.shouldUpdateSegments = false
+                GlobalSettings.shouldUpdateSegments = false
             }
         } else {
             createSegmentedControl()
         }
-        selectedCity = AnasayfaVController.selectedCities[segmentedControl!.selectedSegmentIndex]
+        selectedCity = GlobalSettings.selectedCities[segmentedControl!.selectedSegmentIndex]
         fetchData(for: selectedCity!)
         
     }
@@ -216,7 +215,7 @@ class AnasayfaVController: BaseVController {
     }
 
     func createSegmentedControl() {
-      let items = AnasayfaVController.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
+      let items = GlobalSettings.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray
@@ -234,7 +233,7 @@ class AnasayfaVController: BaseVController {
     }
 
     @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
-        selectedCity = AnasayfaVController.selectedCities[segmentedControl.selectedSegmentIndex]
+        selectedCity = GlobalSettings.selectedCities[segmentedControl.selectedSegmentIndex]
         fetchData(for: selectedCity!)
         
     }

@@ -86,7 +86,7 @@ class CitiesMainVModel {
 
     func getForecastForAllCities(completion: @escaping () -> Void) {
         var weather: [HavaDurum] = []
-        let selectedCities: [Location] = AnasayfaVController.selectedCities
+      let selectedCities: [Location] = UserDefaultsHelper.getCities()
         for city in selectedCities {
             dispatchGroup.enter()
           let endPoint = Endpoint.daily(city: city.LocalizedName, cnt: "1")
