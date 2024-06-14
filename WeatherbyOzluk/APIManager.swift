@@ -1,4 +1,6 @@
 import Foundation
+import Network
+import UIKit
 
 class APIManager {
     static func getJSON<T: Decodable>(url: URL,
@@ -36,6 +38,30 @@ class APIManager {
 
         }.resume()
     }
+  
+  static func netWorkConnectivityCheck(onViewController viewController: UIViewController) {
+       let monitor = NWPathMonitor()
+       monitor.pathUpdateHandler = { path in
+
+           if path.status == .satisfied {
+             if !GlobalSettings.formerConnectivityStatus {
+                   DispatchQueue.main.async {
+                     viewController.showToast(message: CustomAlerts.internetConnected.alertTitle, seconds: 5, alertType: CustomAlerts.internetConnected.alertType)
+                   }
+               }
+             GlobalSettings.formerConnectivityStatus = true
+
+           } else {
+             GlobalSettings.formerConnectivityStatus = false
+               DispatchQueue.main.async {
+                 viewController.showToast(message: CustomAlerts.internetNotConnected.alertTitle, seconds: 5, alertType: CustomAlerts.internetNotConnected.alertType)
+               }
+           }
+       }
+
+       monitor.start(queue: DispatchQueue(label: "Network"))
+   }
+
 }
 
 extension APIManager {

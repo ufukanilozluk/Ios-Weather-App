@@ -19,7 +19,6 @@ class AnasayfaVController: BaseVController {
 
     lazy var refreshControl = UIRefreshControl()
     var segmentedControl: UISegmentedControl?
-//    var city: Location = Location()
     var dataWeather: [HavaDurum.Hava]?
     var weeklyWeather: HavaDurumWeekly?
     private let spacing: CGFloat = 4.0
@@ -31,7 +30,6 @@ class AnasayfaVController: BaseVController {
     var days  : [String] = []
   
     override func viewDidLoad() {
-        Utility.netWorkConnectivityCheck()
         configUI()
     }
 
@@ -39,7 +37,7 @@ class AnasayfaVController: BaseVController {
       GlobalSettings.selectedCities = UserDefaultsHelper.getCities()
       guard  !GlobalSettings.selectedCities.isEmpty else {
             view.addSubview(emptyView)
-            Utility.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
+            view.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
             emptyView.center = view.center
             scrollViewAnasayfa.isHidden = true
             return

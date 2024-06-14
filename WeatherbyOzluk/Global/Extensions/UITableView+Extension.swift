@@ -29,7 +29,7 @@ extension UITableView {
                 animationView.heightAnchor.constraint(equalToConstant: 100),
             ])
 
-            Utility.startAnimation(jsonFile: animation!, view: animationView)
+            self.startAnimation(jsonFile: animation!, view: animationView)
             stackView.addArrangedSubview(animationView)
         }
 
