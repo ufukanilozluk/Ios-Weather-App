@@ -43,6 +43,29 @@ extension UIViewController {
     }
     }
   
+  func showToast(message: String, seconds: Double, alertType: AlertType = .info) {
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            switch alertType {
+            case .warning:
+                alert.view.backgroundColor = .yellow
+            case .error:
+                alert.view.backgroundColor = .red
+            case .success:
+                alert.view.backgroundColor = .green
+            case .info:
+                alert.view.backgroundColor = .blue
+            }
+
+            alert.view.layer.cornerRadius = 15
+            
+            self.present(alert, animated: true, completion: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
+                alert.dismiss(animated: true)
+            }
+        }
+
+  
   func setEmptyView(title: String, message: String, image: UIImage? = nil) {
       let emptyView = UIView(frame: CGRect(x: view.center.x, y: view.center.y, width: view.bounds.size.width, height: view.bounds.size.height))
       let stackView = UIStackView()

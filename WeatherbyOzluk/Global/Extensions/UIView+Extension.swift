@@ -1,4 +1,5 @@
 import UIKit
+import Lottie
 
 extension UIView {
     var width: CGFloat {
@@ -54,4 +55,21 @@ extension UIView {
               dimView.removeFromSuperview()
           }
       }
+  
+   func startAnimation(jsonFile: String, view: UIView) {
+      var animationView = LottieAnimationView()
+      animationView = .init(name: jsonFile)
+      animationView.contentMode = .scaleToFill
+      animationView.loopMode = .loop
+      animationView.animationSpeed = 0.5
+      animationView.layer.cornerRadius = 15
+      view.layer.cornerRadius = 15
+      view.addSubview(animationView)
+      animationView.translatesAutoresizingMaskIntoConstraints = false
+      animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+      animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+      animationView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+      animationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+      animationView.play()
+  }
   }
