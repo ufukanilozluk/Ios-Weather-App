@@ -33,47 +33,47 @@ class SehirlerDetayVController: BaseVController {
     }
 
     @IBAction func getLocationIBA(_ sender: Any) {
-//        getLocation()
+        getLocation()
     }
 
-//    func getLocation() {
-//        let getLocation = GetLocation()
-//
-//        getLocation.run { location, error in
-//
-//            if error == nil {
-//                if let location = location {
-//                    getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
-//
-//                        var citiesArray = SehirlerVController.getCities()
-//                        let cityName = placeMark.administrativeArea
-//
-//                      if let _ = citiesArray?.first(where: { $0.LocalizedName == cityName! }) {
-//                            Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
-//
-//                        } else {
-//                            var city = Location()
-//                            city.cityName = cityName
-//                            city.countryName = placeMark.country
-//                            city.lon = location.coordinate.longitude as Double
-//                            city.lat = location.coordinate.latitude as Double
-//                            citiesArray?.append(city)
-//                            SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
-//                            Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
-//                            self.searchController.searchBar.text = ""
-//                            self.cities = []
-//                            self.sehirlerTableview.reloadData()
-//                            self.searchController.searchBar.endEditing(true)
-//                            SehirlerVController.shouldUpdateSegments = true
-//                        }
-//                    }
-//                    )
-//                }
-//            } else {
-//                Utility.alert(msg: error, type: .err)
-//            }
-//        }
-//    }
+    func getLocation() {
+        let getLocation = GetLocation()
+
+        getLocation.run { location, error in
+
+            if error == nil {
+                if let location = location {
+                    getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
+
+                        var citiesArray = SehirlerVController.getCities()
+                        let cityName = placeMark.administrativeArea
+
+                      if let _ = citiesArray?.first(where: { $0.LocalizedName == cityName! }) {
+                            Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
+
+                        } else {
+                            var city = Location()
+                            city.cityName = cityName
+                            city.countryName = placeMark.country
+                            city.lon = location.coordinate.longitude as Double
+                            city.lat = location.coordinate.latitude as Double
+                            citiesArray?.append(city)
+                            SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
+                            Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
+                            self.searchController.searchBar.text = ""
+                            self.cities = []
+                            self.sehirlerTableview.reloadData()
+                            self.searchController.searchBar.endEditing(true)
+                            SehirlerVController.shouldUpdateSegments = true
+                        }
+                    }
+                    )
+                }
+            } else {
+                Utility.alert(msg: error, type: .err)
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
