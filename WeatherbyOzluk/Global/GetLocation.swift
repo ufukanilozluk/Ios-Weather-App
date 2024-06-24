@@ -1,80 +1,69 @@
 import CoreLocation
 
-public class GetLocation: NSObject, CLLocationManagerDelegate {
-    let manager = CLLocationManager()
-    var locationCallback: ((_ location: CLLocation?, _ error: String?) -> Void)!
-    var locationServicesEnabled = false
-    var didFailWithError: Error?
-
-    public func run(callback: @escaping (CLLocation?, String?) -> Void) {
+class LocationService: NSObject, CLLocationManagerDelegate {
+    private let locationManager = CLLocationManager()
+    private var locationCallback: ((CLLocation?, String?) -> Void)?
+    
+    override init() {
+        super.init()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    }
+    
+    func requestLocation(callback: @escaping (CLLocation?, String?) -> Void) {
         locationCallback = callback
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-
-        locationServicesEnabled = CLLocationManager.locationServicesEnabled()
-
-        if locationServicesEnabled {
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined:
-                manager.requestWhenInUseAuthorization()
-
-            case .restricted, .denied:
-                locationCallback(nil, "Location authorization is denied")
-
-            case .authorizedAlways, .authorizedWhenInUse:
-                manager.startUpdatingLocation()
-
-            default:
-                break
-            }
-
-        } else {
-            locationCallback(nil, "Location service disabled")
+        checkLocationServices()
+    }
+    
+    private func checkLocationServices() {
+        guard CLLocationManager.locationServicesEnabled() else {
+            locationCallback?(nil, "Location services are disabled")
+            return
+        }
+        checkLocationAuthorization()
+    }
+    
+    private func checkLocationAuthorization() {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            locationCallback?(nil, "Location authorization is denied")
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.startUpdatingLocation()
+        @unknown default:
+            locationCallback?(nil, "Unknown authorization status")
         }
     }
-
-//    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//
-//        switch status {
-//
-//        case .restricted, .denied:
-//            locationCallback(nil,"Location authorization is denied")
-//        case .authorizedAlways, .authorizedWhenInUse:
-//            manager.startUpdatingLocation()
-//        case .notDetermined:
-//            fallthrough
-//        @unknown default:
-//            break
-//        }
-//
-//    }
-
-    public func locationManager(_ manager: CLLocationManager,
-                                didUpdateLocations locations: [CLLocation]) {
-        locationCallback(locations.last!, nil)
-        manager.stopUpdatingLocation()
+    
+  
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
     }
-
-    public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        didFailWithError = error
-        locationCallback(nil, error.localizedDescription)
-        manager.stopUpdatingLocation()
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationCallback?(location, nil)
+        } else {
+            locationCallback?(nil, "Failed to get location")
+        }
+        locationManager.stopUpdatingLocation()
     }
-
-    deinit {
-        manager.stopUpdatingLocation()
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        locationCallback?(nil, error.localizedDescription)
+        locationManager.stopUpdatingLocation()
     }
-
-    func retreiveCityName(lattitude: Double, longitude: Double, completionHandler: @escaping ((CLPlacemark) -> Void)) {
-        let geoCoder = CLGeocoder()
-        let location = CLLocation(latitude: lattitude, longitude: longitude)
-        geoCoder.reverseGeocodeLocation(location, completionHandler: { placemarks, _ in
-
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placemarks?[0]
-            completionHandler(placeMark)
-
-        })
+    
+    func retrieveCityName(latitude: Double, longitude: Double, completionHandler: @escaping (CLPlacemark?) -> Void) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            if let error = error {
+                print("Reverse geocode failed: \(error.localizedDescription)")
+                completionHandler(nil)
+                return
+            }
+            completionHandler(placemarks?.first)
+        }
     }
 }

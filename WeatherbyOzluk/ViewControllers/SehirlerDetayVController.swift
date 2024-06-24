@@ -37,42 +37,44 @@ class SehirlerDetayVController: BaseVController {
     }
 
     func getLocation() {
-        let getLocation = GetLocation()
+      let locationService = LocationService()
 
-        getLocation.run { location, error in
+      locationService.requestLocation { location, error in
+          guard error == nil else {
+              self.showAlert(title: "Error", message: error!)
+              return
+          }
+          
+          guard let location = location else {
+              self.showAlert(title: "Error", message: "Unable to retrieve location.")
+              return
+          }
+          
+          locationService.retrieveCityName(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude) { placeMark in
+              guard let placeMark = placeMark,
+                    let cityName = placeMark.administrativeArea,
+                    let countryName = placeMark.country else {
+                  self.showAlert(title: "Error", message: "Unable to retrieve city information.")
+                  return
+              }
+              
+            let citiesArray = UserDefaultsHelper.getCities()
+              if citiesArray.contains(where: { $0.LocalizedName == cityName }) {
+                  self.showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
+              } else {
+                  let geoPosition = Location.GeoPosition(Latitude: location.coordinate.latitude, Longitude: location.coordinate.longitude)
+                  let city = Location(LocalizedName: cityName, Country: Location.Country(LocalizedName: countryName), GeoPosition: geoPosition)
+                  UserDefaultsHelper.saveCity(city: city)
+                  self.showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
+                  self.searchController.searchBar.text = ""
+                  self.cities.removeAll()
+                  self.sehirlerTableview.reloadData()
+                  self.searchController.searchBar.endEditing(true)
+                  GlobalSettings.shouldUpdateSegments = true
+              }
+          }
+      }
 
-            if error == nil {
-                if let location = location {
-                    getLocation.retreiveCityName(lattitude: location.coordinate.latitude, longitude: location.coordinate.longitude, completionHandler: { placeMark in
-
-                        var citiesArray = SehirlerVController.getCities()
-                        let cityName = placeMark.administrativeArea
-
-                      if let _ = citiesArray?.first(where: { $0.LocalizedName == cityName! }) {
-                            Utility.alert(msg: CustomAlerts.sameCity.alertTitle, type: CustomAlerts.sameCity.alertType)
-
-                        } else {
-                            var city = Location()
-                            city.cityName = cityName
-                            city.countryName = placeMark.country
-                            city.lon = location.coordinate.longitude as Double
-                            city.lat = location.coordinate.latitude as Double
-                            citiesArray?.append(city)
-                            SehirlerDetayVController.saveCities(arrayCity: citiesArray!)
-                            Utility.alert(msg: CustomAlerts.added.alertTitle, type: CustomAlerts.added.alertType)
-                            self.searchController.searchBar.text = ""
-                            self.cities = []
-                            self.sehirlerTableview.reloadData()
-                            self.searchController.searchBar.endEditing(true)
-                            SehirlerVController.shouldUpdateSegments = true
-                        }
-                    }
-                    )
-                }
-            } else {
-                Utility.alert(msg: error, type: .err)
-            }
-        }
     }
 
     override func viewDidLoad() {
