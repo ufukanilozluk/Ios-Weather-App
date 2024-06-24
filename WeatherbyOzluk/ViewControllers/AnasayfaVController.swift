@@ -48,7 +48,7 @@ class AnasayfaVController: BaseVController {
 
         if let _ = segmentedControl {
             if GlobalSettings.shouldUpdateSegments {
-              let items = GlobalSettings.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
+              let items = GlobalSettings.selectedCities.map({ $0.localizedName.replacingOccurrences(of: " Province", with: "") })
                 segmentedControl?.replaceSegments(segments: items)
                 segmentedControl?.selectedSegmentIndex = 0
                 GlobalSettings.shouldUpdateSegments = false
@@ -115,89 +115,125 @@ class AnasayfaVController: BaseVController {
     }
 
 
-    func setBindings() {
-        viewModel.bigIcon.bind { [weak self] bigIcon in
-            DispatchQueue.main.async {
-                self?.imgWeatherMain.image = bigIcon
-            }
-        }
+  
+      func setBindings() {
+              viewModel.bigIcon.bind { [weak self] bigIcon in
+                  DispatchQueue.main.async {
+                      self?.imgWeatherMain.image = bigIcon
+                  }
+              }
 
-        viewModel.description.bind { [weak self] description in
-            DispatchQueue.main.async {
-                self?.lblDescription.text = description
-            }
-        }
+              viewModel.description.bind { [weak self] description in
+                  DispatchQueue.main.async {
+                      self?.lblDescription.text = description
+                  }
+              }
 
-      viewModel.humidity.bind { [weak self] humidity in
-            DispatchQueue.main.async {
-                self?.lblHumidity.text = humidity
-            }
-        }
+              viewModel.humidity.bind { [weak self] humidity in
+                  DispatchQueue.main.async {
+                      self?.lblHumidity.text = humidity
+                  }
+              }
 
-        viewModel.wind.bind { [weak self] wind in
-            DispatchQueue.main.async {
-                self?.lblWind.text = wind
-            }
-        }
+              viewModel.wind.bind { [weak self] wind in
+                  DispatchQueue.main.async {
+                      self?.lblWind.text = wind
+                  }
+              }
 
-        viewModel.temperature.bind { [weak self] temperature in
+              viewModel.temperature.bind { [weak self] temperature in
+                  DispatchQueue.main.async {
+                      self?.lblTemperature.text = temperature
+                  }
+              }
 
-            DispatchQueue.main.async {
-                self?.lblTemperature.text = temperature
-            }
-        }
+              viewModel.visibility.bind { [weak self] visibility in
+                  DispatchQueue.main.async {
+                      self?.lblVisibility.text = visibility
+                  }
+              }
 
-        viewModel.visibility.bind { [weak self] visibility in
+              viewModel.pressure.bind { [weak self] pressure in
+                  DispatchQueue.main.async {
+                      self?.lblPressure.text = pressure
+                  }
+              }
 
-            DispatchQueue.main.async {
-                self?.lblVisibility.text = visibility
-            }
-        }
+              viewModel.date.bind { [weak self] date in
+                  DispatchQueue.main.async {
+                      self?.lblDate.text = date
+                  }
+              }
+
+              viewModel.weatherData.bind { [weak self] weatherData in
+                  DispatchQueue.main.async {
+                      self?.dataWeather = weatherData
+                      self?.reloadCollectionViewData()
+                  }
+              }
+
+              viewModel.weeklyWeatherData.bind { [weak self] weeklyWeatherData in
+                  DispatchQueue.main.async {
+                      self?.weeklyWeather = weeklyWeatherData
+                      self?.reloadTableViewData()
+                  }
+              }
+
+              viewModel.times.bind { [weak self] times in
+                  DispatchQueue.main.async {
+                      self?.times = times
+                      self?.reloadCollectionViewData()
+                  }
+              }
+
+              viewModel.days.bind { [weak self] days in
+                  DispatchQueue.main.async {
+                      self?.days = days
+                      self?.reloadTableViewData()
+                  }
+              }
+
+              viewModel.mins.bind { [weak self] mins in
+                  DispatchQueue.main.async {
+                      self?.mins = mins
+                      self?.reloadTableViewData()
+                  }
+              }
+
+              viewModel.maxs.bind { [weak self] maxs in
+                  DispatchQueue.main.async {
+                      self?.maxs = maxs
+                      self?.reloadTableViewData()
+                  }
+              }
+          }
+      
+  func reloadCollectionViewData() {
+    
+    guard dataWeather?.count == times.count else {
+              print("Mismatch in dataWeather and times count")
+              return
+          }
+          self.dailyWeatherCV.reloadData()
+      }
+
+      func reloadTableViewData() {
         
-
-        viewModel.pressure.bind { [weak self] pressure in
-
-            DispatchQueue.main.async {
-                self?.lblPressure.text = pressure
-            }
-        }
-
-        viewModel.date.bind { [weak self] date in
-
-            DispatchQueue.main.async {
-                self?.lblDate.text = date
-            }
-        }
+          guard let weeklyWeather = weeklyWeather,
+                weeklyWeather.daily.count == mins.count,
+                mins.count == maxs.count,
+                maxs.count == days.count else {
+              print("Mismatch in weeklyWeather, mins, maxs, or days count")
+              return
+          }
+          self.weeklyWeatherTV.reloadData()
+      }
       
-        viewModel.weatherData.bind { [weak self] weatherData in
-            self?.dataWeather = weatherData
-        }
-
-        viewModel.weeklyWeatherData.bind { [weak self] weeklyWeatherData in
-            self?.weeklyWeather = weeklyWeatherData
-        }
-      
-      viewModel.times.bind { [weak self] times in
-        self?.times = times
-        }
-      
-      viewModel.days.bind { [weak self] days in
-        self?.days = days
-        }
-      
-      viewModel.mins.bind { [weak self] mins in
-        self?.mins = mins
-        }
-      
-      viewModel.maxs.bind { [weak self] maxs in
-        self?.maxs = maxs
-        }
-      
-    }
+    
 
     func updateUI() {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.async {
             self.dailyWeatherCV.reloadData()
             self.weeklyWeatherTV.reloadData()
             self.refreshControl.endRefreshing()
@@ -213,7 +249,7 @@ class AnasayfaVController: BaseVController {
     }
 
     func createSegmentedControl() {
-      let items = GlobalSettings.selectedCities.map({ $0.LocalizedName.replacingOccurrences(of: " Province", with: "") })
+      let items = GlobalSettings.selectedCities.map({ $0.localizedName.replacingOccurrences(of: " Province", with: "") })
         segmentedControl = UISegmentedControl(items: items)
         segmentedControl!.selectedSegmentIndex = 0
         segmentedControl!.backgroundColor = Colors.iosCaseLightGray

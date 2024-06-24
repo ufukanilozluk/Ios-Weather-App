@@ -42,8 +42,6 @@ class CitiesMainVModel {
                 self.weatherData.value = forecast.list
                 self.times.value = forecast.list.enumerated().map { $0.offset == 0 ? "Now" : $0.element.dt.timeIn24Hour() }
               
-              
-              
             case let .failure(error):
                 switch error {
                 case let .error(errorString):
@@ -74,9 +72,9 @@ class CitiesMainVModel {
     }
 
     func getForecast(city: Location, completion: @escaping () -> Void) {
-      guard let lat = city.GeoPosition?.Latitude, let lon = city.GeoPosition?.Longitude else {return}
+      guard let lat = city.geoPosition?.latitude, let lon = city.geoPosition?.longitude else {return}
         dispatchGroup.enter()
-      getWeather(city: city.LocalizedName)
+      getWeather(city: city.localizedName)
         dispatchGroup.enter()
       getWeatherForecastWeekly(lat: String(lat), lon: String(lon))
         dispatchGroup.notify(queue: .main) {
@@ -89,7 +87,7 @@ class CitiesMainVModel {
       let selectedCities: [Location] = UserDefaultsHelper.getCities()
         for city in selectedCities {
             dispatchGroup.enter()
-          let endPoint = Endpoint.daily(city: city.LocalizedName, cnt: "1")
+          let endPoint = Endpoint.daily(city: city.localizedName, cnt: "1")
             APIManager.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
                 switch result {
                 case let .success(forecast):
@@ -109,10 +107,10 @@ class CitiesMainVModel {
 
             weather.sort(by: { n1, n2 in
                 let index1 = selectedCities.firstIndex(where: {
-                  $0.LocalizedName.replacingOccurrences(of: " Province", with: "") == n1.city!.name.replacingOccurrences(of: " Province", with: "")
+                  $0.localizedName.replacingOccurrences(of: " Province", with: "") == n1.city!.name.replacingOccurrences(of: " Province", with: "")
                 })
                 let index2 = selectedCities.firstIndex(where: {
-                  $0.LocalizedName.replacingOccurrences(of: " Province", with: "") == n2.city!.name.replacingOccurrences(of: " Province", with: "")
+                  $0.localizedName.replacingOccurrences(of: " Province", with: "") == n2.city!.name.replacingOccurrences(of: " Province", with: "")
                 })
                 return index1! < index2!
             })

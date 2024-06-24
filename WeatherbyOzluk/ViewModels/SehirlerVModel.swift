@@ -12,11 +12,11 @@ class SehirlerVModel{
   
     func findCity(query: String,completion: @escaping () -> Void) {
       let endPoint = Endpoint.findCity(q: query)
-      APIManager.getJSON(url: endPoint.url) { (result: Result<[Location], APIManager.APIError>) in
+      APIManager.getJSON(url: endPoint.url,keyDecodingStrategy: .convertFromPascalCase) { (result: Result<[Location], APIManager.APIError>) in
             switch result {
             case let .success(locations):
                 self.locationSearchData.value = locations
-              self.cityNames.value = locations.map({"\($0.LocalizedName),\($0.Country.LocalizedName)"})
+              self.cityNames.value = locations.map({"\($0.localizedName),\($0.country.localizedName)"})
                 completion()
             case let .failure(error):
                 switch error {
@@ -31,7 +31,7 @@ class SehirlerVModel{
     func findCoordinate(query: String, closure: @escaping (Result<(), Error>) -> Void) {
      let searchText = query.replacingOccurrences(of: " ", with: "%20")
      let endPoint = Endpoint.findCoordinate(q: searchText)
-     APIManager.getJSON(url: endPoint.url) { (result: Result<[Location], APIManager.APIError>) in
+      APIManager.getJSON(url: endPoint.url,keyDecodingStrategy: .convertFromPascalCase) { (result: Result<[Location], APIManager.APIError>) in
        switch result {
        case let .success(location):
          self.location.value = location

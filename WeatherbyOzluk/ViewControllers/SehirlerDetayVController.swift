@@ -59,11 +59,11 @@ class SehirlerDetayVController: BaseVController {
               }
               
             let citiesArray = UserDefaultsHelper.getCities()
-              if citiesArray.contains(where: { $0.LocalizedName == cityName }) {
+            if citiesArray.contains(where: { $0.localizedName == cityName }) {
                   self.showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
               } else {
-                  let geoPosition = Location.GeoPosition(Latitude: location.coordinate.latitude, Longitude: location.coordinate.longitude)
-                  let city = Location(LocalizedName: cityName, Country: Location.Country(LocalizedName: countryName), GeoPosition: geoPosition)
+                let geoPosition = Location.GeoPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                let city = Location(localizedName: cityName, country: Location.Country(localizedName: countryName), geoPosition: geoPosition)
                   UserDefaultsHelper.saveCity(city: city)
                   self.showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
                   self.searchController.searchBar.text = ""
@@ -156,9 +156,9 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
     cell.ekleAction = {
       
       let citiesArray = UserDefaultsHelper.getCities()
-      let cityName = self.cities[indexPath.row].LocalizedName
-      let city = self.cities.first(where: { $0.LocalizedName == cityName })
-      guard  !citiesArray.contains(where: { $0.LocalizedName == city?.LocalizedName }) else {
+      let cityName = self.cities[indexPath.row].localizedName
+      let city = self.cities.first(where: { $0.localizedName == cityName })
+      guard  !citiesArray.contains(where: { $0.localizedName == city?.localizedName }) else {
         throw SehirEkleError.sameSelection
       }
       

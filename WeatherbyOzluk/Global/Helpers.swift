@@ -12,9 +12,9 @@ enum UserDefaultsHelper {
              let latitude = city["latitude"] as? Double,
              let longitude = city["longitude"] as? Double {
               
-              let country = Location.Country(LocalizedName: countryName)
-              let geoPosition = Location.GeoPosition(Latitude: latitude, Longitude: longitude)
-              let location = Location(LocalizedName: cityName, Country: country, GeoPosition: geoPosition)
+              let country = Location.Country(localizedName: countryName)
+            let geoPosition = Location.GeoPosition(latitude: latitude, longitude: longitude)
+              let location = Location(localizedName: cityName, country: country, geoPosition: geoPosition)
               cities.append(location)
           }
       }
@@ -24,19 +24,19 @@ enum UserDefaultsHelper {
   static func saveCity(city: Location) {
       var cities: [[String: Any]] = UserDefaults.standard.array(forKey: "cities") as? [[String: Any]] ?? []
       
-      guard let latitude = city.GeoPosition?.Latitude,
-            let longitude = city.GeoPosition?.Longitude else {
+      guard let latitude = city.geoPosition?.latitude,
+            let longitude = city.geoPosition?.longitude else {
           // Handle the case where any of the values are nil
           return
       }
       
       // Convert Location.Country to Dictionary
       let countryDict: [String: Any] = [
-          "LocalizedName": city.Country.LocalizedName
+          "LocalizedName": city.country.localizedName
       ]
       
       let newCity: [String: Any] = [
-          "city": city.LocalizedName,
+          "city": city.localizedName,
           "country": countryDict,
           "latitude": latitude,
           "longitude": longitude,

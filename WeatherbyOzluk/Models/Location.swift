@@ -1,22 +1,21 @@
 import Foundation
 
-// Karşılaştırmada (contains kısmı) kullanmak için equatable gerekir
-
-struct Location : Codable {
-
-    var LocalizedName: String
-    var Country: Country
-    var GeoPosition : GeoPosition?
+struct Location: Codable {
+    var localizedName: String
+    var country: Country
+    var geoPosition: GeoPosition?
 }
 
-extension Location{
-  struct Country : Codable {
-    var LocalizedName : String
-  }
-  
-  struct GeoPosition : Codable {
-    var Latitude  : Double
-    var Longitude : Double
-  }
+// Location struct'ına extension eklemesi
+extension Location {
+    // Location içindeki Country struct'ı tanımlaması
+    struct Country: Codable {
+        var localizedName: String
+    }
+    
+    // Location içindeki GeoPosition struct'ı tanımlaması
+    struct GeoPosition: Codable {
+        var latitude: Double
+        var longitude: Double
+    }
 }
-
