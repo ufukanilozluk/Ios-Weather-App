@@ -5,10 +5,12 @@ extension Endpoint {
         city: String,
         cnt: String = "7",
         lang: String = "en",
-        appId: String = "54bfbfe4aa755c3b005fded2b0741fa5",
         units: String = "metric"
     ) -> Self {
-        Endpoint(
+      guard let appId = GlobalSettings.KeychainHelper.getApiKey(forKey: "openweather") else {
+            fatalError("API key not found in Keychain")
+        }
+        return Endpoint(
             host: "api.openweathermap.org",
             path: "data/2.5/forecast",
             queryItems: [
@@ -25,10 +27,12 @@ extension Endpoint {
         exclude: String = "current,minutely,hourly,alerts" ,
         units: String = "metric" ,
         lat: String,
-        lon: String,
-        appId: String = "54bfbfe4aa755c3b005fded2b0741fa5"
+        lon: String
     ) -> Self {
-        Endpoint(
+      guard let appId = GlobalSettings.KeychainHelper.getApiKey(forKey: "openweather") else {
+            fatalError("API key not found in Keychain")
+        }
+        return Endpoint(
             host: "api.openweathermap.org",
             path: "data/2.5/onecall",
             queryItems: [

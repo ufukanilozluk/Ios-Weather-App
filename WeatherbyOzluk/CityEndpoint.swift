@@ -6,10 +6,12 @@ extension Endpoint {
       exclude: String = "current,minutely,hourly,alerts" ,
       units: String = "metric" ,
       lat: String,
-      lon: String,
-      appId: String = "54bfbfe4aa755c3b005fded2b0741fa5"
+      lon: String
   ) -> Self {
-      Endpoint(
+    guard let appId = GlobalSettings.KeychainHelper.getApiKey(forKey: "openweather") else {
+          fatalError("API key not found in Keychain")
+      }
+      return Endpoint(
           host: "api.openweathermap.org",
           path: "data/2.5/onecall",
           queryItems: [
@@ -22,11 +24,12 @@ extension Endpoint {
       )
   }
   
-static func findCity(
-    q: String,
-    apikey: String = "ViMALGnwtd6ZwguzkrnCM7phryDuVKY3"
-) -> Self {
-    Endpoint(
+static func findCity( q: String) -> Self {
+  
+  guard let apikey = GlobalSettings.KeychainHelper.getApiKey(forKey: "accuweather") else {
+        fatalError("API key not found in Keychain")
+    }
+    return Endpoint(
         host: "dataservice.accuweather.com",
         path: "locations/v1/cities/autocomplete",
         queryItems: [
@@ -36,11 +39,11 @@ static func findCity(
     )
 }
 
-static func findCoordinate(
-    q: String,
-    apikey: String = "ViMALGnwtd6ZwguzkrnCM7phryDuVKY3"
-) -> Self {
-    Endpoint(
+static func findCoordinate(q: String) -> Self {
+  guard let apikey = GlobalSettings.KeychainHelper.getApiKey(forKey: "accuweather") else {
+        fatalError("API key not found in Keychain")
+    }
+    return Endpoint(
         host: "dataservice.accuweather.com",
         path: "locations/v1/search",
         queryItems: [
@@ -48,6 +51,5 @@ static func findCoordinate(
             URLQueryItem(name: "q", value: q),
         ]
     )
-}
-    
+}    
 }
