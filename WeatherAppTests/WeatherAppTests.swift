@@ -9,9 +9,5 @@
 import XCTest
 
 final class WeatherAppTests: XCTestCase {
-    
-    let vmodel = CitiesMainVModel()
-    
-    
-      
+  let vmodel = CitiesMainVModel()
 }
