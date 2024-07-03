@@ -1,6 +1,6 @@
 import Foundation
 
 
-enum SehirEkleError: Error {
+enum AddNewCityError: Error {
   case sameSelection
 }

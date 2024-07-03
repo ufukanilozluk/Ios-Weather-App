@@ -1,6 +1,6 @@
 import UIKit
 
-class AnasayfaDailyWeatherCVCell: UICollectionViewCell {
+class HomeDailyWeatherCollectionViewCell: UICollectionViewCell {
   @IBOutlet var frameCV: CardView!
   @IBOutlet var imgWeather: UIImageView!
   @IBOutlet var hour: UILabel!

@@ -7,7 +7,7 @@ extension Endpoint {
     lat: String,
     lon: String
   ) -> Self {
-    guard let appId = GlobalSettings.KeychainHelper.getApiKey(forKey: "openweather") else {
+    guard let appId = KeychainHelper.getApiKey(forKey: "openweather") else {
       fatalError("API key not found in Keychain")
     }
     return Endpoint(
@@ -24,7 +24,7 @@ extension Endpoint {
   }
 
   static func findCity(query: String) -> Self {
-    guard let apikey = GlobalSettings.KeychainHelper.getApiKey(forKey: "accuweather") else {
+    guard let apikey = KeychainHelper.getApiKey(forKey: "accuweather") else {
       fatalError("API key not found in Keychain")
     }
     return Endpoint(
@@ -38,7 +38,7 @@ extension Endpoint {
   }
 
   static func findCoordinate(query: String) -> Self {
-    guard let apikey = GlobalSettings.KeychainHelper.getApiKey(forKey: "accuweather") else {
+    guard let apikey = KeychainHelper.getApiKey(forKey: "accuweather") else {
       fatalError("API key not found in Keychain")
     }
     return Endpoint(

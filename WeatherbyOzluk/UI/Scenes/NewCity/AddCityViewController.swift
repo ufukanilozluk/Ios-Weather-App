@@ -1,11 +1,11 @@
 import UIKit
 
-class SehirlerDetayVController: BaseVController {
+class AddCityViewController: UIViewController {
   @IBOutlet var sehirlerTableview: UITableView!
 
   var cities: [Location] = []
   let searchController = UISearchController(searchResultsController: nil)
-  let sehirlerVModel = SehirlerVModel()
+  let sehirlerVModel = CityViewModel()
   lazy var searchBar = UISearchBar()
   var segueIdentifier = "goToSehir"
   var locationToAdd: [Location]?
@@ -103,8 +103,7 @@ class SehirlerDetayVController: BaseVController {
     }
   }
 
-  override func setConfig() {
-    super.setConfig()
+  func setConfig() {
     sehirlerTableview.delegate = self
     sehirlerTableview.dataSource = self
     sehirlerTableview.allowsSelection = false
@@ -138,7 +137,7 @@ class SehirlerDetayVController: BaseVController {
 
 // MARK: TableView Functions
 
-extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
+extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if cities.isEmpty && isFiltering {
       if let searchText = searchController.searchBar.text, searchText.count > 2 {
@@ -154,9 +153,9 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
   // Inside your cellForRowAt method
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(
-      withIdentifier: SehirlerDetayTVCell.reuseIdentifier,
+      withIdentifier: CitiesToAddTableViewCell.reuseIdentifier,
       for: indexPath
-    ) as? SehirlerDetayTVCell else {
+    ) as? CitiesToAddTableViewCell else {
       fatalError("Failed to dequeue SehirlerDetayTVCell")
     }
     let city = cityNames[indexPath.row] // cityNames dizisi kullanılıyor
@@ -165,7 +164,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
     cell.ekleAction = { [weak self] in
       guard let self = self else { return }
       let citiesArray = UserDefaultsHelper.getCities()
-      let cityName = city // cityNames dizisinden alınan şehir ismi kullanılıyor
+      let cityName = cities[indexPath.row].localizedName // cityNames dizisinden alınan şehir ismi kullanılıyor
       // Check if city already exists in UserDefaults
       guard !citiesArray.contains(where: { $0.localizedName == cityName }) else {
         // Handle case where city is already selected
@@ -204,7 +203,7 @@ extension SehirlerDetayVController: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
-extension SehirlerDetayVController: UISearchResultsUpdating {
+extension AddCityViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let searchText = searchController.searchBar.text, searchText.count > 2 else {
       cities = []

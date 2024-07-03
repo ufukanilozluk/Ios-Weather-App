@@ -1,11 +1,11 @@
 import UIKit
 
-class SehirlerVController: BaseVController {
+class CitiesViewController: UIViewController {
   @IBOutlet var sehirlerTableView: UITableView!
-  var weather: [HavaDurum]?
+  var weather: [Forecast]?
   var selectedCities: [Location] = UserDefaultsHelper.getCities()
   var newCityAdded = false
-  var viewModel = CitiesMainVModel()
+  var viewModel = ForecastViewModel()
   var degrees: [String] = []
   var dates: [String] = []
   var cityNames: [String] = []
@@ -53,8 +53,7 @@ class SehirlerVController: BaseVController {
     }
     getWeatherInfo()
   }
-  override func setConfig() {
-    super.setConfig()
+  func setConfig() {
     sehirlerTableView.delegate = self
     sehirlerTableView.dataSource = self
     sehirlerTableView.dragDelegate = self
@@ -85,7 +84,7 @@ class SehirlerVController: BaseVController {
   }
 }
 
-extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
+extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard !selectedCities.isEmpty else {
       tableView.setEmptyView(title: "No location found", message: "Start by adding a location", animation: "location")
@@ -102,9 +101,9 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
     }
     let hava = weatherList[0]
     guard let cell = tableView.dequeueReusableCell(
-      withIdentifier: SehirlerTVCell.reuseIdentifier,
+      withIdentifier: CitiesTableViewCell.reuseIdentifier,
       for: indexPath
-    ) as? SehirlerTVCell else {
+    ) as? CitiesTableViewCell else {
       // Handle the case where the cell cannot be dequeued as SehirlerTVCell
       return UITableViewCell()
     }
@@ -160,7 +159,7 @@ extension SehirlerVController: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
-extension SehirlerVController: UITableViewDragDelegate, UITableViewDropDelegate {
+extension CitiesViewController: UITableViewDragDelegate, UITableViewDropDelegate {
   func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
     // Implementation for drop functionality if needed
   }

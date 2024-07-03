@@ -1,6 +1,6 @@
 import UIKit
 
-class CitiesMainVModel {
+class ForecastViewModel {
   let temperature = ObservableValue("")
   let bigIcon: ObservableValue<UIImage?> = ObservableValue(nil)
   let description = ObservableValue("")
@@ -9,9 +9,9 @@ class CitiesMainVModel {
   let humidity = ObservableValue("")
   let pressure = ObservableValue("")
   let date = ObservableValue("")
-  let weatherData: ObservableValue<[HavaDurum.Hava]> = ObservableValue([])
-  let weeklyWeatherData: ObservableValue<HavaDurumWeekly?> = ObservableValue(nil)
-  let allCitiesWeatherData: ObservableValue<[HavaDurum]> = ObservableValue([])
+  let weatherData: ObservableValue<[Forecast.Weather]> = ObservableValue([])
+  let weeklyWeatherData: ObservableValue<ForecastWeekly?> = ObservableValue(nil)
+  let allCitiesWeatherData: ObservableValue<[Forecast]> = ObservableValue([])
   let dispatchGroup = DispatchGroup()
   let degree: ObservableValue<[String]> = ObservableValue([])
   let dates: ObservableValue<[String]> = ObservableValue([])
@@ -24,7 +24,7 @@ class CitiesMainVModel {
   func getWeather(city: String) {
     let endPoint = Endpoint.daily(city: city)
 
-    APIManager.shared.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
+    APIManager.shared.getJSON(url: endPoint.url) { (result: Result<Forecast, APIManager.APIError>) in
       switch result {
       case let .success(forecast):
         let data = forecast.list[0]
@@ -50,7 +50,7 @@ class CitiesMainVModel {
 
   func getWeatherForecastWeekly(lat: String, lon: String) {
     let endPoint = Endpoint.weeklyForecast(lat: lat, lon: lon)
-    APIManager.shared.getJSON(url: endPoint.url) { (result: Result<HavaDurumWeekly, APIManager.APIError>) in
+    APIManager.shared.getJSON(url: endPoint.url) { (result: Result<ForecastWeekly, APIManager.APIError>) in
       switch result {
       case let .success(weeklyForecast):
         self.weeklyWeatherData.value = weeklyForecast
@@ -79,12 +79,12 @@ class CitiesMainVModel {
   }
 
   func getForecastForAllCities(completion: @escaping () -> Void) {
-    var weather: [HavaDurum] = []
+    var weather: [Forecast] = []
     let selectedCities: [Location] = UserDefaultsHelper.getCities()
     for city in selectedCities {
       self.dispatchGroup.enter()
       let endPoint = Endpoint.daily(city: city.localizedName, cnt: "1")
-      APIManager.shared.getJSON(url: endPoint.url) { (result: Result<HavaDurum, APIManager.APIError>) in
+      APIManager.shared.getJSON(url: endPoint.url) { (result: Result<Forecast, APIManager.APIError>) in
         switch result {
         case let .success(forecast):
           weather.append(forecast)

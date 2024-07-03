@@ -13,14 +13,14 @@ extension City {
   }
 }
 
-struct HavaDurum: Codable {
-  var list: [Hava]
+struct Forecast: Codable {
+  var list: [Weather]
   var city: City?
 }
 
-extension HavaDurum {
-  struct Hava: Codable {
-    var main: HavaMain
+extension Forecast {
+  struct Weather: Codable {
+    var main: WeatherMain
     var weather: [Weather]
     var wind: Wind
     var visibility: Double
@@ -28,15 +28,15 @@ extension HavaDurum {
   }
 }
 
-extension HavaDurum.Hava {
+extension Forecast.Weather {
   private enum CodingKeys: String, CodingKey {
     case main, weather, wind, visibility
     case date = "dt"
   }
 }
 
-extension HavaDurum.Hava {
-  struct HavaMain: Codable {
+extension Forecast.Weather {
+  struct WeatherMain: Codable {
     var temp: Double
     var humidity: Int
     var pressure: Int
@@ -55,12 +55,12 @@ extension HavaDurum.Hava {
   }
 }
 
-struct HavaDurumWeekly: Codable {
+struct ForecastWeekly: Codable {
   var lat: Double
   var daily: [Daily]
 }
 
-extension HavaDurumWeekly {
+extension ForecastWeekly {
   struct Daily: Codable {
     var date: Date
     var temp: Temp
@@ -68,7 +68,7 @@ extension HavaDurumWeekly {
   }
 }
 
-extension HavaDurumWeekly.Daily {
+extension ForecastWeekly.Daily {
   struct Temp: Codable {
     var min: Double
     var max: Double

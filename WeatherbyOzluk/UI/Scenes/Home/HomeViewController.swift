@@ -1,7 +1,6 @@
-import Network
 import UIKit
 
-class AnasayfaVController: BaseVController {
+class HomeViewController: UIViewController {
   @IBOutlet var mainStackView: UIStackView!
   @IBOutlet var emptyView: UIView!
   @IBOutlet var scrollViewAnasayfa: UIScrollView!
@@ -18,11 +17,11 @@ class AnasayfaVController: BaseVController {
   @IBOutlet var welcomeAnimationView: UIView!
   lazy var refreshControl = UIRefreshControl()
   var segmentedControl: UISegmentedControl?
-  var dataWeather: [HavaDurum.Hava]?
-  var weeklyWeather: HavaDurumWeekly?
+  var dataWeather: [Forecast.Weather]?
+  var weeklyWeather: ForecastWeekly?
   private let spacing: CGFloat = 4.0
   var selectedCity: Location?
-  var viewModel = CitiesMainVModel()
+  var viewModel = ForecastViewModel()
   var times: [String] = []
   var mins: [String] = []
   var maxs: [String] = []
@@ -97,7 +96,7 @@ class AnasayfaVController: BaseVController {
     }
     setBindings()
   }
-  func bindLabels() {
+  private func bindLabels() {
     viewModel.bigIcon.bind { [weak self] bigIcon in
       DispatchQueue.main.async {
         self?.imgWeatherMain.image = bigIcon
@@ -241,17 +240,17 @@ class AnasayfaVController: BaseVController {
   }
 }
 
-extension AnasayfaVController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return weeklyWeather?.daily.count ?? 0
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(
-      withIdentifier: AnasayfaWeeklyWeatherTVCell.reuseIdentifier,
+      withIdentifier: HomeWeeklyWeatherTableviewCell.reuseIdentifier,
       for: indexPath
     )
-    if let cell = cell as? AnasayfaWeeklyWeatherTVCell,
+    if let cell = cell as? HomeWeeklyWeatherTableviewCell,
       let rowData = weeklyWeather?.daily[indexPath.row],
       let imageName = rowData.weather.first?.icon,
       let image = UIImage(named: imageName) {
@@ -261,17 +260,17 @@ extension AnasayfaVController: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
-extension AnasayfaVController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return dataWeather?.count ?? 0
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: AnasayfaDailyWeatherCVCell.reuseIdentifier,
+      withReuseIdentifier: HomeDailyWeatherCollectionViewCell.reuseIdentifier,
       for: indexPath
     )
-    if let cell = cell as? AnasayfaDailyWeatherCVCell {
+    if let cell = cell as? HomeDailyWeatherCollectionViewCell {
       if let rowData = dataWeather?[indexPath.row],
         let image = UIImage(named: rowData.weather[0].icon) {
         cell.set(time: times[indexPath.row], image: image)
@@ -281,7 +280,7 @@ extension AnasayfaVController: UICollectionViewDelegate, UICollectionViewDataSou
   }
 }
 
-extension AnasayfaVController: UICollectionViewDelegateFlowLayout {
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 75, height: 100)
   }

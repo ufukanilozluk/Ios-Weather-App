@@ -1,7 +1,7 @@
 import Network
 import UIKit
 
-class TabbarController: UITabBarController {
+class CustomTabBarController: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     UITabBarItem.appearance().setTitleTextAttributes(

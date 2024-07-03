@@ -1,6 +1,6 @@
 import UIKit
 
-class AnasayfaWeeklyWeatherTVCell: UITableViewCell {
+class HomeWeeklyWeatherTableviewCell: UITableViewCell {
   @IBOutlet var imgWeatherTV: UIImageView!
   @IBOutlet var lblDay: UILabel!
   @IBOutlet var lblMaxWeatherTV: UILabel!

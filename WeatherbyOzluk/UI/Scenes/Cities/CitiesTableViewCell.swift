@@ -1,6 +1,6 @@
 import UIKit
 
-class SehirlerTVCell: UITableViewCell {
+class CitiesTableViewCell: UITableViewCell {
   @IBOutlet var derece: UILabel!
   @IBOutlet var tarih: UILabel!
   @IBOutlet var sehirIsim: UILabel!

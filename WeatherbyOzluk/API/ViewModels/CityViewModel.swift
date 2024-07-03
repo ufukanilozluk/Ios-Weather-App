@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class SehirlerVModel {
+class CityViewModel {
   let locationSearchData: ObservableValue<[Location]> = ObservableValue([])
   let location: ObservableValue<[Location]> = ObservableValue([])
   let cityNames: ObservableValue<[String]> = ObservableValue([])
