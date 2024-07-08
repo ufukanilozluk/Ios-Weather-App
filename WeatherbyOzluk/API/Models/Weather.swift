@@ -56,7 +56,6 @@ extension Forecast.Weather {
 }
 
 struct ForecastWeekly: Codable {
-  var lat: Double
   var daily: [Daily]
 }
 

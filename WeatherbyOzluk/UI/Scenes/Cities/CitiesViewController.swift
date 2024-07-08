@@ -5,7 +5,7 @@ class CitiesViewController: UIViewController {
   var weather: [Forecast]?
   var selectedCities: [Location] = UserDefaultsHelper.getCities()
   var newCityAdded = false
-  var viewModel = ForecastViewModel()
+  var viewModel = ForecastViewModel(service: ForecastService())
   var degrees: [String] = []
   var dates: [String] = []
   var cityNames: [String] = []

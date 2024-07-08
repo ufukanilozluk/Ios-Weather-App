@@ -3,7 +3,7 @@ import Foundation
 extension Endpoint {
   static func daily(
     city: String,
-    cnt: String = "7",
+    cnt: String,
     lang: String = "en",
     units: String = "metric"
   ) -> Self {

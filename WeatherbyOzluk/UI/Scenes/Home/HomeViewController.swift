@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
   var weeklyWeather: ForecastWeekly?
   private let spacing: CGFloat = 4.0
   var selectedCity: Location?
-  var viewModel = ForecastViewModel()
+  var viewModel = ForecastViewModel(service: ForecastService())
   var times: [String] = []
   var mins: [String] = []
   var maxs: [String] = []
@@ -80,6 +80,7 @@ class HomeViewController: UIViewController {
     return totalWidth
   }
   func configUI() {
+    viewModel = ForecastViewModel(service: ForecastService())
     weeklyWeatherTV.dataSource = self
     weeklyWeatherTV.delegate = self
     dailyWeatherCV.delegate = self
