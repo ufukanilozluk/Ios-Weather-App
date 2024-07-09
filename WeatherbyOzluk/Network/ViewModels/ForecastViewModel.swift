@@ -133,9 +133,6 @@ class ForecastViewModel {
 
   // Handle errors
   private func handleError(_ error: APIManager.APIError) {
-    switch error {
-    case let .error(errorString):
-      print(errorString)
-    }
+    print(error.localizedDescription)
   }
 }

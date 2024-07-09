@@ -10,6 +10,7 @@ extension UIViewController {
   ///   - completion: A closure to be executed when the action button is tapped. Default is `nil`.
   ///   - style: The style of the alert controller. Default is `.alert`.
   ///   - presentationCompletion: A closure to be executed after the alert is presented. Default is `nil`.
+  ///   - alertType: The type of the alert for different styles. Default is `.info`.
   func showAlert(
     title: String,
     message: String = "",
@@ -43,6 +44,12 @@ extension UIViewController {
     }
   }
 
+  /// Shows a toast message with the specified duration and alert type.
+  ///
+  /// - Parameters:
+  ///   - message: The message to display in the toast.
+  ///   - seconds: The duration for which the toast should be visible.
+  ///   - alertType: The type of the alert for different styles. Default is `.info`.
   func showToast(message: String, seconds: Double, alertType: AlertType = .info) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
     switch alertType {
@@ -62,6 +69,12 @@ extension UIViewController {
     }
   }
 
+  /// Sets an empty view with the specified title, message, and optional image.
+  ///
+  /// - Parameters:
+  ///   - title: The title of the empty view.
+  ///   - message: The message body of the empty view.
+  ///   - image: An optional image to display in the empty view.
   func setEmptyView(title: String, message: String, image: UIImage? = nil) {
     let emptyView = UIView(
       frame: CGRect(
@@ -71,45 +84,47 @@ extension UIViewController {
         height: view.bounds.size.height
       )
     )
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    stackView.axis = .vertical
-    stackView.distribution = .fill
-    stackView.alignment = .center
-    stackView.spacing = 10
+    let stackView: UIStackView = {
+      let stackView = UIStackView()
+      stackView.translatesAutoresizingMaskIntoConstraints = false
+      stackView.axis = .vertical
+      stackView.distribution = .fill
+      stackView.alignment = .center
+      stackView.spacing = 10
+      return stackView
+    }()
+    let titleLabel: UILabel = {
+      let label = UILabel()
+      label.textColor = UIColor.black
+      label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+      label.textAlignment = .center
+      return label
+    }()
+    let messageLabel: UILabel = {
+      let label = UILabel()
+      label.textColor = UIColor.lightGray
+      label.font = UIFont(name: "HelveticaNeue-Regular", size: 17)
+      label.textAlignment = .center
+      return label
+    }()
 
-    let titleLabel = UILabel()
-    let messageLabel = UILabel()
-    titleLabel.textColor = UIColor.black
-    titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-    messageLabel.textColor = UIColor.lightGray
-    messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 17)
-
-    let imageView = UIImageView()
     if let image = image {
-      imageView.image = image
+      let imageView: UIImageView = {
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+      }()
       stackView.addArrangedSubview(imageView)
-      // imageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-      // imageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
     stackView.addArrangedSubview(titleLabel)
     stackView.addArrangedSubview(messageLabel)
     emptyView.addSubview(stackView)
-
-    stackView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
-    stackView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
-
-    //        titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 20).isActive = true
-    //        titleLabel.leftAnchor.constraint(equalTo: messageLabel.leftAnchor, constant: 0).isActive = true
-    //        titleLabel.rightAnchor.constraint(equalTo: messageLabel.rightAnchor, constant: 0).isActive = true
-    //
-    //        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
-    //        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
-    //        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
-
+    NSLayoutConstraint.activate([
+      stackView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
+      stackView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor)
+    ])
     titleLabel.text = title
     messageLabel.text = message
-    messageLabel.textAlignment = .center
     view = emptyView
   }
 }

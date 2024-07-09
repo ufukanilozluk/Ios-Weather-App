@@ -16,6 +16,7 @@
 		E1321F4E2C32FCF300AE08D2 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1321F4D2C32FCF300AE08D2 /* CustomNavigationController.swift */; };
 		E1416F9B257E551D00B548ED /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F99257E551D00B548ED /* CardView.swift */; };
 		E14BA9462C09BFA600903392 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BA9452C09BFA600903392 /* UserDefaultsHelper.swift */; };
+		E152762E2C3D219A00A4BFB7 /* CityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E152762D2C3D219A00A4BFB7 /* CityService.swift */; };
 		E16098282C29A40700800D6E /* JSONDecoder.KeyDecodingStrategy+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16098262C29A40600800D6E /* JSONDecoder.KeyDecodingStrategy+Extension.swift */; };
 		E160982A2C29A40700800D6E /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16098272C29A40700800D6E /* String+Extension.swift */; };
 		E172B3FF259B451100390001 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E172B3FE259B451100390001 /* Colors.swift */; };
@@ -77,6 +78,7 @@
 		E1321F4D2C32FCF300AE08D2 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		E1416F99257E551D00B548ED /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E14BA9452C09BFA600903392 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
+		E152762D2C3D219A00A4BFB7 /* CityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityService.swift; sourceTree = "<group>"; };
 		E16098262C29A40600800D6E /* JSONDecoder.KeyDecodingStrategy+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder.KeyDecodingStrategy+Extension.swift"; sourceTree = "<group>"; };
 		E16098272C29A40700800D6E /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		E172B3FE259B451100390001 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				E105B1FF2C3836A900A5B52C /* ForecastService.swift */,
+				E152762D2C3D219A00A4BFB7 /* CityService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -199,7 +202,6 @@
 				E1B402C12C3558C700E75084 /* Resources */,
 				E1B402BA2C352FB100E75084 /* Scenes */,
 				E1B402C02C35588B00E75084 /* Reusables */,
-				E1321F4D2C32FCF300AE08D2 /* CustomNavigationController.swift */,
 				E1B91B932566578A0031E020 /* Main.storyboard */,
 				E1B91B982566578A0031E020 /* LaunchScreen.storyboard */,
 			);
@@ -268,6 +270,7 @@
 		E1B402C02C35588B00E75084 /* Reusables */ = {
 			isa = PBXGroup;
 			children = (
+				E1321F4D2C32FCF300AE08D2 /* CustomNavigationController.swift */,
 				E1416F99257E551D00B548ED /* CardView.swift */,
 				E1F5B0FB25A4B285005CF4A4 /* CustomTabBarController.swift */,
 			);
@@ -284,7 +287,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		E1B402C22C355A9F00E75084 /* API */ = {
+		E1B402C22C355A9F00E75084 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				E1B402BE2C3532C600E75084 /* EndPoints */,
@@ -293,7 +296,7 @@
 				E105B1FE2C38365800A5B52C /* Services */,
 				E1F1D2832566C819001149FE /* APIManager.swift */,
 			);
-			path = API;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		E1B91B812566578A0031E020 = {
@@ -317,7 +320,7 @@
 		E1B91B8C2566578A0031E020 /* WeatherbyOzluk */ = {
 			isa = PBXGroup;
 			children = (
-				E1B402C22C355A9F00E75084 /* API */,
+				E1B402C22C355A9F00E75084 /* Network */,
 				E172B3FD259B44EB00390001 /* Global */,
 				E1B402B92C352ECC00E75084 /* UI */,
 				E1B91B8D2566578A0031E020 /* AppDelegate.swift */,
@@ -532,6 +535,7 @@
 				E1416F9B257E551D00B548ED /* CardView.swift in Sources */,
 				E1D66A20258CD69E00B03121 /* HomeDailyWeatherCollectionViewCell.swift in Sources */,
 				E1C396682C1C68230054D3C5 /* UIImageview+Extension.swift in Sources */,
+				E152762E2C3D219A00A4BFB7 /* CityService.swift in Sources */,
 				E101EF81257BA84A003ACC06 /* UISegmentedControl+Extensions.swift in Sources */,
 				E1F1D2682566790A001149FE /* HomeViewController.swift in Sources */,
 				E160982A2C29A40700800D6E /* String+Extension.swift in Sources */,

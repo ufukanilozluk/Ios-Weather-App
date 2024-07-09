@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
     GlobalSettings.selectedCities = UserDefaultsHelper.getCities()
     guard !GlobalSettings.selectedCities.isEmpty else {
       view.addSubview(emptyView)
-      view.startAnimation(jsonFile: "welcome-page", view: welcomeAnimationView)
+      view.startAnimation(jsonFile: "welcome-page", onView: welcomeAnimationView)
       emptyView.center = view.center
       scrollViewAnasayfa.isHidden = true
       return
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
         let items = GlobalSettings.selectedCities.map {
           $0.localizedName.replacingOccurrences(of: " Province", with: "")
         }
-        segmentedControl.replaceSegments(segments: items)
+        segmentedControl.replaceSegments(with: items)
         segmentedControl.selectedSegmentIndex = 0
         GlobalSettings.shouldUpdateSegments = false
       }
@@ -161,6 +161,7 @@ class HomeViewController: UIViewController {
     viewModel.days.bind { [weak self] days in
       DispatchQueue.main.async {
         self?.days = days
+//        days.forEach({print($0)})
         self?.reloadTableViewData()
       }
     }
@@ -251,14 +252,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
       withIdentifier: HomeWeeklyWeatherTableviewCell.reuseIdentifier,
       for: indexPath
     )
+    
     if let cell = cell as? HomeWeeklyWeatherTableviewCell,
-      let rowData = weeklyWeather?.daily[indexPath.row],
-      let imageName = rowData.weather.first?.icon,
-      let image = UIImage(named: imageName) {
+       let rowData = weeklyWeather?.daily[indexPath.row],
+       let imageName = rowData.weather.first?.icon,
+       let image = UIImage(named: imageName) {
       cell.set(image: image, maxTemp: maxs[indexPath.row], minTemp: mins[indexPath.row], day: days[indexPath.row])
+      return cell
     }
+    
+    // Hücre yapılandırması başarısız olduğunda varsayılan bir hücre döndür
     return cell
   }
+
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {

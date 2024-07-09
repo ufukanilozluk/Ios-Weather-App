@@ -1,12 +1,13 @@
 import UIKit
 
 extension UISegmentedControl {
-  // Segment atamak için
-
-  func replaceSegments(segments: [String]) {
+  /// Segments atamak için
+  func replaceSegments(with segments: [String]) {
+    // Tüm segmentleri kaldır
     removeAllSegments()
-    for segment in segments {
-      insertSegment(withTitle: segment, at: numberOfSegments, animated: false)
+    // Yeni segmentleri ekle
+    for (index, segment) in segments.enumerated() {
+      insertSegment(withTitle: segment, at: index, animated: false)
     }
   }
 }

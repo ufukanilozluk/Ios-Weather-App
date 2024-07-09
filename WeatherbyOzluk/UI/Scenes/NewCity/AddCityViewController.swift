@@ -5,7 +5,7 @@ class AddCityViewController: UIViewController {
 
   var cities: [Location] = []
   let searchController = UISearchController(searchResultsController: nil)
-  let sehirlerVModel = CityViewModel()
+  let sehirlerVModel = CityViewModel(service: CityService())
   lazy var searchBar = UISearchBar()
   var segueIdentifier = "goToSehir"
   var locationToAdd: [Location]?

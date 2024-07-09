@@ -3,73 +3,78 @@ import Lottie
 
 extension UIView {
   var width: CGFloat {
-    return frame.size.width
+    frame.size.width
   }
 
   var height: CGFloat {
-    return frame.size.height
+    frame.size.height
   }
 
   func addSubviews(_ views: UIView...) {
-    for view in views {
-      addSubview(view)
-    }
+    views.forEach { addSubview($0) }
   }
 
   func showSpinner() {
-    // Dim view oluştur ve ayarla
-    let dimView = UIView(frame: self.bounds)
-    dimView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-    dimView.translatesAutoresizingMaskIntoConstraints = false
-    dimView.tag = 999 // Dim view için benzersiz bir tag
+    let dimView: UIView = {
+      let view = UIView(frame: bounds)
+      view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+      view.translatesAutoresizingMaskIntoConstraints = false
+      view.tag = 999
+      return view
+    }()
 
-    // Spinner'ı oluştur ve ayarla
-    let spinner = UIActivityIndicatorView(style: .large)
-    spinner.translatesAutoresizingMaskIntoConstraints = false
-    spinner.startAnimating()
+    let spinner: UIActivityIndicatorView = {
+      let spinner = UIActivityIndicatorView(style: .large)
+      spinner.translatesAutoresizingMaskIntoConstraints = false
+      spinner.startAnimating()
+      return spinner
+    }()
 
-    // Dim view'a spinner'ı ekle
     dimView.addSubview(spinner)
+    addSubview(dimView)
 
-    // Spinner'ı dim view'ın ortasına yerleştir
     NSLayoutConstraint.activate([
       spinner.centerXAnchor.constraint(equalTo: dimView.centerXAnchor),
-      spinner.centerYAnchor.constraint(equalTo: dimView.centerYAnchor)
-    ])
-
-    // Dim view'ı ana view'a ekle
-    self.addSubview(dimView)
-
-    // Dim view'ı ana view'ın boyutlarına göre ayarla
-    NSLayoutConstraint.activate([
-      dimView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      dimView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      dimView.topAnchor.constraint(equalTo: self.topAnchor),
-      dimView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+      spinner.centerYAnchor.constraint(equalTo: dimView.centerYAnchor),
+      dimView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      dimView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      dimView.topAnchor.constraint(equalTo: topAnchor),
+      dimView.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
   }
 
   func removeSpinner() {
-    // Dim view'ı tag'ine göre bul ve kaldır
-    if let dimView = self.viewWithTag(999) {
+    if let dimView = viewWithTag(999) {
       dimView.removeFromSuperview()
     }
   }
 
-  func startAnimation(jsonFile: String, view: UIView) {
-    var animationView = LottieAnimationView()
-    animationView = .init(name: jsonFile)
-    animationView.contentMode = .scaleToFill
-    animationView.loopMode = .loop
-    animationView.animationSpeed = 0.5
-    animationView.layer.cornerRadius = 15
-    view.layer.cornerRadius = 15
+  func startAnimation(jsonFile: String, onView view: UIView) {
+    removeAnimation()
+
+    let animationView: LottieAnimationView = {
+      let view = LottieAnimationView(name: jsonFile)
+      view.contentMode = .scaleAspectFill
+      view.loopMode = .loop
+      view.animationSpeed = 0.5
+      view.layer.cornerRadius = 15
+      view.translatesAutoresizingMaskIntoConstraints = false
+      return view
+    }()
+
     view.addSubview(animationView)
-    animationView.translatesAutoresizingMaskIntoConstraints = false
-    animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    animationView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-    animationView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+
+    NSLayoutConstraint.activate([
+      animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
+      animationView.heightAnchor.constraint(equalTo: view.heightAnchor)
+    ])
+
     animationView.play()
+  }
+
+  func removeAnimation() {
+    subviews.compactMap { $0 as? LottieAnimationView }.forEach { $0.removeFromSuperview() }
   }
 }

@@ -3,48 +3,57 @@ import UIKit
 extension UITableView {
   func setEmptyView(title: String, message: String, image: UIImage? = nil, animation: String? = nil) {
     let emptyView = UIView()
-    let stackView = UIStackView()
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    stackView.axis = .vertical
-    stackView.distribution = .equalSpacing
-    stackView.alignment = .center
-    stackView.spacing = 10
-
-    let titleLabel = UILabel()
-    let messageLabel = UILabel()
-    titleLabel.textColor = Colors.customGray
-    titleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-    messageLabel.textColor = Colors.customLightGray
-    messageLabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
-
+    let stackView: UIStackView = {
+      let stackView = UIStackView()
+      stackView.translatesAutoresizingMaskIntoConstraints = false
+      stackView.axis = .vertical
+      stackView.distribution = .equalSpacing
+      stackView.alignment = .center
+      stackView.spacing = 10
+      return stackView
+    }()
+    let titleLabel: UILabel = {
+      let label = UILabel()
+      label.text = title
+      label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+      label.textColor = Colors.customGray
+      label.textAlignment = .center
+      return label
+    }()
+    let messageLabel: UILabel = {
+      let label = UILabel()
+      label.text = message
+      label.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+      label.textColor = Colors.customLightGray
+      label.textAlignment = .center
+      return label
+    }()
     if let image = image {
-      let imageView = UIImageView()
-      imageView.image = image
+      let imageView: UIImageView = {
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+      }()
       stackView.addArrangedSubview(imageView)
     } else if let animation = animation {
-      let animationView = UIView()
-      NSLayoutConstraint.activate([
-        animationView.widthAnchor.constraint(equalToConstant: 100),
-        animationView.heightAnchor.constraint(equalToConstant: 100)
-      ])
-      self.startAnimation(jsonFile: animation, view: animationView)
+      let animationView: UIView = {
+        let view = UIView()
+        NSLayoutConstraint.activate([
+          view.widthAnchor.constraint(equalToConstant: 100),
+          view.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        self.startAnimation(jsonFile: animation, onView: view)
+        return view
+      }()
       stackView.addArrangedSubview(animationView)
     }
-
-
     stackView.addArrangedSubview(titleLabel)
     stackView.addArrangedSubview(messageLabel)
     emptyView.addSubview(stackView)
-
-    stackView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
-    stackView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
-
-    titleLabel.text = title
-    messageLabel.text = message
-    messageLabel.textAlignment = .center
-    titleLabel.textAlignment = .center
-
-    // The only tricky part is here:
+    NSLayoutConstraint.activate([
+      stackView.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor),
+      stackView.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor)
+    ])
     backgroundView = emptyView
     separatorStyle = .none
   }
