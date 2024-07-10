@@ -161,7 +161,6 @@ class HomeViewController: UIViewController {
     viewModel.days.bind { [weak self] days in
       DispatchQueue.main.async {
         self?.days = days
-//        days.forEach({print($0)})
         self?.reloadTableViewData()
       }
     }
@@ -252,19 +251,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
       withIdentifier: HomeWeeklyWeatherTableviewCell.reuseIdentifier,
       for: indexPath
     )
-    
     if let cell = cell as? HomeWeeklyWeatherTableviewCell,
-       let rowData = weeklyWeather?.daily[indexPath.row],
-       let imageName = rowData.weather.first?.icon,
-       let image = UIImage(named: imageName) {
-      cell.set(image: image, maxTemp: maxs[indexPath.row], minTemp: mins[indexPath.row], day: days[indexPath.row])
-      return cell
+      let rowData = weeklyWeather?.daily[indexPath.row],
+      let imageName = rowData.weather.first?.icon,
+      let image = UIImage(named: imageName) {
+        cell.set(image: image, maxTemp: maxs[indexPath.row], minTemp: mins[indexPath.row], day: days[indexPath.row])
+        return cell
     }
-    
     // Hücre yapılandırması başarısız olduğunda varsayılan bir hücre döndür
     return cell
   }
-
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -2,65 +2,44 @@ import Foundation
 import UIKit
 
 enum Colors {
-  //    Colors
-  static let weatherPurpleLight = UIColor(red: 120 / 255, green: 6 / 255, blue: 245 / 255, alpha: 1)
-  static let weatherPurpleDark = UIColor(red: 174 / 255, green: 13 / 255, blue: 255 / 255, alpha: 1)
-  static let iosCaseLightGray = UIColor(red: 247 / 255, green: 247 / 255, blue: 250 / 255, alpha: 1)
-  static let grayDarkMode = UIColor(red: 205 / 255, green: 202 / 255, blue: 205 / 255, alpha: 1)
-  static let grayLightMode = UIColor(red: 76 / 255, green: 82 / 255, blue: 100 / 255, alpha: 1)
-  static let lightGrayDarkMode = UIColor(red: 227 / 255, green: 225 / 255, blue: 220 / 255, alpha: 1)
-  static let lightGrayLightMode = UIColor(red: 50 / 255, green: 53 / 255, blue: 64 / 255, alpha: 1)
-  static let alpha = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+  // Colors
+  static let weatherPurpleLight = UIColor.color(120, 6, 245)
+  static let weatherPurpleDark = UIColor.color(174, 13, 255)
+  static let iosCaseLightGray = UIColor.color(247, 247, 250)
+  static let grayDarkMode = UIColor.color(205, 202, 205)
+  static let grayLightMode = UIColor.color(76, 82, 100)
+  static let lightGrayDarkMode = UIColor.color(227, 225, 220)
+  static let lightGrayLightMode = UIColor.color(50, 53, 64)
+  static let alpha = UIColor.color(0, 0, 0, 0)
 
-  //     Dynamic Colors for Dark/Light Mode
-
-  static var tint: UIColor = {
-    if #available(iOS 13, *) {
-      return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
-        UITraitCollection.userInterfaceStyle == .dark ? weatherPurpleDark : weatherPurpleLight
-      }
-    } else {
-      return weatherPurpleLight
+  // Dynamic Colors for Dark/Light Mode
+  static var tint: UIColor {
+    UIColor { traitCollection in
+      traitCollection.userInterfaceStyle == .dark ? weatherPurpleDark : weatherPurpleLight
     }
-  }()
+  }
 
-  static var segmentedControlSelectedState: UIColor = {
-    if #available(iOS 13, *) {
-      return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
-        UITraitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.white
-      }
-    } else {
-      return UIColor.black
+  static var segmentedControlSelectedState: UIColor {
+    UIColor { traitCollection in
+      traitCollection.userInterfaceStyle == .dark ? .black : .white
     }
-  }()
+  }
 
-  static var segmentedControlNormalState: UIColor = {
-    if #available(iOS 13, *) {
-      return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
-        UITraitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
-      }
-    } else {
-      return UIColor.white
+  static var segmentedControlNormalState: UIColor {
+    UIColor { traitCollection in
+      traitCollection.userInterfaceStyle == .dark ? .white : .black
     }
-  }()
+  }
 
-  static var customLightGray: UIColor = {
-    if #available(iOS 13, *) {
-      return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
-        UITraitCollection.userInterfaceStyle == .dark ? lightGrayDarkMode : lightGrayLightMode
-      }
-    } else {
-      return UIColor.lightGray
+  static var customLightGray: UIColor {
+    UIColor { traitCollection in
+      traitCollection.userInterfaceStyle == .dark ? lightGrayDarkMode : lightGrayLightMode
     }
-  }()
+  }
 
-  static var customGray: UIColor = {
-    if #available(iOS 13, *) {
-      return UIColor { (UITraitCollection: UITraitCollection) -> UIColor in
-        UITraitCollection.userInterfaceStyle == .dark ? grayDarkMode : grayLightMode
-      }
-    } else {
-      return UIColor.gray
+  static var customGray: UIColor {
+    UIColor { traitCollection in
+      traitCollection.userInterfaceStyle == .dark ? grayDarkMode : grayLightMode
     }
-  }()
+  }
 }

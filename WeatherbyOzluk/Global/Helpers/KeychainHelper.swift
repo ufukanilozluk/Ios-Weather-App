@@ -2,17 +2,16 @@ import Foundation
 
 enum KeychainHelper {
   static func saveApiKey(_ apiKey: String, forKey key: String) {
-    // Önceki API anahtarını kontrol et
     guard getApiKey(forKey: key) == nil else {
       print("\(key) zaten kayıtlı.")
       return
     }
 
-    // API anahtarını kaydet
     guard let apiKeyData = apiKey.data(using: .utf8) else {
       print("API anahtarı veriye dönüştürülemedi.")
       return
     }
+
     let keychainQuery: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
       kSecAttrAccount as String: key,
@@ -25,6 +24,7 @@ enum KeychainHelper {
       print("\(key) başarıyla kaydedildi.")
     } else {
       print("\(key) kaydedilemedi. Hata kodu: \(status)")
+      // Daha ayrıntılı hata mesajları veya loglama ekleyebilirsiniz.
     }
   }
 
@@ -40,12 +40,16 @@ enum KeychainHelper {
     let status = SecItemCopyMatching(keychainQuery as CFDictionary, &dataTypeRef)
 
     guard status == errSecSuccess else {
-      print("SecItemCopyMatching hata kodu: \(status)")
+      if status == errSecItemNotFound {
+        print("\(key) için kayıt bulunamadı.")
+      } else {
+        print("\(key) için veri alınamadı. Hata kodu: \(status)")
+      }
       return nil
     }
 
     guard let retrievedData = dataTypeRef as? Data else {
-      print("Veri tipi dönüşümünde hata.")
+      print("\(key) için alınan veri geçersiz.")
       return nil
     }
 

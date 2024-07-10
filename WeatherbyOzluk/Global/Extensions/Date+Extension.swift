@@ -15,7 +15,6 @@ extension Date {
   private static let dayFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "EEEE"
-    formatter.locale = Locale(identifier: "en_US")
     return formatter
   }()
 

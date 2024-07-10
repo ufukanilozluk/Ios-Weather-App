@@ -38,6 +38,7 @@
 		E1C396642C1C65560054D3C5 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C396632C1C65560054D3C5 /* UIView+Extension.swift */; };
 		E1C396662C1C676F0054D3C5 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C396652C1C676F0054D3C5 /* UITableView+Extension.swift */; };
 		E1C396682C1C68230054D3C5 /* UIImageview+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C396672C1C68230054D3C5 /* UIImageview+Extension.swift */; };
+		E1CCE8632C3E72D40020848D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CCE8622C3E72D40020848D /* UIColor+Extension.swift */; };
 		E1D0D442296745A9008A2890 /* not-found.json in Resources */ = {isa = PBXBuildFile; fileRef = E1D0D441296745A9008A2890 /* not-found.json */; };
 		E1D2F5DD297749C3004BDD06 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D2F5DC297749C3004BDD06 /* EndPoint.swift */; };
 		E1D66A1D258CD65100B03121 /* HomeWeeklyWeatherTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D66A1C258CD65100B03121 /* HomeWeeklyWeatherTableviewCell.swift */; };
@@ -103,6 +104,7 @@
 		E1C396632C1C65560054D3C5 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		E1C396652C1C676F0054D3C5 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		E1C396672C1C68230054D3C5 /* UIImageview+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageview+Extension.swift"; sourceTree = "<group>"; };
+		E1CCE8622C3E72D40020848D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E1D0D441296745A9008A2890 /* not-found.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "not-found.json"; sourceTree = "<group>"; };
 		E1D2F5DC297749C3004BDD06 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		E1D66A1C258CD65100B03121 /* HomeWeeklyWeatherTableviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWeeklyWeatherTableviewCell.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				E1AA87622C0E0FB7003BA2B5 /* UIViewController+Extension.swift */,
 				E1C396612C1C641F0054D3C5 /* Date+Extension.swift */,
 				E1C396632C1C65560054D3C5 /* UIView+Extension.swift */,
+				E1CCE8622C3E72D40020848D /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1AA87632C0E0FB7003BA2B5 /* UIViewController+Extension.swift in Sources */,
+				E1CCE8632C3E72D40020848D /* UIColor+Extension.swift in Sources */,
 				E1B94F7B2C136BEA000E6A35 /* CitiesTableViewCell.swift in Sources */,
 				E11AF94E261F998B00EAD8E3 /* LocationService.swift in Sources */,
 				E194CCE6297FE4A600E12918 /* ObservableValue.swift in Sources */,
