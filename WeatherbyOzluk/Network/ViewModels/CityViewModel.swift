@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class CityViewModel {
+final class CityViewModel {
   // Observable properties to hold location data
   let locationSearchData: ObservableValue<[Location]> = ObservableValue([])
   let location: ObservableValue<[Location]> = ObservableValue([])

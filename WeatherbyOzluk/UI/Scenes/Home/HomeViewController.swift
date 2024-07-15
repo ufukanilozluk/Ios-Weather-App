@@ -1,6 +1,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+  // MARK: - Outlets
   @IBOutlet var mainStackView: UIStackView!
   @IBOutlet var emptyView: UIView!
   @IBOutlet var scrollViewAnasayfa: UIScrollView!
@@ -15,6 +16,7 @@ class HomeViewController: UIViewController {
   @IBOutlet var lblHumidity: UILabel!
   @IBOutlet var lblPressure: UILabel!
   @IBOutlet var welcomeAnimationView: UIView!
+  // MARK: - Properties
   lazy var refreshControl = UIRefreshControl()
   var segmentedControl: UISegmentedControl?
   var dataWeather: [Forecast.Weather]?
@@ -26,77 +28,68 @@ class HomeViewController: UIViewController {
   var mins: [String] = []
   var maxs: [String] = []
   var days: [String] = []
+
+  // MARK: - Lifecycle Methods
   override func viewDidLoad() {
     super.viewDidLoad()
-    configUI()
+    configureUI()
   }
-  func updateHome() {
-    GlobalSettings.selectedCities = UserDefaultsHelper.getCities()
-    guard !GlobalSettings.selectedCities.isEmpty else {
-      view.addSubview(emptyView)
-      view.startAnimation(jsonFile: "welcome-page", onView: welcomeAnimationView)
-      emptyView.center = view.center
-      scrollViewAnasayfa.isHidden = true
-      return
-    }
-    emptyView.removeFromSuperview()
-    scrollViewAnasayfa.isHidden = false
-    if let segmentedControl = segmentedControl {
-      if GlobalSettings.shouldUpdateSegments {
-        let items = GlobalSettings.selectedCities.map {
-          $0.localizedName.replacingOccurrences(of: " Province", with: "")
-        }
-        segmentedControl.replaceSegments(with: items)
-        segmentedControl.selectedSegmentIndex = 0
-        GlobalSettings.shouldUpdateSegments = false
-      }
-    } else {
-      createSegmentedControl()
-    }
-    if let selectedSegmentIndex = segmentedControl?.selectedSegmentIndex {
-      let selectedCity = GlobalSettings.selectedCities[selectedSegmentIndex]
-      self.selectedCity = selectedCity
-      fetchData(for: selectedCity)
-    }
-  }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     updateHome()
   }
-  func calculateTotalContentWidth() -> CGFloat {
-    var totalWidth: CGFloat = 0.0
-    if let collectionViewFlowLayout = dailyWeatherCV.collectionViewLayout as? UICollectionViewFlowLayout {
-      let numberOfItems = dailyWeatherCV.numberOfItems(inSection: 0)
-      let interitemSpacing = collectionViewFlowLayout.minimumInteritemSpacing
-      for itemIndex in 0..<numberOfItems {
-        let cellWidth = collectionViewFlowLayout.itemSize.width // Her hücrenin genişliği
-        totalWidth += cellWidth
-        // İlk hücre hariç her hücrenin arasına interitemSpacing kadar boşluk ekle
-        if itemIndex > 0 {
-          totalWidth += interitemSpacing
-        }
-      }
-    }
-    return totalWidth
+
+  // MARK: - UI Configuration
+  private func configureUI() {
+    configureTableView()
+    configureCollectionView()
+    configureRefreshControl()
+    configureSegmentedControl()
+    setBindings()
   }
-  func configUI() {
-    viewModel = ForecastViewModel(service: ForecastService())
+
+  private func configureTableView() {
     weeklyWeatherTV.dataSource = self
     weeklyWeatherTV.delegate = self
+    weeklyWeatherTV.estimatedRowHeight = 50
+  }
+
+  private func configureCollectionView() {
     dailyWeatherCV.delegate = self
     dailyWeatherCV.dataSource = self
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .horizontal
-    dailyWeatherCV.collectionViewLayout = layout
-    refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
-    scrollViewAnasayfa.addSubview(refreshControl)
-    // for skeletonview
-    weeklyWeatherTV.estimatedRowHeight = 50
     if let layout = dailyWeatherCV.collectionViewLayout as? UICollectionViewFlowLayout {
       layout.scrollDirection = .horizontal
     }
-    setBindings()
   }
+
+  private func configureRefreshControl() {
+    refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+    scrollViewAnasayfa.addSubview(refreshControl)
+  }
+
+  private func configureSegmentedControl() {
+    let items = GlobalSettings.selectedCities.map { $0.localizedName.replacingOccurrences(of: " Province", with: "") }
+    let segmentedControl = UISegmentedControl(items: items)
+    segmentedControl.selectedSegmentIndex = 0
+    segmentedControl.backgroundColor = Colors.iosCaseLightGray
+    segmentedControl.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
+    mainStackView.insertArrangedSubview(segmentedControl, at: 0)
+    let attributes = [NSAttributedString.Key.foregroundColor: Colors.segmentedControlNormalState]
+    let attributesSelected = [NSAttributedString.Key.foregroundColor: Colors.segmentedControlSelectedState]
+    segmentedControl.setTitleTextAttributes(attributes, for: .normal)
+    segmentedControl.setTitleTextAttributes(attributesSelected, for: .selected)
+    segmentedControl.backgroundColor = Colors.segmentedControlSelectedState
+    segmentedControl.selectedSegmentTintColor = Colors.tint
+    self.segmentedControl = segmentedControl
+  }
+
+  // MARK: - Data Binding
+  private func setBindings() {
+    bindLabels()
+    bindCollectionsData()
+  }
+
   private func bindLabels() {
     viewModel.bigIcon.bind { [weak self] bigIcon in
       DispatchQueue.main.async {
@@ -139,6 +132,7 @@ class HomeViewController: UIViewController {
       }
     }
   }
+
   private func bindCollectionsData() {
     viewModel.weatherData.bind { [weak self] weatherData in
       DispatchQueue.main.async {
@@ -177,18 +171,59 @@ class HomeViewController: UIViewController {
       }
     }
   }
-  func setBindings() {
-    bindLabels()
-    bindCollectionsData()
+
+  // MARK: - UI Updates
+  private func updateHome() {
+    GlobalSettings.selectedCities = UserDefaultsHelper.getCities()
+    guard !GlobalSettings.selectedCities.isEmpty else {
+      showEmptyView()
+      return
+    }
+    emptyView.removeFromSuperview()
+    scrollViewAnasayfa.isHidden = false
+    if segmentedControl != nil {
+      updateSegmentedControlItems()
+    } else {
+      configureSegmentedControl()
+    }
+    fetchDataForSelectedCity()
   }
-  func reloadCollectionViewData() {
+
+  private func showEmptyView() {
+    view.addSubview(emptyView)
+    view.startAnimation(jsonFile: "welcome-page", onView: welcomeAnimationView)
+    emptyView.center = view.center
+    scrollViewAnasayfa.isHidden = true
+  }
+
+  private func updateSegmentedControlItems() {
+    if GlobalSettings.shouldUpdateSegments {
+      let items = GlobalSettings.selectedCities.map {
+        $0.localizedName.replacingOccurrences(of: " Province", with: "")
+      }
+      segmentedControl?.replaceSegments(with: items)
+      segmentedControl?.selectedSegmentIndex = 0
+      GlobalSettings.shouldUpdateSegments = false
+    }
+  }
+
+  private func fetchDataForSelectedCity() {
+    if let selectedSegmentIndex = segmentedControl?.selectedSegmentIndex {
+      let selectedCity = GlobalSettings.selectedCities[selectedSegmentIndex]
+      self.selectedCity = selectedCity
+      fetchData(for: selectedCity)
+    }
+  }
+
+  private func reloadCollectionViewData() {
     guard dataWeather?.count == times.count else {
       print("Mismatch in dataWeather and times count")
       return
     }
     self.dailyWeatherCV.reloadData()
   }
-  func reloadTableViewData() {
+
+  private func reloadTableViewData() {
     guard let weeklyWeather = weeklyWeather,
       weeklyWeather.daily.count == mins.count,
       mins.count == maxs.count,
@@ -198,7 +233,8 @@ class HomeViewController: UIViewController {
     }
     self.weeklyWeatherTV.reloadData()
   }
-  func updateUI() {
+
+  private func updateUI() {
     DispatchQueue.main.async {
       self.dailyWeatherCV.reloadData()
       self.weeklyWeatherTV.reloadData()
@@ -206,41 +242,28 @@ class HomeViewController: UIViewController {
       self.view.removeSpinner()
     }
   }
-  func fetchData(for city: Location) {
+
+  private func fetchData(for city: Location) {
     self.view.showSpinner()
     viewModel.getForecast(city: city) {
       self.updateUI()
     }
   }
-  func createSegmentedControl() {
-    let items = GlobalSettings.selectedCities.map { $0.localizedName.replacingOccurrences(of: " Province", with: "") }
-    let segmentedControl = UISegmentedControl(items: items)
-    segmentedControl.selectedSegmentIndex = 0
-    segmentedControl.backgroundColor = Colors.iosCaseLightGray
-    segmentedControl.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
-    mainStackView.insertArrangedSubview(segmentedControl, at: 0)
-    let attributes = [NSAttributedString.Key.foregroundColor: Colors.segmentedControlNormalState]
-    let attributesSelected = [NSAttributedString.Key.foregroundColor: Colors.segmentedControlSelectedState]
-    segmentedControl.setTitleTextAttributes(attributes, for: .normal)
-    segmentedControl.setTitleTextAttributes(attributesSelected, for: .selected)
-    segmentedControl.backgroundColor = Colors.segmentedControlSelectedState
-    if #available(iOS 13.0, *) {
-      segmentedControl.selectedSegmentTintColor = Colors.tint
-    }
-    // Assign segmentedControl to your property if needed
-    self.segmentedControl = segmentedControl
-  }
-  @objc func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
+
+  // MARK: - Actions
+  @objc private func segmentedValueChanged(_ segmentedControl: UISegmentedControl) {
     let selectedCity = GlobalSettings.selectedCities[segmentedControl.selectedSegmentIndex]
     self.selectedCity = selectedCity
     fetchData(for: selectedCity)
   }
-  @objc func didPullToRefresh() {
+
+  @objc private func didPullToRefresh() {
     guard let selectedCity = selectedCity else { return }
     fetchData(for: selectedCity)
   }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return weeklyWeather?.daily.count ?? 0
@@ -258,11 +281,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.set(image: image, maxTemp: maxs[indexPath.row], minTemp: mins[indexPath.row], day: days[indexPath.row])
         return cell
     }
-    // Hücre yapılandırması başarısız olduğunda varsayılan bir hücre döndür
+    // Return default cell if configuration fails
     return cell
   }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return dataWeather?.count ?? 0
@@ -283,6 +307,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
   }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: 75, height: 100)

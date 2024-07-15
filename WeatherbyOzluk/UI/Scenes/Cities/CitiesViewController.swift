@@ -1,7 +1,7 @@
 import UIKit
 
 class CitiesViewController: UIViewController {
-  @IBOutlet var sehirlerTableView: UITableView!
+  @IBOutlet var citiesTableView: UITableView!
   var weather: [Forecast]?
   var selectedCities: [Location] = UserDefaultsHelper.getCities()
   var newCityAdded = false
@@ -9,7 +9,27 @@ class CitiesViewController: UIViewController {
   var degrees: [String] = []
   var dates: [String] = []
   var cityNames: [String] = []
-  func setBindings() {
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setConfig()
+    setBindings()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    selectedCities = UserDefaultsHelper.getCities()
+    guard !selectedCities.isEmpty else {
+      citiesTableView.setEmptyView(
+        title: "No location Found",
+        message: "Start by adding a location",
+        animation: "location"
+      )
+      return
+    }
+    getWeatherInfo()
+  }
+  private func setBindings() {
     viewModel.allCitiesWeatherData.bind { [weak self] weatherData in
       self?.weather = weatherData
     }
@@ -23,66 +43,57 @@ class CitiesViewController: UIViewController {
       self?.cityNames = cityNames
     }
   }
-  func updateUI() {
+
+  private func updateUI() {
     view.removeSpinner()
-    sehirlerTableView.reloadData()
+    citiesTableView.reloadData()
   }
+
   private func getWeatherInfo() {
-    self.view.showSpinner()
+    view.showSpinner()
     viewModel.getForecastForAllCities { [weak self] in
       DispatchQueue.main.async {
         self?.updateUI()
       }
     }
   }
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    setConfig()
-    setBindings()
+
+  private func setConfig() {
+    configureTableView()
+    configureNavigationItems()
   }
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    selectedCities = UserDefaultsHelper.getCities()
-    guard !selectedCities.isEmpty else {
-      sehirlerTableView.setEmptyView(
-        title: "No location Found",
-        message: "Start by adding a location",
-        animation: "location"
-      )
-      return
-    }
-    getWeatherInfo()
+
+  private func configureTableView() {
+    citiesTableView.delegate = self
+    citiesTableView.dataSource = self
+    citiesTableView.dragDelegate = self
+    citiesTableView.dropDelegate = self
+    citiesTableView.dragInteractionEnabled = false
+    citiesTableView.allowsSelection = false
+    citiesTableView.estimatedRowHeight = 60
   }
-  func setConfig() {
-    sehirlerTableView.delegate = self
-    sehirlerTableView.dataSource = self
-    sehirlerTableView.dragDelegate = self
-    sehirlerTableView.dropDelegate = self
-    sehirlerTableView.dragInteractionEnabled = false
-    // Bir sonraki sayfadaki geri butonunun texti burada ayarlanır.
+
+  private func configureNavigationItems() {
     navigationItem.backBarButtonItem = UIBarButtonItem(
       title: "", style: .plain, target: nil, action: nil)
-    // Use the edit button provided by the view controller.
     editButtonItem.title = "Edit"
-    navigationItem.leftBarButtonItem = editButtonItem // editbutton swiftten geliyor
-    sehirlerTableView.allowsSelection = false
-    sehirlerTableView.estimatedRowHeight = 60
+    navigationItem.leftBarButtonItem = editButtonItem
   }
+
   // Edit state function
   override func setEditing(_ editing: Bool, animated: Bool) {
-    // Takes care of toggling the button's title.
     super.setEditing(editing, animated: true)
-    // Toggle table view editing.
-    sehirlerTableView.setEditing(editing, animated: true)
-    sehirlerTableView.dragInteractionEnabled = editing
-    // Edit button text ayarlama
-    // Swiftten geliyor isEditing
+    citiesTableView.setEditing(editing, animated: true)
+    citiesTableView.dragInteractionEnabled = editing
     editButtonItem.title = isEditing ? "Done" : "Edit"
   }
+
   @IBAction func sehirEkle(_ sender: Any) {
-    performSegue(withIdentifier: "goToSehirlerDetay", sender: nil)
+    performSegue(withIdentifier: "goToAddCity", sender: nil)
   }
 }
+
+// MARK: - TableView Delegate and DataSource
 
 extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -96,23 +107,22 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let weatherList = weather?[indexPath.row].list, !weatherList.isEmpty else {
-      // Handle the case where weather is nil or the list is empty
       return UITableViewCell()
     }
+
     let hava = weatherList[0]
     guard let cell = tableView.dequeueReusableCell(
       withIdentifier: CitiesTableViewCell.reuseIdentifier,
       for: indexPath
     ) as? CitiesTableViewCell else {
-      // Handle the case where the cell cannot be dequeued as SehirlerTVCell
       return UITableViewCell()
     }
-    let row = indexPath.row
-    guard let icon = hava.weather.first?.icon,
-      let weatherPic = UIImage(named: icon) else {
-      // Handle the case where the icon or image is nil
-        return UITableViewCell()
+
+    guard let icon = hava.weather.first?.icon, let weatherPic = UIImage(named: icon) else {
+      return UITableViewCell()
     }
+
+    let row = indexPath.row
     cell.setWeather(
       weatherPic: weatherPic,
       cityName: cityNames[row],
@@ -121,8 +131,9 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
     )
     return cell
   }
+
   func numberOfSections(in tableView: UITableView) -> Int {
-    1
+    return 1
   }
 
   func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -130,13 +141,8 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-    // Update the model
-    guard var weather = weather else {
-      // Handle the case where weather is nil
-      return
-    }
-
-    let mover = weather.remove(at: sourceIndexPath.row) // sildiğini dönüyor. Yani mover bir Location
+    guard var weather = weather else { return }
+    let mover = weather.remove(at: sourceIndexPath.row)
     weather.insert(mover, at: destinationIndexPath.row)
     self.weather = weather
     selectedCities.swapAt(sourceIndexPath.row, destinationIndexPath.row)
@@ -145,30 +151,27 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      guard var weather = weather else {
-        // Handle the case where weather is nil
-        return
-      }
+      guard var weather = weather else { return }
       weather.remove(at: indexPath.row)
       self.weather = weather
       selectedCities.remove(at: indexPath.row)
-      sehirlerTableView.deleteRows(at: [indexPath], with: .automatic)
+      citiesTableView.deleteRows(at: [indexPath], with: .automatic)
       UserDefaultsHelper.removeCity(index: indexPath.row)
       GlobalSettings.shouldUpdateSegments = true
     }
   }
 }
 
+// MARK: - TableView Drag and Drop Delegate
+
 extension CitiesViewController: UITableViewDragDelegate, UITableViewDropDelegate {
   func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
     // Implementation for drop functionality if needed
   }
+
   func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
     GlobalSettings.shouldUpdateSegments = true
-    guard let weather = weather else {
-      // Handle the case where weather is nil
-      return []
-    }
+    guard let weather = weather else { return [] }
     let dragItem = UIDragItem(itemProvider: NSItemProvider())
     dragItem.localObject = weather[indexPath.row]
     return [dragItem]

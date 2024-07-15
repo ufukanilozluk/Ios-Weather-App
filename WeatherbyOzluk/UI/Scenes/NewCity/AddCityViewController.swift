@@ -2,13 +2,13 @@ import UIKit
 import CoreLocation
 
 class AddCityViewController: UIViewController {
-  @IBOutlet var sehirlerTableView: UITableView!
+  @IBOutlet var citiesTableView: UITableView!
 
   var cities: [Location] = []
   let searchController = UISearchController(searchResultsController: nil)
-  let sehirlerVModel = CityViewModel(service: CityService())
+  let cityViewModel = CityViewModel(service: CityService())
   lazy var searchBar = UISearchBar()
-  var segueIdentifier = "goToSehir"
+  var segueIdentifier = "goToCities"
   var locationToAdd: [Location]?
   var cityNames: [String] = []
   var isSearchBarEmpty: Bool {
@@ -36,10 +36,10 @@ class AddCityViewController: UIViewController {
   }
 
   private func configureTableView() {
-    sehirlerTableView.delegate = self
-    sehirlerTableView.dataSource = self
-    sehirlerTableView.allowsSelection = false
-    sehirlerTableView.estimatedRowHeight = 50
+    citiesTableView.delegate = self
+    citiesTableView.dataSource = self
+    citiesTableView.allowsSelection = false
+    citiesTableView.estimatedRowHeight = 50
   }
 
   private func configureSearchController() {
@@ -53,20 +53,20 @@ class AddCityViewController: UIViewController {
   }
 
   private func setBindings() {
-    sehirlerVModel.location.bind { [weak self] location in
+    cityViewModel.location.bind { [weak self] location in
       self?.locationToAdd = location
     }
-    sehirlerVModel.locationSearchData.bind { [weak self] searchData in
+    cityViewModel.locationSearchData.bind { [weak self] searchData in
       self?.cities = searchData
     }
-    sehirlerVModel.cityNames.bind { [weak self] cityNames in
+    cityViewModel.cityNames.bind { [weak self] cityNames in
       self?.cityNames = cityNames
     }
   }
 
   // MARK: - Search TextField Customization
   private func setSearchTextField() {
-    let imageView = UIImageView(image: UIImage(named: "ara"))
+    let imageView = UIImageView(image: UIImage(named: "search"))
     if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
       searchTextField.layer.cornerRadius = 15
       searchTextField.textAlignment = .left
@@ -137,7 +137,7 @@ class AddCityViewController: UIViewController {
   private func clearSearchAndReload() {
     searchController.searchBar.text = ""
     cities.removeAll()
-    sehirlerTableView.reloadData()
+    citiesTableView.reloadData()
     searchController.searchBar.endEditing(true)
   }
 
@@ -145,10 +145,10 @@ class AddCityViewController: UIViewController {
   private func filterContentForSearchText(_ searchText: String) {
     view.showSpinner()
     let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
-    sehirlerVModel.findCity(query: searchTxt) { [weak self] in
+    cityViewModel.findCity(query: searchTxt) { [weak self] in
       DispatchQueue.main.async {
         self?.view.removeSpinner()
-        self?.sehirlerTableView.reloadData()
+        self?.citiesTableView.reloadData()
       }
     }
   }
@@ -174,7 +174,7 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     let city = cityNames[indexPath.row]
     cell.set(city: city, parentVC: self)
-    cell.ekleAction = { [weak self] in
+    cell.addCityAction = { [weak self] in
       self?.addCity(at: indexPath)
     }
     return cell
@@ -184,10 +184,10 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
     let citiesArray = UserDefaultsHelper.getCities()
     let cityName = cities[indexPath.row].localizedName
     guard !citiesArray.contains(where: { $0.localizedName == cityName }) else {
-      showAlert(title: "Info", message: "City already selected.")
+      showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
       return
     }
-    sehirlerVModel.findCoordinate(query: cityName) { [weak self] result in
+    cityViewModel.findCoordinate(query: cityName) { [weak self] result in
       switch result {
       case .success:
         DispatchQueue.main.async {
@@ -215,7 +215,7 @@ extension AddCityViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let searchText = searchController.searchBar.text, searchText.count > 2 else {
       cities = []
-      sehirlerTableView.reloadData()
+      citiesTableView.reloadData()
       return
     }
     filterContentForSearchText(searchText)

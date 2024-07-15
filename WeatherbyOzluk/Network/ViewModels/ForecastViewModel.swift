@@ -1,6 +1,6 @@
 import UIKit
 
-class ForecastViewModel {
+final class ForecastViewModel {
   // Observable properties
   let temperature = ObservableValue("")
   let bigIcon: ObservableValue<UIImage?> = ObservableValue(nil)

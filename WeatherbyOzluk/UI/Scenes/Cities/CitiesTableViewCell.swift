@@ -1,17 +1,17 @@
 import UIKit
 
 class CitiesTableViewCell: UITableViewCell {
-  @IBOutlet var derece: UILabel!
-  @IBOutlet var tarih: UILabel!
-  @IBOutlet var sehirIsim: UILabel!
+  @IBOutlet var degreeLabel: UILabel!
+  @IBOutlet var dateLabel: UILabel!
+  @IBOutlet var cityNameLabel: UILabel!
   @IBOutlet var weatherPicImageView: UIImageView!
 
-  static let reuseIdentifier: String = "SehirlerTVCell"
+  static let reuseIdentifier: String = "CitiesTableViewCell"
 
   func setWeather(weatherPic: UIImage, cityName: String, degree: String, date: String) {
-    sehirIsim.text = cityName
-    derece.text = degree
+    cityNameLabel.text = cityName
+    degreeLabel.text = degree
     weatherPicImageView.image = weatherPic
-    tarih.text = date
+    dateLabel.text = date
   }
 }

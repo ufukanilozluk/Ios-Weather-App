@@ -37,7 +37,7 @@
                                 <rect key="frame" x="10" y="10" width="373" height="842"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SehirlerTVCell" id="hKh-PV-dOe" customClass="CitiesTableViewCell" customModule="WeatherbyOzluk" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CitiesTableViewCell" id="hKh-PV-dOe" customClass="CitiesTableViewCell" customModule="WeatherbyOzluk" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="373" height="57.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hKh-PV-dOe" id="r7X-kr-uyc">
@@ -49,7 +49,7 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-hC-sjq">
                                                             <rect key="frame" x="0.0" y="3" width="32" height="32"/>
-                                                            <color key="tintColor" name="mor"/>
+                                                            <color key="tintColor" name="purple"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="32" id="TFd-zz-URn"/>
                                                                 <constraint firstAttribute="height" constant="32" id="exk-PP-BwX"/>
@@ -67,7 +67,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJu-0E-yAZ">
                                                                     <rect key="frame" x="0.0" y="20.666666666666664" width="156" height="16.666666666666664"/>
                                                                     <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
-                                                                    <color key="textColor" name="mor"/>
+                                                                    <color key="textColor" name="purple"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -75,7 +75,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7L-Ea-GVE">
                                                             <rect key="frame" x="252" y="7.0000000000000018" width="49" height="23.666666666666671"/>
                                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
-                                                            <color key="textColor" name="mor"/>
+                                                            <color key="textColor" name="purple"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -90,9 +90,9 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <connections>
-                                            <outlet property="derece" destination="F7L-Ea-GVE" id="091-8q-JBh"/>
-                                            <outlet property="sehirIsim" destination="vbd-Ou-E0f" id="GYr-S2-80K"/>
-                                            <outlet property="tarih" destination="hJu-0E-yAZ" id="ncK-Pb-RbA"/>
+                                            <outlet property="cityNameLabel" destination="vbd-Ou-E0f" id="GYr-S2-80K"/>
+                                            <outlet property="dateLabel" destination="hJu-0E-yAZ" id="ncK-Pb-RbA"/>
+                                            <outlet property="degreeLabel" destination="F7L-Ea-GVE" id="091-8q-JBh"/>
                                             <outlet property="weatherPicImageView" destination="cZi-hC-sjq" id="bWB-cD-TQy"/>
                                         </connections>
                                     </tableViewCell>
@@ -116,8 +116,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="sehirlerTableView" destination="8W9-Hx-UJO" id="MNL-ys-1KP"/>
-                        <segue destination="SyD-yQ-TzH" kind="show" identifier="goToSehirlerDetay" id="IfI-vH-t3G"/>
+                        <outlet property="citiesTableView" destination="8W9-Hx-UJO" id="MNL-ys-1KP"/>
+                        <segue destination="SyD-yQ-TzH" kind="show" identifier="goToAddCity" id="IfI-vH-t3G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F9W-hv-XBa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -152,9 +152,9 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VuU-Vw-zVQ">
-                                                                <rect key="frame" x="79" y="31.666666666666671" width="98" height="46.999999999999986"/>
+                                                                <rect key="frame" x="79" y="31.666666666666671" width="98" height="47"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="40"/>
-                                                                <color key="textColor" name="mor"/>
+                                                                <color key="textColor" name="purple"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UP8-xn-I9n">
@@ -169,7 +169,7 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qt5-Aj-ANT">
                                                                         <rect key="frame" x="0.0" y="21.666666666666671" width="29.666666666666668" height="14.333333333333336"/>
                                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
-                                                                        <color key="textColor" name="mor"/>
+                                                                        <color key="textColor" name="purple"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -209,14 +209,14 @@
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DailyWeatherCVCell" id="BCp-pe-EaG" customClass="HomeDailyWeatherCollectionViewCell" customModule="WeatherbyOzluk" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="18" width="75" height="89.333333333333329"/>
+                                                                <rect key="frame" x="0.0" y="6.666666666666667" width="75" height="112"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Qpc-pz-Q5E">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="89.333333333333329"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="112"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <subviews>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QcB-Bc-n0D">
-                                                                            <rect key="frame" x="20" y="20.000000000000004" width="35" height="49.333333333333343"/>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QcB-Bc-n0D">
+                                                                            <rect key="frame" x="20" y="20" width="35" height="72"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PQH-B3-Amj">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
@@ -226,7 +226,7 @@
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XVR-m8-S5K">
-                                                                                    <rect key="frame" x="0.0" y="35" width="35" height="14.333333333333336"/>
+                                                                                    <rect key="frame" x="0.0" y="37" width="35" height="35"/>
                                                                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                                     <color key="textColor" name="ColorLbl"/>
                                                                                     <nil key="highlightedColor"/>
@@ -269,7 +269,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="bFg-LD-Fv1">
                                                                         <rect key="frame" x="0.0" y="0.0" width="80" height="32.666666666666664"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="damla" translatesAutoresizingMaskIntoConstraints="NO" id="cXW-Os-qxE">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="waterdrop" translatesAutoresizingMaskIntoConstraints="NO" id="cXW-Os-qxE">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="32.666666666666664"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="32.669998168945312" id="Bq5-uv-uO9"/>
@@ -298,7 +298,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="GsJ-xT-RhA">
                                                                         <rect key="frame" x="0.0" y="37.666666666666686" width="80" height="32.666666666666657"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="goz" translatesAutoresizingMaskIntoConstraints="NO" id="aFn-D5-g5p">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="eye" translatesAutoresizingMaskIntoConstraints="NO" id="aFn-D5-g5p">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="32.666666666666664"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="16" id="AeG-yQ-aEK"/>
@@ -332,7 +332,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="H4y-U2-0nB">
                                                                         <rect key="frame" x="0.0" y="0.0" width="74" height="32.666666666666664"/>
                                                                         <subviews>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="ruzgar" translatesAutoresizingMaskIntoConstraints="NO" id="EvQ-4j-1Lt">
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="251" image="wind" translatesAutoresizingMaskIntoConstraints="NO" id="EvQ-4j-1Lt">
                                                                                 <rect key="frame" x="0.0" y="0.33333333333331439" width="16" height="32"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="32" id="Aex-Dg-rIF"/>
@@ -531,7 +531,7 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEZ-92-wtW">
                                     <rect key="frame" x="60.333333333333329" y="205.33333333333331" width="78.999999999999986" height="21.666666666666657"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
-                                    <color key="textColor" name="mor"/>
+                                    <color key="textColor" name="purple"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start by adding a location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8k-Dz-eFu">
@@ -575,7 +575,7 @@
         <scene sceneID="dgO-d5-4aC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tMa-rd-gag" customClass="CustomNavigationController" customModule="WeatherbyOzluk" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Locations" image="konum" id="Za4-7J-Cc4"/>
+                    <tabBarItem key="tabBarItem" title="Locations" image="location" id="Za4-7J-Cc4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="6on-fq-rGd">
                         <rect key="frame" x="0.0" y="59" width="393" height="96"/>
@@ -602,7 +602,7 @@
                                 <rect key="frame" x="10" y="10" width="373" height="822"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SehirlerDetayTVCell" id="cME-xy-NJD" customClass="CitiesToAddTableViewCell" customModule="WeatherbyOzluk" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddNewCity" id="cME-xy-NJD" customClass="CitiesToAddTableViewCell" customModule="WeatherbyOzluk" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="373" height="49.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cME-xy-NJD" id="4Z0-61-FYE">
@@ -622,10 +622,10 @@
                                                             <rect key="frame" x="323" y="0.33333333333333393" width="30" height="29"/>
                                                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                             <state key="normal" title="Add">
-                                                                <color key="titleColor" name="mor"/>
+                                                                <color key="titleColor" name="purple"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="sehirEkle:" destination="cME-xy-NJD" eventType="touchUpInside" id="tis-sM-7nu"/>
+                                                                <action selector="addCity:" destination="cME-xy-NJD" eventType="touchUpInside" id="tis-sM-7nu"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -640,7 +640,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <connections>
-                                            <outlet property="sehirName" destination="anh-Cb-Vi6" id="W2h-5o-jwF"/>
+                                            <outlet property="cityNameLabel" destination="anh-Cb-Vi6" id="W2h-5o-jwF"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -663,8 +663,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="sehirlerTableView" destination="EWK-Mn-mh0" id="Ggj-yg-9N0"/>
-                        <segue destination="CXm-lF-HNo" kind="show" identifier="goToSehir" id="7kv-7T-Hf9"/>
+                        <outlet property="citiesTableView" destination="EWK-Mn-mh0" id="Ggj-yg-9N0"/>
+                        <segue destination="CXm-lF-HNo" kind="show" identifier="goToCities" id="7kv-7T-Hf9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YOU-nj-6BR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -680,11 +680,11 @@
         <image name="01n" width="170.66667175292969" height="170.66667175292969"/>
         <image name="02d" width="25" height="25"/>
         <image name="current-location" width="25" height="25"/>
-        <image name="damla" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="goz" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="konum" width="25" height="25"/>
+        <image name="eye" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="location" width="25" height="25"/>
         <image name="pressure" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="ruzgar" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="waterdrop" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="wind" width="170.66667175292969" height="170.66667175292969"/>
         <namedColor name="ColorLbl">
             <color red="0.19499999284744263" green="0.2070000022649765" blue="0.25200000405311584" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
@@ -694,11 +694,11 @@
         <namedColor name="colorLbl3">
             <color red="0.29803921568627451" green="0.32156862745098042" blue="0.39215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="mor">
+        <namedColor name="purple">
             <color red="0.46900001168251038" green="0.02199999988079071" blue="0.96200001239776611" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

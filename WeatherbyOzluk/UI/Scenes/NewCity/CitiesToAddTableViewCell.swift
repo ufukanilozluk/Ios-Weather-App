@@ -1,16 +1,16 @@
 import UIKit
 
 class CitiesToAddTableViewCell: UITableViewCell {
-  var ekleAction: (() -> Void)?
+  var addCityAction: (() -> Void)?
   weak var parentViewController: AddCityViewController?
-  static let reuseIdentifier: String = "SehirlerDetayTVCell"
-  @IBOutlet var sehirName: UILabel!
+  static let reuseIdentifier: String = "AddNewCity"
+  @IBOutlet var cityNameLabel: UILabel!
 
-  @IBAction func sehirEkle(_ sender: Any) {
-    ekleAction?()
+  @IBAction func addCity(_ sender: Any) {
+    addCityAction?()
   }
   func set(city: String, parentVC: AddCityViewController) {
-    sehirName.text = city
+    cityNameLabel.text = city
     parentViewController = parentVC
   }
 }
