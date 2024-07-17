@@ -90,14 +90,6 @@ extension APIManager {
     monitor.start(queue: DispatchQueue(label: "Network"))
 }
 }
-  // MARK: - API Request Method
-
-  /// Performs a GET request for JSON data from the specified URL.
-  /// - Parameters:
-  ///   - url: The URL to request JSON data from.
-  ///   - dateDecodingStrategy: Date decoding strategy for JSON decoding (default is .deferredToDate).
-  ///   - keyDecodingStrategy: Key decoding strategy for JSON decoding (default is .useDefaultKeys).
-  ///   - completion: Closure to be called upon completion with the result.
   // MARK: - Response Decoding
 
   /// Decodes a response of the specified type from the provided data.
@@ -105,7 +97,7 @@ extension APIManager {
   ///   - type: The type to decode.
   ///   - data: The data to decode.
   /// - Returns: An instance of the decoded type or nil if decoding fails.
-  func decodeResponse<T: Decodable>(type: T.Type, from data: Data) -> T? {
+  private func decodeResponse<T: Decodable>(type: T.Type, from data: Data) -> T? {
     let decoder = JSONDecoder()
     do {
       let decodedData = try decoder.decode(T.self, from: data)

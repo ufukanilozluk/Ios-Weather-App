@@ -1,14 +1,14 @@
 import UIKit
 
-class CitiesViewController: UIViewController {
-  @IBOutlet var citiesTableView: UITableView!
-  var weather: [Forecast]?
-  var selectedCities: [Location] = UserDefaultsHelper.getCities()
-  var newCityAdded = false
-  var viewModel = ForecastViewModel(service: ForecastService())
-  var degrees: [String] = []
-  var dates: [String] = []
-  var cityNames: [String] = []
+final class CitiesViewController: UIViewController {
+  @IBOutlet private var citiesTableView: UITableView!
+  private var weather: [Forecast]?
+  private var selectedCities: [Location] = UserDefaultsHelper.getCities()
+  private var newCityAdded = false
+  private var viewModel = ForecastViewModel(service: ForecastService())
+  private var degrees: [String] = []
+  private var dates: [String] = []
+  private var cityNames: [String] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()

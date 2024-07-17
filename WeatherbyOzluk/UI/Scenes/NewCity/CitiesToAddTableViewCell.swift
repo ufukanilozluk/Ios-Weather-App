@@ -1,16 +1,16 @@
 import UIKit
 
-class CitiesToAddTableViewCell: UITableViewCell {
+final class CitiesToAddTableViewCell: UITableViewCell {
   var addCityAction: (() -> Void)?
-  weak var parentViewController: AddCityViewController?
   static let reuseIdentifier: String = "AddNewCity"
-  @IBOutlet var cityNameLabel: UILabel!
+  @IBOutlet weak var addButton: UIButton!
+  @IBOutlet private var cityNameLabel: UILabel!
 
-  @IBAction func addCity(_ sender: Any) {
+  @IBAction func addCity(_ sender: UIButton) {
+    sender.isEnabled = false
     addCityAction?()
   }
-  func set(city: String, parentVC: AddCityViewController) {
+  func set(city: String) {
     cityNameLabel.text = city
-    parentViewController = parentVC
   }
 }

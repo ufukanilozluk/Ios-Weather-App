@@ -1,9 +1,9 @@
 import UIKit
 
-class HomeDailyWeatherCollectionViewCell: UICollectionViewCell {
-  @IBOutlet var frameCV: CardView!
-  @IBOutlet var imgWeather: UIImageView!
-  @IBOutlet var hour: UILabel!
+final class HomeDailyWeatherCollectionViewCell: UICollectionViewCell {
+  @IBOutlet private var frameCV: CardView!
+  @IBOutlet private var imgWeather: UIImageView!
+  @IBOutlet private var hour: UILabel!
   static let reuseIdentifier: String = "DailyWeatherCVCell"
 
   func set(time: String, image: UIImage) {

@@ -2,13 +2,13 @@ import Foundation
 import UIKit
 
 @IBDesignable
-class CardView: UIView {
-  @IBInspectable var cornerRadius: CGFloat = 5
-  @IBInspectable var shadowColor: UIColor? = UIColor.black
-  @IBInspectable var borderColor: UIColor? = UIColor.black
-  @IBInspectable var shadowOffsetWidth: Int = 0
-  @IBInspectable var shadowOffsetHeight: Int = 1
-  @IBInspectable var shadowOpacity: Float = 0.2
+final class CardView: UIView {
+  @IBInspectable private var cornerRadius: CGFloat = 5
+  @IBInspectable private var shadowColor: UIColor? = UIColor.black
+  @IBInspectable private var borderColor: UIColor? = UIColor.black
+  @IBInspectable private var shadowOffsetWidth: Int = 0
+  @IBInspectable private var shadowOffsetHeight: Int = 1
+  @IBInspectable private var shadowOpacity: Float = 0.2
   override func layoutSubviews() {
     layer.cornerRadius = cornerRadius
     layer.shadowColor = shadowColor?.cgColor

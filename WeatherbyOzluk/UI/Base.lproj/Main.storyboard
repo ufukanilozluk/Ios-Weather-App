@@ -185,6 +185,11 @@
                                                     <constraint firstAttribute="trailing" secondItem="emy-9s-Zsa" secondAttribute="trailing" constant="20" symbolic="YES" id="gse-pG-Z6U"/>
                                                     <constraint firstItem="emy-9s-Zsa" firstAttribute="leading" secondItem="fYT-da-4jM" secondAttribute="leading" constant="20" symbolic="YES" id="xCR-c3-1Sc"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetWidth">
+                                                        <integer key="value" value="0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Today" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mip-Kk-nIW">
                                                 <rect key="frame" x="0.0" y="170" width="353" height="19"/>
@@ -640,6 +645,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <connections>
+                                            <outlet property="addButton" destination="T5v-4J-aA4" id="dCm-6Y-bk8"/>
                                             <outlet property="cityNameLabel" destination="anh-Cb-Vi6" id="W2h-5o-jwF"/>
                                         </connections>
                                     </tableViewCell>
@@ -698,7 +704,7 @@
             <color red="0.46900001168251038" green="0.02199999988079071" blue="0.96200001239776611" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

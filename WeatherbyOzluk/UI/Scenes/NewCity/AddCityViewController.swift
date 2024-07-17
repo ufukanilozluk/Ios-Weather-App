@@ -1,20 +1,20 @@
 import UIKit
 import CoreLocation
 
-class AddCityViewController: UIViewController {
-  @IBOutlet var citiesTableView: UITableView!
+final class AddCityViewController: UIViewController {
+  @IBOutlet private var citiesTableView: UITableView!
 
-  var cities: [Location] = []
-  let searchController = UISearchController(searchResultsController: nil)
-  let cityViewModel = CityViewModel(service: CityService())
-  lazy var searchBar = UISearchBar()
-  var segueIdentifier = "goToCities"
-  var locationToAdd: [Location]?
-  var cityNames: [String] = []
-  var isSearchBarEmpty: Bool {
+  private var cities: [Location] = []
+  private let searchController = UISearchController(searchResultsController: nil)
+  private let cityViewModel = CityViewModel(service: CityService())
+  private lazy var searchBar = UISearchBar()
+  private var segueIdentifier = "goToCities"
+  private var locationToAdd: [Location]?
+  private var cityNames: [String] = []
+  private var isSearchBarEmpty: Bool {
     searchController.searchBar.text?.isEmpty ?? true
   }
-  var isFiltering: Bool {
+  private var isFiltering: Bool {
     searchController.isActive && !isSearchBarEmpty
   }
 
@@ -173,18 +173,19 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
       fatalError("Failed to dequeue CitiesToAddTableViewCell")
     }
     let city = cityNames[indexPath.row]
-    cell.set(city: city, parentVC: self)
+    cell.set(city: city)
     cell.addCityAction = { [weak self] in
-      self?.addCity(at: indexPath)
+      self?.addCity(at: indexPath, cell: cell)
     }
     return cell
   }
 
-  private func addCity(at indexPath: IndexPath) {
+  private func addCity(at indexPath: IndexPath, cell: CitiesToAddTableViewCell) {
     let citiesArray = UserDefaultsHelper.getCities()
     let cityName = cities[indexPath.row].localizedName
     guard !citiesArray.contains(where: { $0.localizedName == cityName }) else {
       showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
+      cell.addButton.isEnabled = true
       return
     }
     cityViewModel.findCoordinate(query: cityName) { [weak self] result in
@@ -192,7 +193,7 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
       case .success:
         DispatchQueue.main.async {
           guard let self = self, let locationToAdd = self.locationToAdd?.first else { return }
-          self.handleCityAdded(location: locationToAdd)
+          self.handleCityAdded(location: locationToAdd, cell: cell)
         }
       case .failure(let error):
         DispatchQueue.main.async {
@@ -202,8 +203,9 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
     }
   }
 
-  private func handleCityAdded(location: Location) {
+  private func handleCityAdded(location: Location, cell: CitiesToAddTableViewCell) {
     showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
+    cell.addButton.isEnabled = true
     GlobalSettings.shouldUpdateSegments = true
     clearSearchAndReload()
     UserDefaultsHelper.saveCity(city: location)

@@ -10,7 +10,7 @@ protocol ForecastServiceProtocol {
     lat: String, lon: String, completion: @escaping (Result<ForecastWeekly, APIManager.APIError>) -> Void
   )
 }
-class ForecastService: ForecastServiceProtocol {
+final class ForecastService: ForecastServiceProtocol {
   func getWeather(
     city: String,
     cnt: String,

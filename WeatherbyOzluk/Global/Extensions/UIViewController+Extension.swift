@@ -18,7 +18,7 @@ extension UIViewController {
     completion: (() -> Void)? = nil,
     style: UIAlertController.Style = .alert,
     presentationCompletion: (() -> Void)? = nil,
-    alertType: AlertType = .info
+    alertType: Alerts.AlertType = .info
   ) {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
     let action = UIAlertAction(title: actionTitle, style: .default) { _ in
@@ -50,7 +50,7 @@ extension UIViewController {
   ///   - message: The message to display in the toast.
   ///   - seconds: The duration for which the toast should be visible.
   ///   - alertType: The type of the alert for different styles. Default is `.info`.
-  func showToast(message: String, seconds: Double, alertType: AlertType = .info) {
+  func showToast(message: String, seconds: Double, alertType: Alerts.AlertType = .info) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
     switch alertType {
     case .warning:

@@ -1,33 +1,33 @@
 import UIKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
   // MARK: - Outlets
-  @IBOutlet var mainStackView: UIStackView!
-  @IBOutlet var emptyView: UIView!
-  @IBOutlet var scrollViewAnasayfa: UIScrollView!
-  @IBOutlet var dailyWeatherCV: UICollectionView!
-  @IBOutlet var weeklyWeatherTV: UITableView!
-  @IBOutlet var lblTemperature: UILabel!
-  @IBOutlet var imgWeatherMain: UIImageView!
-  @IBOutlet var lblDescription: UILabel!
-  @IBOutlet var lblDate: UILabel!
-  @IBOutlet var lblVisibility: UILabel!
-  @IBOutlet var lblWind: UILabel!
-  @IBOutlet var lblHumidity: UILabel!
-  @IBOutlet var lblPressure: UILabel!
-  @IBOutlet var welcomeAnimationView: UIView!
+  @IBOutlet private var mainStackView: UIStackView!
+  @IBOutlet private var emptyView: UIView!
+  @IBOutlet private var scrollViewAnasayfa: UIScrollView!
+  @IBOutlet private var dailyWeatherCV: UICollectionView!
+  @IBOutlet private var weeklyWeatherTV: UITableView!
+  @IBOutlet private var lblTemperature: UILabel!
+  @IBOutlet private var imgWeatherMain: UIImageView!
+  @IBOutlet private var lblDescription: UILabel!
+  @IBOutlet private var lblDate: UILabel!
+  @IBOutlet private var lblVisibility: UILabel!
+  @IBOutlet private var lblWind: UILabel!
+  @IBOutlet private var lblHumidity: UILabel!
+  @IBOutlet private var lblPressure: UILabel!
+  @IBOutlet private var welcomeAnimationView: UIView!
   // MARK: - Properties
-  lazy var refreshControl = UIRefreshControl()
-  var segmentedControl: UISegmentedControl?
-  var dataWeather: [Forecast.Weather]?
-  var weeklyWeather: ForecastWeekly?
+  private lazy var refreshControl = UIRefreshControl()
+  private var segmentedControl: UISegmentedControl?
+  private var dataWeather: [Forecast.Weather]?
+  private var weeklyWeather: ForecastWeekly?
   private let spacing: CGFloat = 4.0
-  var selectedCity: Location?
-  var viewModel = ForecastViewModel(service: ForecastService())
-  var times: [String] = []
-  var mins: [String] = []
-  var maxs: [String] = []
-  var days: [String] = []
+  private var selectedCity: Location?
+  private var viewModel = ForecastViewModel(service: ForecastService())
+  private var times: [String] = []
+  private var mins: [String] = []
+  private var maxs: [String] = []
+  private var days: [String] = []
 
   // MARK: - Lifecycle Methods
   override func viewDidLoad() {

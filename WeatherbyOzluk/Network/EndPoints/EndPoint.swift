@@ -1,9 +1,9 @@
 import Foundation
 
 struct Endpoint {
-  let host: String
-  let path: String
-  let queryItems: [URLQueryItem]
+  private let host: String
+  private let path: String
+  private let queryItems: [URLQueryItem]
   init(host: String, path: String, queryItems: [URLQueryItem] = []) {
     self.host = host
     self.path = path

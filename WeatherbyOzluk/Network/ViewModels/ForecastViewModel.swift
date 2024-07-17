@@ -21,7 +21,7 @@ final class ForecastViewModel {
   let days: ObservableValue<[String]> = ObservableValue([])
   let cityNames: ObservableValue<[String]> = ObservableValue([])
   private let service: ForecastServiceProtocol
-  let dispatchGroup = DispatchGroup()
+  private let dispatchGroup = DispatchGroup()
   // Init
   init(service: ForecastServiceProtocol) {
     self.service = service

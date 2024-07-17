@@ -1,6 +1,6 @@
 import CoreLocation
 
-class LocationService: NSObject, CLLocationManagerDelegate {
+final class LocationService: NSObject, CLLocationManagerDelegate {
   private let locationManager = CLLocationManager()
   private var locationCallback: ((CLLocation?, String?) -> Void)?
 

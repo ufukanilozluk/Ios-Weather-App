@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class CustomNavigationController: UINavigationController {
+final class CustomNavigationController: UINavigationController {
   override init(rootViewController: UIViewController) {
   super.init(rootViewController: rootViewController)
   applyTheme()

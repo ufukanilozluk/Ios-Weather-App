@@ -74,7 +74,7 @@ extension UIView {
     animationView.play()
   }
 
-  func removeAnimation() {
+  private func removeAnimation() {
     subviews.compactMap { $0 as? LottieAnimationView }.forEach { $0.removeFromSuperview() }
   }
 }

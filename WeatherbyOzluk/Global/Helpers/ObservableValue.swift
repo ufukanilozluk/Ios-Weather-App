@@ -26,7 +26,7 @@ final class ObservableValue<T> {
   }
 
   ///  Unbinds any previously bound listener.
-  func unbind() {
+  private func unbind() {
     listener = nil
   }
 

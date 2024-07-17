@@ -1,10 +1,10 @@
 import UIKit
 
-class HomeWeeklyWeatherTableviewCell: UITableViewCell {
-  @IBOutlet var imgWeatherTV: UIImageView!
-  @IBOutlet var lblDay: UILabel!
-  @IBOutlet var lblMaxWeatherTV: UILabel!
-  @IBOutlet var lblMinWeatherTV: UILabel!
+final class HomeWeeklyWeatherTableviewCell: UITableViewCell {
+  @IBOutlet private var imgWeatherTV: UIImageView!
+  @IBOutlet private var lblDay: UILabel!
+  @IBOutlet private var lblMaxWeatherTV: UILabel!
+  @IBOutlet private var lblMinWeatherTV: UILabel!
   static let reuseIdentifier = "WeeklyWeatherTVCell"
 
   func set(image: UIImage, maxTemp: String, minTemp: String, day: String) {

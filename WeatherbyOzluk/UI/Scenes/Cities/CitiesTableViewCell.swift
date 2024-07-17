@@ -1,10 +1,10 @@
 import UIKit
 
-class CitiesTableViewCell: UITableViewCell {
-  @IBOutlet var degreeLabel: UILabel!
-  @IBOutlet var dateLabel: UILabel!
-  @IBOutlet var cityNameLabel: UILabel!
-  @IBOutlet var weatherPicImageView: UIImageView!
+final class CitiesTableViewCell: UITableViewCell {
+  @IBOutlet private var degreeLabel: UILabel!
+  @IBOutlet private var dateLabel: UILabel!
+  @IBOutlet private var cityNameLabel: UILabel!
+  @IBOutlet private var weatherPicImageView: UIImageView!
 
   static let reuseIdentifier: String = "CitiesTableViewCell"
 

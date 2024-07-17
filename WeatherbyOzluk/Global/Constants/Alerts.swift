@@ -1,15 +1,17 @@
 import Foundation
 
-enum AlertType {
-  case warning
-  case error
-  case success
-  case info
-}
-
 struct Alerts {
   var alertType: AlertType
   var alertTitle: String
+}
+
+extension Alerts {
+  enum AlertType {
+    case warning
+    case error
+    case success
+    case info
+  }
 }
 
 enum CustomAlerts {
