@@ -14,6 +14,10 @@
 		E107B73F2C1B52DF00C9A3A4 /* HomeEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E107B73E2C1B52DF00C9A3A4 /* HomeEndpoint.swift */; };
 		E11AF94E261F998B00EAD8E3 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AF94D261F998B00EAD8E3 /* LocationService.swift */; };
 		E1321F4E2C32FCF300AE08D2 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1321F4D2C32FCF300AE08D2 /* CustomNavigationController.swift */; };
+		E140352C2C4E76A9009BCE2A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E140352B2C4E76A9009BCE2A /* Home.storyboard */; };
+		E140352E2C4E7A33009BCE2A /* Locations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E140352D2C4E7A33009BCE2A /* Locations.storyboard */; };
+		E14035302C4E7A40009BCE2A /* AddLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E140352F2C4E7A40009BCE2A /* AddLocation.storyboard */; };
+		E14035322C4E7A58009BCE2A /* LocationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E14035312C4E7A58009BCE2A /* LocationList.storyboard */; };
 		E1416F9B257E551D00B548ED /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1416F99257E551D00B548ED /* CardView.swift */; };
 		E14BA9462C09BFA600903392 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14BA9452C09BFA600903392 /* UserDefaultsHelper.swift */; };
 		E152762E2C3D219A00A4BFB7 /* CityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E152762D2C3D219A00A4BFB7 /* CityService.swift */; };
@@ -77,6 +81,10 @@
 		E107B73E2C1B52DF00C9A3A4 /* HomeEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeEndpoint.swift; sourceTree = "<group>"; };
 		E11AF94D261F998B00EAD8E3 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		E1321F4D2C32FCF300AE08D2 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		E140352B2C4E76A9009BCE2A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		E140352D2C4E7A33009BCE2A /* Locations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Locations.storyboard; sourceTree = "<group>"; };
+		E140352F2C4E7A40009BCE2A /* AddLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddLocation.storyboard; sourceTree = "<group>"; };
+		E14035312C4E7A58009BCE2A /* LocationList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LocationList.storyboard; sourceTree = "<group>"; };
 		E1416F99257E551D00B548ED /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E14BA9452C09BFA600903392 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
 		E152762D2C3D219A00A4BFB7 /* CityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityService.swift; sourceTree = "<group>"; };
@@ -170,6 +178,19 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		E13D3E202C4EA0B8008BFEE6 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				E1B91B932566578A0031E020 /* Main.storyboard */,
+				E140352B2C4E76A9009BCE2A /* Home.storyboard */,
+				E140352D2C4E7A33009BCE2A /* Locations.storyboard */,
+				E140352F2C4E7A40009BCE2A /* AddLocation.storyboard */,
+				E14035312C4E7A58009BCE2A /* LocationList.storyboard */,
+				E1B91B982566578A0031E020 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		E168888025ACDA970008E35F /* Animations */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,8 +225,7 @@
 				E1B402C12C3558C700E75084 /* Resources */,
 				E1B402BA2C352FB100E75084 /* Scenes */,
 				E1B402C02C35588B00E75084 /* Reusables */,
-				E1B91B932566578A0031E020 /* Main.storyboard */,
-				E1B91B982566578A0031E020 /* LaunchScreen.storyboard */,
+				E13D3E202C4EA0B8008BFEE6 /* Storyboards */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -213,9 +233,9 @@
 		E1B402BA2C352FB100E75084 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				E1B402BD2C3530AA00E75084 /* NewCity */,
-				E1B402BC2C35307300E75084 /* Cities */,
 				E1B402BB2C35300F00E75084 /* Home */,
+				E1B402BC2C35307300E75084 /* Cities */,
+				E1B402BD2C3530AA00E75084 /* NewCity */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -465,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1F5B0F925A4AA94005CF4A4 /* Roboto-Bold.ttf in Resources */,
+				E140352C2C4E76A9009BCE2A /* Home.storyboard in Resources */,
 				E1EA113F259B5C3900C7D5F6 /* Roboto-Regular.ttf in Resources */,
 				E1D0D442296745A9008A2890 /* not-found.json in Resources */,
 				E1EA113D259B5C3900C7D5F6 /* Roboto-Medium.ttf in Resources */,
@@ -474,6 +495,9 @@
 				E18BF10125B0B227006AC78E /* welcome-page.json in Resources */,
 				E18BF10425B0C7AB006AC78E /* location.json in Resources */,
 				E1B91B952566578A0031E020 /* Main.storyboard in Resources */,
+				E14035322C4E7A58009BCE2A /* LocationList.storyboard in Resources */,
+				E140352E2C4E7A33009BCE2A /* Locations.storyboard in Resources */,
+				E14035302C4E7A40009BCE2A /* AddLocation.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
