@@ -1,4 +1,5 @@
 import UIKit
+import OSLog
 
 final class HomeViewController: UIViewController {
   // MARK: - Outlets
@@ -33,6 +34,9 @@ final class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureUI()
+    if #available(iOS 14.0, *) {
+      Logger.api.notice("Sample Comment")
+    }
   }
 
   override func viewWillAppear(_ animated: Bool) {

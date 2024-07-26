@@ -148,7 +148,8 @@ class ForecastMockServiceForSuccess: ForecastServiceProtocol {
     case .success:
       completion(.success(forecastWeekly))
     case .error:
-      completion(.failure(.error("Error")))
+//      FIXME: Handle here. Düzgün hata kodu. Unittestler yeniden yazılsın ya en son hatalar üzerinden.
+      completion(.failure(.timeout))
     }
   }
 }

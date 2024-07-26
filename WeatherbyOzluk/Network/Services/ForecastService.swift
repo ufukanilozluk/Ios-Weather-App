@@ -17,14 +17,23 @@ final class ForecastService: ForecastServiceProtocol {
     completion: @escaping (Result<Forecast, APIManager.APIError>) -> Void
   ) {
     let endPoint = Endpoint.daily(city: city, cnt: cnt)
-    APIManager.shared.getJSON(url: endPoint.url, completion: completion)
+    guard let url = endPoint.url else {
+      completion(.failure(.invalidURL))
+      return
+    }
+    APIManager.shared.getJSON(url: url, completion: completion)
   }
+
   func getWeatherForecastWeekly(
     lat: String,
     lon: String,
     completion: @escaping (Result<ForecastWeekly, APIManager.APIError>) -> Void
   ) {
     let endPoint = Endpoint.weeklyForecast(lat: lat, lon: lon)
-    APIManager.shared.getJSON(url: endPoint.url, completion: completion)
+    guard let url = endPoint.url else {
+      completion(.failure(.invalidURL))
+      return
+    }
+    APIManager.shared.getJSON(url: url, completion: completion)
   }
 }

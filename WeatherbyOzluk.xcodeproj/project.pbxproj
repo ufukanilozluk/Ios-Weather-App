@@ -29,6 +29,7 @@
 		E18A6EB625798DA000FC2BD1 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18A6EB525798DA000FC2BD1 /* Weather.swift */; };
 		E18BF10125B0B227006AC78E /* welcome-page.json in Resources */ = {isa = PBXBuildFile; fileRef = E18BF10025B0B227006AC78E /* welcome-page.json */; };
 		E18BF10425B0C7AB006AC78E /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = E18BF10325B0C7AB006AC78E /* location.json */; };
+		E18FA8632C4FF8B5000C923E /* Logger+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18FA8622C4FF8B5000C923E /* Logger+Extension.swift */; };
 		E194CCE6297FE4A600E12918 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E194CCE5297FE4A600E12918 /* ObservableValue.swift */; };
 		E1AA87632C0E0FB7003BA2B5 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AA87622C0E0FB7003BA2B5 /* UIViewController+Extension.swift */; };
 		E1B402C42C357CB700E75084 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B402C32C357CB700E75084 /* KeychainHelper.swift */; };
@@ -97,6 +98,7 @@
 		E18A6EB525798DA000FC2BD1 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		E18BF10025B0B227006AC78E /* welcome-page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "welcome-page.json"; sourceTree = "<group>"; };
 		E18BF10325B0C7AB006AC78E /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
+		E18FA8622C4FF8B5000C923E /* Logger+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extension.swift"; sourceTree = "<group>"; };
 		E194CCE5297FE4A600E12918 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
 		E1AA87622C0E0FB7003BA2B5 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		E1B402C32C357CB700E75084 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				E1C396612C1C641F0054D3C5 /* Date+Extension.swift */,
 				E1C396632C1C65560054D3C5 /* UIView+Extension.swift */,
 				E1CCE8622C3E72D40020848D /* UIColor+Extension.swift */,
+				E18FA8622C4FF8B5000C923E /* Logger+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				E1CCE8632C3E72D40020848D /* UIColor+Extension.swift in Sources */,
 				E1B94F7B2C136BEA000E6A35 /* CitiesTableViewCell.swift in Sources */,
 				E11AF94E261F998B00EAD8E3 /* LocationService.swift in Sources */,
+				E18FA8632C4FF8B5000C923E /* Logger+Extension.swift in Sources */,
 				E194CCE6297FE4A600E12918 /* ObservableValue.swift in Sources */,
 				E1F1D2812566C5B6001149FE /* Location.swift in Sources */,
 				E1C396622C1C641F0054D3C5 /* Date+Extension.swift in Sources */,

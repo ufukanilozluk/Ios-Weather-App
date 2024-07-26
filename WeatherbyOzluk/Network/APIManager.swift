@@ -119,6 +119,7 @@ extension APIManager {
     case decodingFailed(String)
     case noInternetConnection
     case timeout
+    case invalidURL
 
     /// A localized description for each error case.
     var localizedDescription: String {
@@ -137,6 +138,8 @@ extension APIManager {
         return "No Internet Connection"
       case .timeout:
         return "Request Timeout"
+      case .invalidURL:
+        return "Invalid URL"
       }
     }
   }
