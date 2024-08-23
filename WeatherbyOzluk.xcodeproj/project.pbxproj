@@ -58,7 +58,7 @@
 		E1F1D27E2566A1A5001149FE /* CitiesToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D27D2566A1A5001149FE /* CitiesToAddTableViewCell.swift */; };
 		E1F1D2812566C5B6001149FE /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D2802566C5B6001149FE /* Location.swift */; };
 		E1F1D2842566C819001149FE /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1D2832566C819001149FE /* APIManager.swift */; };
-		E1F354F725B8877700757B01 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F354F625B8877700757B01 /* Errors.swift */; };
+		E1F354F725B8877700757B01 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F354F625B8877700757B01 /* ErrorHandling.swift */; };
 		E1F5B0F925A4AA94005CF4A4 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1F5B0F825A4AA94005CF4A4 /* Roboto-Bold.ttf */; };
 		E1F5B0FC25A4B285005CF4A4 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5B0FB25A4B285005CF4A4 /* CustomTabBarController.swift */; };
 		E1FAD1F62861C97E007A9EF4 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FAD1F52861C97E007A9EF4 /* Alerts.swift */; };
@@ -128,7 +128,7 @@
 		E1F1D27D2566A1A5001149FE /* CitiesToAddTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesToAddTableViewCell.swift; sourceTree = "<group>"; };
 		E1F1D2802566C5B6001149FE /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		E1F1D2832566C819001149FE /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		E1F354F625B8877700757B01 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		E1F354F625B8877700757B01 /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		E1F5B0F825A4AA94005CF4A4 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		E1F5B0FB25A4B285005CF4A4 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		E1FAD1F52861C97E007A9EF4 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
@@ -287,6 +287,7 @@
 				E14BA9452C09BFA600903392 /* UserDefaultsHelper.swift */,
 				E194CCE5297FE4A600E12918 /* ObservableValue.swift */,
 				E1B402C32C357CB700E75084 /* KeychainHelper.swift */,
+				E1F354F625B8877700757B01 /* ErrorHandling.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -385,7 +386,6 @@
 			isa = PBXGroup;
 			children = (
 				E183986F2C1B527400CF74C1 /* GlobalSettings.swift */,
-				E1F354F625B8877700757B01 /* Errors.swift */,
 				E1FAD1F52861C97E007A9EF4 /* Alerts.swift */,
 				E172B3FE259B451100390001 /* Colors.swift */,
 			);
@@ -523,7 +523,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint --fix && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -549,7 +549,7 @@
 				E1F1D2812566C5B6001149FE /* Location.swift in Sources */,
 				E1C396622C1C641F0054D3C5 /* Date+Extension.swift in Sources */,
 				E107B73D2C1B52CD00C9A3A4 /* CityEndpoint.swift in Sources */,
-				E1F354F725B8877700757B01 /* Errors.swift in Sources */,
+				E1F354F725B8877700757B01 /* ErrorHandling.swift in Sources */,
 				E1F5B0FC25A4B285005CF4A4 /* CustomTabBarController.swift in Sources */,
 				E1F1D27B25669021001149FE /* AddCityViewController.swift in Sources */,
 				E1F1D2842566C819001149FE /* APIManager.swift in Sources */,

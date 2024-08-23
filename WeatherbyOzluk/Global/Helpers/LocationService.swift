@@ -54,15 +54,14 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     locationManager.stopUpdatingLocation()
   }
 
-  func retrieveCityName(latitude: Double, longitude: Double, completionHandler: @escaping (CLPlacemark?) -> Void) {
+  func retrieveCityName(latitude: Double, longitude: Double, completionHandler: @escaping (CLPlacemark?, String?) -> Void) {
     let location = CLLocation(latitude: latitude, longitude: longitude)
     CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
       if let error = error {
-        print("Reverse geocode failed: \(error.localizedDescription)")
-        completionHandler(nil)
+        completionHandler(nil, error.localizedDescription)
         return
       }
-      completionHandler(placemarks?.first)
+      completionHandler(placemarks?.first, nil)
     }
   }
 }

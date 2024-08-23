@@ -6,9 +6,9 @@ extension Endpoint {
     cnt: String,
     lang: String = "en",
     units: String = "metric"
-  ) -> Self {
+  ) throws -> Self {
     guard let appId = KeychainHelper.getApiKey(forKey: "openweather") else {
-      fatalError("API key not found in Keychain")
+      throw EndpointError.missingAPIKey
     }
     return Endpoint(
       host: "api.openweathermap.org",
@@ -28,9 +28,9 @@ extension Endpoint {
     units: String = "metric",
     lat: String,
     lon: String
-  ) -> Self {
+  ) throws -> Self {
     guard let appId = KeychainHelper.getApiKey(forKey: "openweather") else {
-      fatalError("API key not found in Keychain")
+      throw EndpointError.missingAPIKey
     }
     return Endpoint(
       host: "api.openweathermap.org",

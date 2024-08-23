@@ -21,7 +21,7 @@ final class CityViewModel {
         self.cityNames.value = locations.map { "\($0.localizedName), \($0.country.localizedName)" }
         completion()
       case .failure(let error):
-        self.handleError(error)
+        ErrorHandling.handleError(error)
       }
     }
   }
@@ -34,13 +34,8 @@ final class CityViewModel {
         self.location.value = locations
         completion(.success(()))
       case .failure(let error):
-        completion(.failure(error))
+        ErrorHandling.handleError(error)
       }
     }
-  }
-  // Private function to handle errors
-  private func handleError(_ error: APIManager.APIError) {
-    print("Error: \(error.localizedDescription)")
-      // Optionally, you could show an alert to the user or perform other UI-related error handling here.
   }
 }

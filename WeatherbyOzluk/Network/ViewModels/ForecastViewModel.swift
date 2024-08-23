@@ -35,7 +35,7 @@ final class ForecastViewModel {
       case let .success(forecast):
         self.processWeather(forecast)
       case let .failure(error):
-        self.handleError(error)
+        ErrorHandling.handleError(error)
       }
       self.dispatchGroup.leave()
     }
@@ -49,7 +49,7 @@ final class ForecastViewModel {
       case let .success(weeklyForecast):
         self.processWeeklyWeather(weeklyForecast)
       case let .failure(error):
-        self.handleError(error)
+        ErrorHandling.handleError(error)
       }
       self.dispatchGroup.leave()
     }
@@ -78,7 +78,7 @@ final class ForecastViewModel {
         case let .success(forecast):
           weather.append(forecast)
         case let .failure(error):
-          self.handleError(error)
+          ErrorHandling.handleError(error)
         }
         self.dispatchGroup.leave()
       }
@@ -129,10 +129,5 @@ final class ForecastViewModel {
     degree.value = temp.map { "\(Int($0.main.temp))°C" }
     dates.value = temp.map { $0.date.dateAndTimeLong() }
     cityNames.value = sortedWeather.compactMap { $0.city?.name.replacingOccurrences(of: " Province", with: "") }
-  }
-
-  // Handle errors
-  private func handleError(_ error: APIManager.APIError) {
-    print(error.localizedDescription)
   }
 }

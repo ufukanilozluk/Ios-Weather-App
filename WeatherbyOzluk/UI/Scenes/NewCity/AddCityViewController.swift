@@ -132,12 +132,12 @@ final class AddCityViewController: UIViewController {
     let locationService = LocationService()
 
     locationService.requestLocation { location, error in
-      if let error = error {
-        self.showAlert(title: "Error", message: error)
+      if error != nil {
+        self.showAlert(title: "Error", message: "Unable to retrieve location.", alertType: .error)
         return
       }
       guard let location = location else {
-        self.showAlert(title: "Error", message: "Unable to retrieve location.")
+        self.showAlert(title: "Error", message: "Unable to retrieve location.", alertType: .error)
         return
       }
       self.retrieveCityName(from: location, using: locationService)
@@ -148,10 +148,14 @@ final class AddCityViewController: UIViewController {
     locationService.retrieveCityName(
       latitude: location.coordinate.latitude,
       longitude: location.coordinate.longitude
-    ) { placeMark in
+    ) { placeMark, error  in
+      if error != nil {
+        self.showAlert(title: "Error", message: "Unable to retrieve city information.", alertType: .error)
+        return
+      }
       guard let placeMark = placeMark, let cityName = placeMark.administrativeArea,
         let countryName = placeMark.country else {
-          self.showAlert(title: "Error", message: "Unable to retrieve city information.")
+          self.showAlert(title: "Error", message: "Unable to retrieve city information.", alertType: .error)
           return
       }
       self.handleCityNameRetrieved(cityName: cityName, countryName: countryName, location: location)

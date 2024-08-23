@@ -1,5 +1,9 @@
 import Foundation
 
+enum EndpointError: Error {
+  case missingAPIKey
+}
+
 struct Endpoint {
   private let host: String
   private let path: String

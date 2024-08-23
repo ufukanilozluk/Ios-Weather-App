@@ -120,6 +120,7 @@ extension APIManager {
     case noInternetConnection
     case timeout
     case invalidURL
+    case missingAPIKey
 
     /// A localized description for each error case.
     var localizedDescription: String {
@@ -140,6 +141,8 @@ extension APIManager {
         return "Request Timeout"
       case .invalidURL:
         return "Invalid URL"
+      case .missingAPIKey:
+        return "Missing API Key"
       }
     }
   }
