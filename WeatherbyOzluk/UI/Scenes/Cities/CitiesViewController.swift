@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 final class CitiesViewController: UIViewController {
   @IBOutlet private var citiesTableView: UITableView!
@@ -9,6 +10,9 @@ final class CitiesViewController: UIViewController {
   private var degrees: [String] = []
   private var dates: [String] = []
   private var cityNames: [String] = []
+
+  // Combine
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,31 +33,50 @@ final class CitiesViewController: UIViewController {
     }
     getWeatherInfo()
   }
+
   private func setBindings() {
-    viewModel.allCitiesWeatherData.bind { [weak self] weatherData in
-      self?.weather = weatherData
-    }
-    viewModel.degree.bind { [weak self] degrees in
-      self?.degrees = degrees
-    }
-    viewModel.dates.bind { [weak self] dates in
-      self?.dates = dates
-    }
-    viewModel.cityNames.bind { [weak self] cityNames in
-      self?.cityNames = cityNames
-    }
+    viewModel.allCitiesWeatherData
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] weatherData in
+        self?.weather = weatherData
+        self?.citiesTableView.reloadData()
+      }
+      .store(in: &cancellables)
+
+    viewModel.degree
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] degrees in
+        self?.degrees = degrees
+        self?.citiesTableView.reloadData()
+      }
+      .store(in: &cancellables)
+
+    viewModel.dates
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] dates in
+        self?.dates = dates
+        self?.citiesTableView.reloadData()
+      }
+      .store(in: &cancellables)
+
+    viewModel.cityNames
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] cityNames in
+        self?.cityNames = cityNames
+        self?.citiesTableView.reloadData()
+      }
+      .store(in: &cancellables)
   }
 
   private func updateUI() {
     view.removeSpinner()
-    citiesTableView.reloadData()
   }
 
   private func getWeatherInfo() {
     view.showSpinner()
-    viewModel.getForecastForAllCities { [weak self] in
+    viewModel.getForecastForAllCities {
       DispatchQueue.main.async {
-        self?.updateUI()
+        self.updateUI()
       }
     }
   }
@@ -80,7 +103,6 @@ final class CitiesViewController: UIViewController {
     navigationItem.leftBarButtonItem = editButtonItem
   }
 
-  // Edit state function
   override func setEditing(_ editing: Bool, animated: Bool) {
     super.setEditing(editing, animated: true)
     citiesTableView.setEditing(editing, animated: true)

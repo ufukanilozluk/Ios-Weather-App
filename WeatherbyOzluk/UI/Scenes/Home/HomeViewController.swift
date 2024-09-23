@@ -1,5 +1,6 @@
 import UIKit
 import OSLog
+import Combine
 
 final class HomeViewController: UIViewController {
   // MARK: - Outlets
@@ -17,6 +18,7 @@ final class HomeViewController: UIViewController {
   @IBOutlet private var lblHumidity: UILabel!
   @IBOutlet private var lblPressure: UILabel!
   @IBOutlet private var welcomeAnimationView: UIView!
+
   // MARK: - Properties
   private lazy var refreshControl = UIRefreshControl()
   private var segmentedControl: UISegmentedControl?
@@ -29,6 +31,7 @@ final class HomeViewController: UIViewController {
   private var mins: [String] = []
   private var maxs: [String] = []
   private var days: [String] = []
+  private var cancellables = Set<AnyCancellable>()
 
   // MARK: - Lifecycle Methods
   override func viewDidLoad() {
@@ -95,85 +98,111 @@ final class HomeViewController: UIViewController {
   }
 
   private func bindLabels() {
-    viewModel.bigIcon.bind { [weak self] bigIcon in
-      DispatchQueue.main.async {
+    viewModel.bigIcon
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] bigIcon in
         self?.imgWeatherMain.image = bigIcon
       }
-    }
-    viewModel.description.bind { [weak self] description in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.description
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] description in
         self?.lblDescription.text = description
       }
-    }
-    viewModel.humidity.bind { [weak self] humidity in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.humidity
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] humidity in
         self?.lblHumidity.text = humidity
       }
-    }
-    viewModel.wind.bind { [weak self] wind in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.wind
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] wind in
         self?.lblWind.text = wind
       }
-    }
-    viewModel.temperature.bind { [weak self] temperature in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.temperature
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] temperature in
         self?.lblTemperature.text = temperature
       }
-    }
-    viewModel.visibility.bind { [weak self] visibility in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.visibility
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] visibility in
         self?.lblVisibility.text = visibility
       }
-    }
-    viewModel.pressure.bind { [weak self] pressure in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.pressure
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] pressure in
         self?.lblPressure.text = pressure
       }
-    }
-    viewModel.date.bind { [weak self] date in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.date
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] date in
         self?.lblDate.text = date
       }
-    }
+      .store(in: &cancellables)
   }
 
   private func bindCollectionsData() {
-    viewModel.weatherData.bind { [weak self] weatherData in
-      DispatchQueue.main.async {
+    viewModel.weatherData
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] weatherData in
         self?.dataWeather = weatherData
         self?.reloadCollectionViewData()
       }
-    }
-    viewModel.weeklyWeatherData.bind { [weak self] weeklyWeatherData in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.weeklyWeatherData
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] weeklyWeatherData in
         self?.weeklyWeather = weeklyWeatherData
         self?.reloadTableViewData()
       }
-    }
-    viewModel.times.bind { [weak self] times in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.times
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] times in
         self?.times = times
         self?.reloadCollectionViewData()
       }
-    }
-    viewModel.days.bind { [weak self] days in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.days
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] days in
         self?.days = days
         self?.reloadTableViewData()
       }
-    }
-    viewModel.mins.bind { [weak self] mins in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.mins
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] mins in
         self?.mins = mins
         self?.reloadTableViewData()
       }
-    }
-    viewModel.maxs.bind { [weak self] maxs in
-      DispatchQueue.main.async {
+      .store(in: &cancellables)
+
+    viewModel.maxs
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] maxs in
         self?.maxs = maxs
         self?.reloadTableViewData()
       }
-    }
+      .store(in: &cancellables)
   }
 
   // MARK: - UI Updates
@@ -220,21 +249,10 @@ final class HomeViewController: UIViewController {
   }
 
   private func reloadCollectionViewData() {
-    guard dataWeather?.count == times.count else {
-      print("Mismatch in dataWeather and times count")
-      return
-    }
     self.dailyWeatherCV.reloadData()
   }
 
   private func reloadTableViewData() {
-    guard let weeklyWeather = weeklyWeather,
-      weeklyWeather.daily.count == mins.count,
-      mins.count == maxs.count,
-      maxs.count == days.count else {
-        print("Mismatch in weeklyWeather, mins, maxs, or days count")
-        return
-    }
     self.weeklyWeatherTV.reloadData()
   }
 
@@ -260,60 +278,59 @@ final class HomeViewController: UIViewController {
     self.selectedCity = selectedCity
     fetchData(for: selectedCity)
   }
-
   @objc private func didPullToRefresh() {
     guard let selectedCity = selectedCity else { return }
-    fetchData(for: selectedCity)
-  }
-}
-
-// MARK: - UITableViewDelegate, UITableViewDataSource
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return weeklyWeather?.daily.count ?? 0
+      fetchData(for: selectedCity)
+    }
   }
 
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(
-      withIdentifier: HomeWeeklyWeatherTableviewCell.reuseIdentifier,
-      for: indexPath
-    )
-    if let cell = cell as? HomeWeeklyWeatherTableviewCell,
-      let rowData = weeklyWeather?.daily[indexPath.row],
-      let imageName = rowData.weather.first?.icon,
-      let image = UIImage(named: imageName) {
+  // MARK: - UITableViewDelegate, UITableViewDataSource
+  extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return weeklyWeather?.daily.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      let cell = tableView.dequeueReusableCell(
+        withIdentifier: HomeWeeklyWeatherTableviewCell.reuseIdentifier,
+        for: indexPath
+      )
+      if let cell = cell as? HomeWeeklyWeatherTableviewCell,
+        let rowData = weeklyWeather?.daily[indexPath.row],
+        let imageName = rowData.weather.first?.icon,
+        let image = UIImage(named: imageName) {
         cell.set(image: image, maxTemp: maxs[indexPath.row], minTemp: mins[indexPath.row], day: days[indexPath.row])
         return cell
-    }
-    // Return default cell if configuration fails
-    return cell
-  }
-}
-
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return dataWeather?.count ?? 0
-  }
-
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: HomeDailyWeatherCollectionViewCell.reuseIdentifier,
-      for: indexPath
-    )
-    if let cell = cell as? HomeDailyWeatherCollectionViewCell {
-      if let rowData = dataWeather?[indexPath.row],
-        let image = UIImage(named: rowData.weather[0].icon) {
-        cell.set(time: times[indexPath.row], image: image)
       }
+      // Default hücre döndür
+      return cell
     }
-    return cell
   }
-}
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: 75, height: 100)
+  // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+      return dataWeather?.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+      let cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: HomeDailyWeatherCollectionViewCell.reuseIdentifier,
+        for: indexPath
+      )
+      if let cell = cell as? HomeDailyWeatherCollectionViewCell {
+        if let rowData = dataWeather?[indexPath.row],
+          let image = UIImage(named: rowData.weather[0].icon) {
+          cell.set(time: times[indexPath.row], image: image)
+        }
+      }
+      return cell
+    }
   }
-}
+
+  // MARK: - UICollectionViewDelegateFlowLayout
+  extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+      return CGSize(width: 75, height: 100)
+    }
+  }

@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 import CoreLocation
 
 final class AddCityViewController: UIViewController {
@@ -7,10 +8,9 @@ final class AddCityViewController: UIViewController {
   private var cities: [Location] = []
   private let searchController = UISearchController(searchResultsController: nil)
   private let cityViewModel = CityViewModel(service: CityService())
-  private lazy var searchBar = UISearchBar()
-  private var segueIdentifier = "goToCities"
   private var locationToAdd: [Location]?
   private var cityNames: [String] = []
+  private var cancellables = Set<AnyCancellable>()
   private var isSearchBarEmpty: Bool {
     searchController.searchBar.text?.isEmpty ?? true
   }
@@ -21,9 +21,11 @@ final class AddCityViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setConfig()
+    setupBindings()
   }
 
   override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
     setSearchTextField()
   }
 
@@ -32,8 +34,43 @@ final class AddCityViewController: UIViewController {
     configureTableView()
     configureSearchController()
     setSearchTextField()
-    setBindings()
     registerForKeyboardNotifications()
+  }
+
+  private func registerForKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: UIResponder.keyboardWillShowNotification,
+      object: nil
+    )
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: UIResponder.keyboardWillHideNotification,
+      object: nil
+    )
+  }
+
+  private func unregisterForKeyboardNotifications() {
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+  }
+
+  @objc private func keyboardWillShow(_ notification: Notification) {
+    if let userInfo = notification.userInfo,
+      let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+        let keyboardHeight = keyboardFrame.height
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        citiesTableView.contentInset = contentInsets
+        citiesTableView.scrollIndicatorInsets = contentInsets
+    }
+  }
+
+  @objc private func keyboardWillHide(_ notification: Notification) {
+    let contentInsets = UIEdgeInsets.zero
+    citiesTableView.contentInset = contentInsets
+    citiesTableView.scrollIndicatorInsets = contentInsets
   }
 
   private func configureTableView() {
@@ -53,63 +90,33 @@ final class AddCityViewController: UIViewController {
     navigationController?.navigationBar.backItem?.title = ""
   }
 
-  private func setBindings() {
-    cityViewModel.location.bind { [weak self] location in
-      self?.locationToAdd = location
-    }
-    cityViewModel.locationSearchData.bind { [weak self] searchData in
-      self?.cities = searchData
-    }
-    cityViewModel.cityNames.bind { [weak self] cityNames in
-      self?.cityNames = cityNames
-    }
-  }
-  deinit {
-    unregisterForKeyboardNotifications()
-  }
-  private func registerForKeyboardNotifications() {
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(keyboardWillShow(_:)),
-      name: UIResponder.keyboardWillShowNotification,
-      object: nil
-    )
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(keyboardWillHide(_:)),
-      name: UIResponder.keyboardWillHideNotification,
-      object: nil
-    )
-    }
-    private func unregisterForKeyboardNotifications() {
-      NotificationCenter.default.removeObserver(
-        self,
-        name: UIResponder.keyboardWillShowNotification,
-        object: nil
-      )
-      NotificationCenter.default.removeObserver(
-        self,
-        name: UIResponder.keyboardWillHideNotification,
-        object: nil
-      )
-    }
-
-    @objc private func keyboardWillShow(_ notification: Notification) {
-      if let userInfo = notification.userInfo,
-        let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-          let keyboardHeight = keyboardFrame.height
-          let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-          citiesTableView.contentInset = contentInsets
-          citiesTableView.scrollIndicatorInsets = contentInsets
+  private func setupBindings() {
+    cityViewModel.location
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] locations in
+        self?.locationToAdd = locations
+        self?.clearSearchAndReload()
       }
-    }
-    @objc private func keyboardWillHide(_ notification: Notification) {
-      let contentInsets = UIEdgeInsets.zero
-      citiesTableView.contentInset = contentInsets
-      citiesTableView.scrollIndicatorInsets = contentInsets
-    }
+      .store(in: &cancellables)
 
-  // MARK: - Search TextField Customization
+    cityViewModel.cityNames
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] cityNames in
+        self?.cityNames = cityNames
+      }
+      .store(in: &cancellables)
+
+    cityViewModel.locationSearchData
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] searchData in
+        self?.cities = searchData
+        self?.citiesTableView.reloadData()
+        self?.view.removeSpinner()
+      }
+      .store(in: &cancellables)
+  }
+
+  // MARK: - Other Methods
   private func setSearchTextField() {
     let imageView = UIImageView(image: UIImage(named: "search"))
     if let searchTextField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
@@ -123,7 +130,6 @@ final class AddCityViewController: UIViewController {
     }
   }
 
-  // MARK: - Location Handling
   @IBAction func getLocationIBA(_ sender: Any) {
     getLocation()
   }
@@ -131,16 +137,16 @@ final class AddCityViewController: UIViewController {
   private func getLocation() {
     let locationService = LocationService()
 
-    locationService.requestLocation { location, error in
-      if error != nil {
-        self.showAlert(title: "Error", message: "Unable to retrieve location.", alertType: .error)
+    locationService.requestLocation { [weak self] location, error in
+      if let error = error {
+        self?.showAlert(title: "Error", message: "Unable to retrieve location: \(error)", alertType: .error)
         return
       }
       guard let location = location else {
-        self.showAlert(title: "Error", message: "Unable to retrieve location.", alertType: .error)
+        self?.showAlert(title: "Error", message: "Unable to retrieve location.", alertType: .error)
         return
       }
-      self.retrieveCityName(from: location, using: locationService)
+      self?.retrieveCityName(from: location, using: locationService)
     }
   }
 
@@ -148,24 +154,25 @@ final class AddCityViewController: UIViewController {
     locationService.retrieveCityName(
       latitude: location.coordinate.latitude,
       longitude: location.coordinate.longitude
-    ) { placeMark, error  in
-      if error != nil {
-        self.showAlert(title: "Error", message: "Unable to retrieve city information.", alertType: .error)
+    ) { [weak self] placeMark, error in
+      if let error = error {
+        self?.showAlert(title: "Error", message: "Unable to retrieve city information: \(error)", alertType: .error)
         return
       }
-      guard let placeMark = placeMark, let cityName = placeMark.administrativeArea,
+      guard let placeMark = placeMark,
+        let cityName = placeMark.administrativeArea,
         let countryName = placeMark.country else {
-          self.showAlert(title: "Error", message: "Unable to retrieve city information.", alertType: .error)
+          self?.showAlert(title: "Error", message: "Unable to retrieve city information.", alertType: .error)
           return
       }
-      self.handleCityNameRetrieved(cityName: cityName, countryName: countryName, location: location)
+      self?.handleCityNameRetrieved(cityName: cityName, countryName: countryName, location: location)
     }
   }
 
   private func handleCityNameRetrieved(cityName: String, countryName: String, location: CLLocation) {
     let citiesArray = UserDefaultsHelper.getCities()
     if citiesArray.contains(where: { $0.localizedName == cityName }) {
-      self.showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
+      showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
     } else {
       let geoPosition = Location.GeoPosition(
         latitude: location.coordinate.latitude,
@@ -177,8 +184,8 @@ final class AddCityViewController: UIViewController {
         geoPosition: geoPosition
       )
       UserDefaultsHelper.saveCity(city: city)
-      self.showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
-      self.clearSearchAndReload()
+      showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
+      clearSearchAndReload()
       GlobalSettings.shouldUpdateSegments = true
     }
   }
@@ -190,20 +197,17 @@ final class AddCityViewController: UIViewController {
     searchController.searchBar.endEditing(true)
   }
 
-  // MARK: - Search Filtering
   private func filterContentForSearchText(_ searchText: String) {
     view.showSpinner()
-    let searchTxt = searchText.replacingOccurrences(of: " ", with: "%20")
-    cityViewModel.findCity(query: searchTxt) { [weak self] in
-      DispatchQueue.main.async {
-        self?.view.removeSpinner()
-        self?.citiesTableView.reloadData()
-      }
-    }
+    cityViewModel.findCity(query: searchText)
+  }
+
+  deinit {
+    unregisterForKeyboardNotifications()
   }
 }
 
-// MARK: - UITableViewDelegate, UITableViewDataSource
+// MARK: - UITableViewDataSource
 extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if cities.isEmpty && isFiltering, let searchText = searchController.searchBar.text, searchText.count > 2 {
@@ -232,32 +236,30 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
   private func addCity(at indexPath: IndexPath, cell: CitiesToAddTableViewCell) {
     let citiesArray = UserDefaultsHelper.getCities()
     let cityName = cities[indexPath.row].localizedName
+
     guard !citiesArray.contains(where: { $0.localizedName == cityName }) else {
       showAlert(title: CustomAlerts.sameCity.alertTitle, alertType: CustomAlerts.sameCity.alertType)
       cell.addButton.isEnabled = true
       return
     }
-    cityViewModel.findCoordinate(query: cityName) { [weak self] result in
-      switch result {
-      case .success:
-        DispatchQueue.main.async {
-          guard let self = self, let locationToAdd = self.locationToAdd?.first else { return }
-          self.handleCityAdded(location: locationToAdd, cell: cell)
-        }
-      case .failure(let error):
-        DispatchQueue.main.async {
-          self?.showAlert(title: "Error", message: error.localizedDescription)
-        }
+
+    cell.addButton.isEnabled = false
+    cityViewModel.findCoordinate(query: cityName)
+    cityViewModel.location
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] locations in
+        guard let self = self, let location = locations.first else { return }
+        self.handleCityAdded(location: location, cell: cell)
+        self.clearSearchAndReload()
       }
-    }
+      .store(in: &cancellables)
   }
 
   private func handleCityAdded(location: Location, cell: CitiesToAddTableViewCell) {
-    showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
-    cell.addButton.isEnabled = true
-    GlobalSettings.shouldUpdateSegments = true
-    clearSearchAndReload()
     UserDefaultsHelper.saveCity(city: location)
+    cell.addButton.isEnabled = true
+    showAlert(title: CustomAlerts.added.alertTitle, alertType: CustomAlerts.added.alertType)
+    GlobalSettings.shouldUpdateSegments = true
   }
 }
 
@@ -265,7 +267,7 @@ extension AddCityViewController: UITableViewDelegate, UITableViewDataSource {
 extension AddCityViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     guard let searchText = searchController.searchBar.text, searchText.count > 2 else {
-      cities = []
+      cities.removeAll()
       citiesTableView.reloadData()
       return
     }

@@ -1,61 +1,54 @@
 import Foundation
 import Network
 import UIKit
+import Combine
 
 class APIManager {
   /// Shared instance of the APIManager.
   static let shared = APIManager()
   /// Private initializer to enforce singleton pattern.
   private init() {}
-  func getJSON<T: Decodable>(
+  func getJSONPublisher<T: Decodable>(
     url: URL,
     dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .secondsSince1970,
-    keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-    completion: @escaping (Result<T, APIError>) -> Void
-  ) {
+    keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys
+  ) -> AnyPublisher<T, APIError> {
     let timeoutInterval: TimeInterval = 30
     let urlRequest = URLRequest(url: url, timeoutInterval: timeoutInterval)
 
-    URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-      // Handle network errors.
-      if let error = error as? URLError {
-        switch error.code {
-        case .notConnectedToInternet:
-          completion(.failure(APIError.noInternetConnection))
-        case .timedOut:
-          completion(.failure(APIError.timeout))
-        default:
-          completion(.failure(APIError.networkError(error.localizedDescription)))
+    return URLSession.shared.dataTaskPublisher(for: urlRequest)
+      .tryMap { data, response in
+        // HTTP response kodunu kontrol et
+        guard let httpResponse = response as? HTTPURLResponse,
+          (200...299).contains(httpResponse.statusCode) else {
+            throw APIError.invalidResponse
         }
-        return
+        return data
       }
-
-      // Check for a valid HTTP response status code.
-      guard let httpResponse = response as? HTTPURLResponse,
-        (200...299).contains(httpResponse.statusCode) else {
-        completion(.failure(APIError.invalidResponse))
-        return
+      .decode(type: T.self, decoder: {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = dateDecodingStrategy
+        decoder.keyDecodingStrategy = keyDecodingStrategy
+        return decoder
+      }())
+      .mapError { error -> APIError in
+        // Combine hata türlerini APIError'a dönüştür
+        if let urlError = error as? URLError {
+          switch urlError.code {
+          case .notConnectedToInternet:
+            return .noInternetConnection
+          case .timedOut:
+            return .timeout
+          default:
+            return .networkError(urlError.localizedDescription)
+          }
+        } else if let decodingError = error as? DecodingError {
+          return .decodingFailed(decodingError.localizedDescription)
+        } else {
+          return (error as? APIError) ?? .unknown
+        }
       }
-
-      // Ensure that data is present.
-      guard let data = data else {
-        completion(.failure(APIError.noData))
-        return
-      }
-
-      // Decode the JSON data.
-      let decoder = JSONDecoder()
-      decoder.dateDecodingStrategy = dateDecodingStrategy
-      decoder.keyDecodingStrategy = keyDecodingStrategy
-
-      do {
-        let decodedData = try decoder.decode(T.self, from: data)
-        completion(.success(decodedData))
-      } catch let decodingError {
-        completion(.failure(APIError.decodingFailed(decodingError.localizedDescription)))
-      }
-    }
-    .resume()
+      .eraseToAnyPublisher()
   }
 }
 
@@ -121,6 +114,7 @@ extension APIManager {
     case timeout
     case invalidURL
     case missingAPIKey
+    case unknown
 
     /// A localized description for each error case.
     var localizedDescription: String {
@@ -143,6 +137,8 @@ extension APIManager {
         return "Invalid URL"
       case .missingAPIKey:
         return "Missing API Key"
+      case .unknown:
+        return "Unknown Error"
       }
     }
   }

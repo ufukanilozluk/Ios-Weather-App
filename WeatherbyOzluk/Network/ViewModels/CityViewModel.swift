@@ -1,41 +1,60 @@
+import Combine
 import Foundation
-import UIKit
 
 final class CityViewModel {
   // Observable properties to hold location data
-  let locationSearchData: ObservableValue<[Location]> = ObservableValue([])
-  let location: ObservableValue<[Location]> = ObservableValue([])
-  let cityNames: ObservableValue<[String]> = ObservableValue([])
+  let locationSearchData = CurrentValueSubject<[Location], Never>([])
+  let location = CurrentValueSubject<[Location], Never>([])
+  let cityNames = CurrentValueSubject<[String], Never>([])
+
   private let service: CityServiceProtocol
+  private var cancellables = Set<AnyCancellable>()
+
   // Initializer to inject the service dependency
   init(service: CityServiceProtocol) {
     self.service = service
   }
+
   // Function to find city based on query string
-  func findCity(query: String, completion: @escaping () -> Void) {
-    service.findCity(query: query) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .success(let locations):
-        self.locationSearchData.value = locations
-        self.cityNames.value = locations.map { "\($0.localizedName), \($0.country.localizedName)" }
-        completion()
-      case .failure(let error):
-        ErrorHandling.handleError(error)
-      }
-    }
+  func findCity(query: String) {
+    service.findCity(query: query)
+      .receive(on: DispatchQueue.main)
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .failure(let error):
+            ErrorHandling.handleError(error)
+          case .finished:
+            break
+          }
+        },
+        receiveValue: { [weak self] locations in
+          guard let self = self else { return }
+          self.locationSearchData.send(locations)
+          self.cityNames.send(locations.map { "\($0.localizedName), \($0.country.localizedName)" })
+        }
+      )
+      .store(in: &cancellables)
   }
+
   // Function to find coordinates based on query string
-  func findCoordinate(query: String, completion: @escaping (Result<Void, Error>) -> Void) {
-    service.findCoordinate(query: query) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .success(let locations):
-        self.location.value = locations
-        completion(.success(()))
-      case .failure(let error):
-        ErrorHandling.handleError(error)
-      }
-    }
+  func findCoordinate(query: String) {
+    service.findCoordinate(query: query)
+      .receive(on: DispatchQueue.main)
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .failure(let error):
+            ErrorHandling.handleError(error)
+          case .finished:
+            break
+          }
+        },
+        receiveValue: { [weak self] locations in
+          guard let self = self else { return }
+          self.location.send(locations)
+        }
+      )
+      .store(in: &cancellables)
   }
 }

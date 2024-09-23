@@ -1,46 +1,32 @@
+import Combine
+
 protocol ForecastServiceProtocol {
-  func getWeather(
-    city: String,
-    cnt: String,
-    completion: @escaping (Result<Forecast, APIManager.APIError>) -> Void
-  )
-  func getWeatherForecastWeekly(
-    lat: String,
-    lon: String,
-    completion: @escaping (Result<ForecastWeekly, APIManager.APIError>) -> Void
-  )
+  func getWeather(city: String, cnt: String) -> AnyPublisher<Forecast, APIManager.APIError>
+  func getWeatherForecastWeekly(lat: String, lon: String) -> AnyPublisher<ForecastWeekly, APIManager.APIError>
 }
+
 final class ForecastService: ForecastServiceProtocol {
-  func getWeather(
-    city: String,
-    cnt: String,
-    completion: @escaping (Result<Forecast, APIManager.APIError>) -> Void
-  ) {
+  func getWeather(city: String, cnt: String) -> AnyPublisher<Forecast, APIManager.APIError> {
     do {
       let endPoint = try Endpoint.daily(city: city, cnt: cnt)
       guard let url = endPoint.url else {
-        completion(.failure(.invalidURL))
-        return
+        return Fail(error: .invalidURL).eraseToAnyPublisher()
       }
-      APIManager.shared.getJSON(url: url, completion: completion)
+      return APIManager.shared.getJSONPublisher(url: url)
     } catch {
-      completion(.failure(.missingAPIKey))
+      return Fail(error: .missingAPIKey).eraseToAnyPublisher()
     }
   }
-  func getWeatherForecastWeekly(
-    lat: String,
-    lon: String,
-    completion: @escaping (Result<ForecastWeekly, APIManager.APIError>) -> Void
-  ) {
+
+  func getWeatherForecastWeekly(lat: String, lon: String) -> AnyPublisher<ForecastWeekly, APIManager.APIError> {
     do {
       let endPoint = try Endpoint.weeklyForecast(lat: lat, lon: lon)
       guard let url = endPoint.url else {
-        completion(.failure(.invalidURL))
-        return
+        return Fail(error: .invalidURL).eraseToAnyPublisher()
       }
-      APIManager.shared.getJSON(url: url, completion: completion)
+      return APIManager.shared.getJSONPublisher(url: url)
     } catch {
-      completion(.failure(.missingAPIKey))
+      return Fail(error: .missingAPIKey).eraseToAnyPublisher()
     }
   }
 }
