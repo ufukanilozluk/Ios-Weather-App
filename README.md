@@ -2,9 +2,12 @@
 
 - An iOS app to fetch and display weather data for multiple cities. 
   
-### **Please wait for gif to load!**
+### **Please wait for gifs to load!**
   
-![Portfolio Gif](https://github.com/ufukanilozluk/Pictures-App-With-Flickr-API/blob/main/Pictures%20With%20Flickr%20Api.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_1.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_2.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_3.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_4.gif)
 
 ### **TechStack**
 
