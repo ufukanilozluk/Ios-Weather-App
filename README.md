@@ -4,10 +4,10 @@
   
 ### **Please wait for gifs to load!**
   
-![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/weather_1.gif)
-![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_2.gif)
-![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_3.gif)
-![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/main/weather_4.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/master/weather_1.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/master/weather_2.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/master/weather_3.gif)
+![Portfolio Gif](https://github.com/ufukanilozluk/Ios-Weather-App-Combine-UIKit/blob/master/weather_4.gif)
 
 ### **TechStack**
 
